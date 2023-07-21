@@ -1,0 +1,41 @@
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+
+import { useState } from 'react';
+import { Touchable } from 'react-native';
+import QRScanner from '../../QRScanner';
+
+export default function VerificacionCamion() {
+  const [abrir, setAbrir] = useState(false);
+  const handleAbrirCamera = () => {
+    setAbrir(true);
+  }
+
+  const handleCerrarCamera = () => {
+    setAbrir(false);
+  }
+
+  return (
+    abrir ? <QRScanner cerrar={handleCerrarCamera} /> :
+      <View style={styles.container}>
+        <Text>Escanear QR de camion</Text>
+        <TouchableOpacity onPress={handleAbrirCamera}>
+          <Text>Abrir cámara</Text>
+        </TouchableOpacity>
+      </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 200, // Agrega un tamaño mínimo para la vista
+  },  checklistButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+});
