@@ -1,17 +1,14 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-export default function CamionDetalle() {
+export default function CamionDetalle({navigation}) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={() => console.log('Atrás')}>
-        <Text style={styles.backButtonText}>Atrás</Text>
-      </TouchableOpacity>
       <Text style={styles.placaText}>Placa</Text>
       <Text style={styles.marcaText}>Marca</Text>
       <Text style={styles.modeloText}>Modelo</Text>
       <TouchableOpacity style={styles.checklistButton} onPress={() => console.log('Realizar checklist')}>
-        <Text style={styles.checklistButtonText}>Realizar checklist</Text>
+        <Text style={styles.checklistButtonText} onPress={() => navigation.navigate('CheckList')}>Realizar checklist</Text>
       </TouchableOpacity>
     </View>
   );

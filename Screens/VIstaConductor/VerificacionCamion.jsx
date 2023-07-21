@@ -5,7 +5,8 @@ import { useState } from 'react';
 import { Touchable } from 'react-native';
 import QRScanner from '../../QRScanner';
 
-export default function VerificacionCamion() {
+
+export default function VerificacionCamion({ navigation }) {
   const [abrir, setAbrir] = useState(false);
   const handleAbrirCamera = () => {
     setAbrir(true);
@@ -16,7 +17,7 @@ export default function VerificacionCamion() {
   }
 
   return (
-    abrir ? <QRScanner cerrar={handleCerrarCamera} /> :
+    abrir ? <QRScanner cerrar={handleCerrarCamera} navigate={navigation.navigate}/> :
       <View style={styles.container}>
         <Text>Escanear QR de camion</Text>
         <TouchableOpacity onPress={handleAbrirCamera}>

@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
-const QRScanner = ({cerrar}) => {
+
+
+const QRScanner = ({cerrar, navigate}) => {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
@@ -16,6 +18,7 @@ const QRScanner = ({cerrar}) => {
   const handleBarCodeScanned = ({ data }) => {
     setScanned(true);
     alert(`Código QR escaneado: ${data}`);
+    navigate('Detalles');
   };
 
   if (hasCameraPermission === null) {
