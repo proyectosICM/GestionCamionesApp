@@ -10,23 +10,26 @@ import { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CheckList from './Screens/VIstaConductor/CheckList';
+import LoginScreen from './Screens/Login/WebLogin';
 
 
 export default function App() {
 
-  const Stack = createNativeStackNavigator(); 
+  const Stack = createNativeStackNavigator();
 
   return (
 
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name='VerificacionCamion' component={VerificacionCamion} />
-          <Stack.Screen name='About' component={CheckList} />
-          <Stack.Screen name='Detalles' component={CamionDetalle} />
-          <Stack.Screen name='CheckList' component={CheckList} />
-          {/* Rutas secundarias */}
-        </Stack.Navigator>
-      </NavigationContainer>
+    <NavigationContainer>
+      <Stack.Navigator>
+        {/*  <Stack.Screen name='Login' component={Login} /> */}
+
+        <Stack.Screen name='VerificacionCamion' component={VerificacionCamion} />
+        <Stack.Screen name='About' component={CheckList} />
+        <Stack.Screen name='Detalles' component={CamionDetalle} />
+        <Stack.Screen name='CheckList' component={CheckList} />
+        {/* Rutas secundarias */}
+      </Stack.Navigator>
+    </NavigationContainer>
 
   );
 }
