@@ -1,22 +1,27 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
 
-export default function Login() {
+export default function Login({navigation}) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+
+
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/unprotected', {
+      const response = await axios.post('http://192.168.1.232:8080/login', {
         username,
         password,
       });
       setError('A');
-      // Aquí puedes guardar el token de autenticación en el almacenamiento local del dispositivo
+
       console.log('Token:', response.data.token);
+      await AsyncStorage.setItem("token", response.data.token); 
+      navigation.navigate('VerificacionCamion');// O
       // Realiza las acciones de autenticación o navegación según la respuesta del servidor
     } catch (error) {
       setError('Error en la autenticación');

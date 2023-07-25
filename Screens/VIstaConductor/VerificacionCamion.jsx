@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 import { Touchable } from 'react-native';
 import QRScanner from '../../QRScanner';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function VerificacionCamion({ navigation }) {
@@ -11,7 +12,7 @@ export default function VerificacionCamion({ navigation }) {
   const handleAbrirCamera = () => {
     setAbrir(true);
   }
-
+  const token = AsyncStorage.getItem('token');
   const handleCerrarCamera = () => {
     setAbrir(false);
   }
@@ -20,6 +21,7 @@ export default function VerificacionCamion({ navigation }) {
     abrir ? <QRScanner cerrar={handleCerrarCamera} navigate={navigation.navigate}/> :
       <View style={styles.container}>
         <Text>Escanear QR de camion</Text>
+        <Text></Text>
         <TouchableOpacity onPress={handleAbrirCamera}>
           <Text>Abrir cámara</Text>
         </TouchableOpacity>
