@@ -13,7 +13,7 @@ export default function Login({navigation}) {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://192.168.1.232:8080/login', {
+      const response = await axios.post('http://192.168.1.35:8080/login', {
         username,
         password,
       });

@@ -17,6 +17,7 @@ const QRScanner = ({cerrar, navigate}) => {
 
   const handleBarCodeScanned = ({ data }) => {
     setScanned(true);
+    cerrar();
     alert(`Código QR escaneado: ${data}`);
     navigate('Detalles');
   };

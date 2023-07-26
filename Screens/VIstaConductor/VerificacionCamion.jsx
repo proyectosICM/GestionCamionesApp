@@ -1,44 +1,48 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-
-import { useState } from 'react';
-import { Touchable } from 'react-native';
-import QRScanner from '../../QRScanner';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { useState } from "react";
+import { Touchable } from "react-native";
+import QRScanner from "../../QRScanner";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { styles } from "../../Styles/General";
+import { Button } from "react-native-elements";
 
 
 export default function VerificacionCamion({ navigation }) {
   const [abrir, setAbrir] = useState(false);
   const handleAbrirCamera = () => {
     setAbrir(true);
-  }
-  const token = AsyncStorage.getItem('token');
+  };
+  const token = AsyncStorage.getItem("token");
+
   const handleCerrarCamera = () => {
     setAbrir(false);
-  }
+  };
 
-  return (
-    abrir ? <QRScanner cerrar={handleCerrarCamera} navigate={navigation.navigate}/> :
-      <View style={styles.container}>
-        <Text>Escanear QR de camion</Text>
-        <Text></Text>
-        <TouchableOpacity onPress={handleAbrirCamera}>
-          <Text>Abrir cámara</Text>
-        </TouchableOpacity>
-      </View>
+  return abrir ? (
+    <QRScanner cerrar={handleCerrarCamera} navigate={navigation.navigate} />
+  ) : (
+    <View style={styles.container}>
+      <Text style={styles.tittleText}>
+        Escanear QR de camion 
+      </Text>
+      <Text></Text>
+      <Button
+        title=" Abrir Camara "
+        type="outline"
+        buttonStyle={styles.styleButton}
+        titleStyle={styles.textoButton}
+        /*icon={<FontAwesome name="camera" size={20}  color="red" />}*/
+        icon={{
+          name: 'camera',
+          type: 'font-awesome',
+          size: 25,
+          color: 'white',
+        }}
+        iconRight
+        onPress={handleAbrirCamera}
+      />
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: 200, // Agrega un tamaño mínimo para la vista
-  },  checklistButtonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-});

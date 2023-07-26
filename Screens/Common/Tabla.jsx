@@ -2,35 +2,46 @@ import React from "react";
 import { FlatList } from "react-native";
 import { View, Text, StyleSheet } from "react-native";
 import { Button, Card, ListItem } from "react-native-elements";
+import { CustomBottomTabBar } from "../../CustomBottomTabBar";
 
 export function Tabla({ titulo, datos }) {
   return (
-    <View style={styles.container}>
+    <View style={styles2.container}>
       <Card>
         <Card.Title>{titulo}</Card.Title>
         <Card.Divider />
-        <View style={styles.user}>
-        <Text style={styles.name}>asd</Text>
-        <Text style={styles.name2}>Marque</Text>
-        <Text style={styles.name2}>Estado</Text>
+        <View style={styles2.user}>
+        <Text style={styles2.name}>Revise</Text>
+        <Text style={styles2.name2}>Marque</Text>
+        <Text style={styles2.name2}>Estado</Text>
         </View>
  
 
         {datos.map((u, i) => {
           return (
-            <View key={i} style={styles.user}>
-              <Text style={styles.name}>{u}</Text>
+            <View key={i} style={styles2.user}>
+              <Text style={styles2.name}>{u}</Text>
               <Button
-                title="v"
                 type="outline"
-                buttonStyle={styles.successButton}
-                titleStyle={styles.buttonTitle}
+                buttonStyle={styles2.successButton}
+                titleStyle={styles2.buttonTitle}
+                icon={{
+                  name: "check",
+                  type: "font-awesome",
+                  size: 10,
+                  color: "white",
+                }}
               />
               <Button
-                title="x"
                 type="outline"
-                buttonStyle={styles.successButton}
-                titleStyle={styles.buttonTitle}
+                buttonStyle={styles2.dangerButton}
+                titleStyle={styles2.buttonTitle}
+                icon={{
+                  name: "times",
+                  type: "font-awesome",
+                  size: 10,
+                  color: "white",
+                }}
               />
               <Text>Sin estado</Text>
             </View>
@@ -43,7 +54,7 @@ export function Tabla({ titulo, datos }) {
 
 // Resto del código se mantiene igual
 
-const styles = StyleSheet.create({
+const styles2 = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
@@ -61,9 +72,11 @@ const styles = StyleSheet.create({
   },
   successButton: {
     borderColor: "green",
+    backgroundColor: "green"
   },
   dangerButton: {
     borderColor: "red",
+    backgroundColor: "red"
   },
   buttonTitle: {
     color: "black",

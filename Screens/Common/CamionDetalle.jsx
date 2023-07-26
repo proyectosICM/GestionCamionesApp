@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useListarElementos } from "../../Hooks/CRUDHook";
 import { useEffect } from "react";
+import { styles } from "../../Styles/General";
+import { Button } from "react-native-elements";
 
 export default function CamionDetalle({ navigation }) {
   const [camion, setCamion] = useState();
   const ListarCamion = useListarElementos(
-    `http://192.168.1.232:8080/api/camiones/1`,
+    `http://192.168.1.35:8080/api/camiones/1`,
     setCamion
   );
 
@@ -18,15 +20,19 @@ export default function CamionDetalle({ navigation }) {
     <View style={styles.container}>
       {camion ? (
         <>
-          <Text style={styles.placaText}>Placa {camion.placa}</Text>
-          <Text style={styles.placaText}>Marca {camion.marcasModel.nombre}</Text>
-          <Text style={styles.placaText}>Modelo {camion.modeloModel.nombre}</Text>
+          <Text style={styles.tittleText}>Placa {camion.placa}</Text>
+          <Text style={styles.tittleText}>
+            Marca {camion.marcasModel.nombre}
+          </Text>
+          <Text style={styles.tittleText}>
+            Modelo {camion.modeloModel.nombre}
+          </Text>
           <TouchableOpacity
-            style={styles.checklistButton}
+            style={styles.styleButton}
             onPress={() => console.log("Realizar checklist")}
           >
             <Text
-              style={styles.checklistButtonText}
+              style={styles.textoButton}
               onPress={() => navigation.navigate("CheckList")}
             >
               Realizar checklist
@@ -34,53 +40,25 @@ export default function CamionDetalle({ navigation }) {
           </TouchableOpacity>
         </>
       ) : (
-        <Text>Cargando...</Text>
+        <>
+          <Text style={styles.tittleText}>Cargando...</Text>
+
+          <Button
+            title=" Realizar Checklist "
+            type="outline"
+            buttonStyle={styles.styleButton}
+            titleStyle={styles.textoButton}
+            icon={{
+              name: "check",
+              type: "font-awesome",
+              size: 25,
+              color: "white",
+            }}
+            iconRight
+            onPress={() => navigation.navigate("CheckList")}
+          />
+        </>
       )}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  backButton: {
-    backgroundColor: "#ccc",
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-    alignSelf: "flex-start",
-    marginBottom: 20,
-  },
-  backButtonText: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  placaText: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  marcaText: {
-    fontSize: 18,
-    marginBottom: 10,
-  },
-  modeloText: {
-    fontSize: 18,
-    marginBottom: 20,
-  },
-  checklistButton: {
-    backgroundColor: "blue",
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-  },
-  checklistButtonText: {
-    color: "white",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-});

@@ -1,11 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
 
-
-import { Button } from 'react-native-elements';
-import { useState } from 'react';
-import { Tabla } from '../Common/Tabla';
-
+import { Button } from "react-native-elements";
+import { useState } from "react";
+import { Tabla } from "../Common/Tabla";
+import { styles } from "../../Styles/General";
+import { CustomBottomTabBar } from "../../CustomBottomTabBar";
 
 export default function CheckList() {
   const [currentTable, setCurrentTable] = useState(0);
@@ -96,27 +96,31 @@ export default function CheckList() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>CheckList</Text>
-      <Tabla titulo={tables[currentTable].titulo} datos={tables[currentTable].datos} />
-      <Button title="Atras"
-        type="outline" onPress={handleBack} disabled={currentTable === 0}>Anterior</Button>
-      <Button title="Siguiente"
-        type="outline" onPress={handleNext} disabled={currentTable === tables.length - 1}>Siguiente</Button>
+      <Text style={styles.tittleText}>CheckList</Text>
+      <Tabla
+        titulo={tables[currentTable].titulo}
+        datos={tables[currentTable].datos}
+      />
+      <Button
+        title="Atras"
+        type="outline"
+        onPress={handleBack}
+        buttonStyle={{backgroundColor:"#ccc", width: 150,  }}
+        titleStyle={{color:"black"}}
+        disabled={currentTable === 0}
+      >
+        Anterior
+      </Button>
+      <Button
+        title="Siguiente"
+        type="outline"
+        onPress={handleNext}
+        buttonStyle={{backgroundColor:"white", width: 150,  }}
+        disabled={currentTable === tables.length - 1}
+      >
+        Siguiente
+      </Button>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-    textAlign: "center",
-  },
-});
