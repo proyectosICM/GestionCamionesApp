@@ -8,18 +8,29 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { styles } from "../../Styles/General";
 import { Button } from "react-native-elements";
 
-
 export default function VerificacionCamion({ navigation }) {
   const [abrir, setAbrir] = useState(false);
   const handleAbrirCamera = () => {
     setAbrir(true);
   };
-  const token = AsyncStorage.getItem("token");
 
   const handleCerrarCamera = () => {
     setAbrir(false);
   };
+/*
+  const obtenerRol = async () => {
+    try {
+      const rol = await AsyncStorage.getItem("rol");
+      return rol;
+    } catch (error) {
+      console.log("Error al obtener el rol desde AsyncStorage:", error);
+      return null;
+    }
+  };
 
+  // Llamar a la función para obtener el rol
+  const rol = obtenerRol();
+*/
   return abrir ? (
     <QRScanner cerrar={handleCerrarCamera} navigate={navigation.navigate} />
   ) : (

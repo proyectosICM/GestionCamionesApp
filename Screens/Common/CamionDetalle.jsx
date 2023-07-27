@@ -4,13 +4,24 @@ import { useListarElementos } from "../../Hooks/CRUDHook";
 import { useEffect } from "react";
 import { styles } from "../../Styles/General";
 import { Button } from "react-native-elements";
+import { base, baseURL } from "../../API/apiurl";
+import { useCallback } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function CamionDetalle({ navigation }) {
   const [camion, setCamion] = useState();
-  const ListarCamion = useListarElementos(
-    `http://192.168.1.35:8080/api/camiones/1`,
-    setCamion
-  );
+  const [rol, setRol] = useState();
+
+  const datosAsync = useCallback(async () => {
+    const rolv = await AsyncStorage.getItem("rol");
+    setRol(rolv);
+  }, []);
+
+  useEffect(() => {
+    datosAsync();
+  }, [datosAsync]);
+
+  const ListarCamion = useListarElementos(`${baseURL}camiones/1`, setCamion);
 
   useEffect(() => {
     ListarCamion();
@@ -20,6 +31,7 @@ export default function CamionDetalle({ navigation }) {
     <View style={styles.container}>
       {camion ? (
         <>
+          <Text style={styles.tittleText}>{rol && rol}</Text>
           <Text style={styles.tittleText}>Placa {camion.placa}</Text>
           <Text style={styles.tittleText}>
             Marca {camion.marcasModel.nombre}
@@ -27,17 +39,56 @@ export default function CamionDetalle({ navigation }) {
           <Text style={styles.tittleText}>
             Modelo {camion.modeloModel.nombre}
           </Text>
-          <TouchableOpacity
-            style={styles.styleButton}
-            onPress={() => console.log("Realizar checklist")}
-          >
-            <Text
-              style={styles.textoButton}
+          {rol && rol === "CONDUCTOR" && (
+            <Button
+              title=" Realizar Checklist "
+              type="outline"
+              buttonStyle={styles.styleButton}
+              titleStyle={styles.textoButton}
+              icon={{
+                name: "check",
+                type: "font-awesome",
+                size: 25,
+                color: "white",
+              }}
+              iconRight
               onPress={() => navigation.navigate("CheckList")}
-            >
-              Realizar checklist
-            </Text>
-          </TouchableOpacity>
+            />
+          )}
+
+          {rol && rol === "MECANICO" && (
+            <>
+              <Button
+                title=" Ver Checklist mas reciente "
+                type="outline"
+                buttonStyle={styles.styleButton}
+                titleStyle={styles.textoButton}
+                icon={{
+                  name: "check",
+                  type: "font-awesome",
+                  size: 25,
+                  color: "white",
+                }}
+                iconRight
+                onPress={() => navigation.navigate("CheckList")}
+              />
+              
+              <Button
+                title=" Realizar Checklist mas reciente "
+                type="outline"
+                buttonStyle={styles.styleButton}
+                titleStyle={styles.textoButton}
+                icon={{
+                  name: "check",
+                  type: "font-awesome",
+                  size: 25,
+                  color: "white",
+                }}
+                iconRight
+                onPress={() => navigation.navigate("CheckList")}
+              />
+            </>
+          )}
         </>
       ) : (
         <>

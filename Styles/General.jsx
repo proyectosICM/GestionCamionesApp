@@ -44,6 +44,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 8,
+    margin: 2
   },
   textoButton: {
     color: "white",

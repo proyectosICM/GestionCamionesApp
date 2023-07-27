@@ -10,19 +10,20 @@ import { Cuenta } from "./Screens/Common/Cuenta";
 import { Configuracion } from "./Screens/Common/Configuracion";
 import { InicioAdministrador } from "./Screens/VistaAdministrador/InicioAdministrador";
 import { MenuTaller } from "./Screens/VistaMecanico/MenuTaller";
+import { Cargando } from "./Screens/Common/Cargando";
 
 const Tab = createBottomTabNavigator();
 
 export function CustomBottomTabBar() {
-  const [user, setUser] = useState(null);
+  const [rol, setRol] = useState(null);
 
   useEffect(() => {
     // Función asincrónica para obtener el valor de 'user' de AsyncStorage
     const getUserFromAsyncStorage = async () => {
       try {
-        const userValue = await AsyncStorage.getItem("user");
-        if (userValue !== null) {
-          setUser(userValue);
+        const rolValue = await AsyncStorage.getItem("rol");
+        if (rolValue !== null) {
+          setRol(rolValue);
         }
       } catch (error) {
         console.log("Error al obtener el usuario de AsyncStorage:", error);
@@ -45,11 +46,13 @@ export function CustomBottomTabBar() {
       <Tab.Screen
         name="Inicio"
         component={
-          user === "CONDUCTOR"
+          rol === "CONDUCTOR"
             ? VerificacionCamion
-            : user === "MECANICO"
+            : rol === "MECANICO"
             ? IncioMecanico
-            : InicioAdministrador // Si el usuario no es ni "CONDUCTOR" ni "MECANICO", entonces es "ADMINISTRADOR"
+            : rol === "ADMINISTRADOR"
+            ? InicioAdministrador 
+            : Cargando
         }
         options={{
           tabBarIcon: ({ color, size }) => (
@@ -57,7 +60,7 @@ export function CustomBottomTabBar() {
           ),
         }}
       />
-      {user === "MECANICO" && (
+      {rol === "MECANICO" && (
         <Tab.Screen
           name="Taller"
           component={MenuTaller}

@@ -6,7 +6,7 @@ import Login from './Screens/Login/Login';
 import CamionDetalle from './Screens/Common/CamionDetalle';
 import { Tabla } from './Screens/Common/Tabla';
 import { Button } from 'react-native-elements';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CheckList from './Screens/VIstaConductor/CheckList';
@@ -17,6 +17,9 @@ import { CustomBottomTabBar } from './CustomBottomTabBar';
 import IncioMecanico from './Screens/VistaMecanico/InicioMecanico';
 import { MenuCamiones } from './Screens/Common/MenuCamiones';
 import { MenuCrud } from './Screens/Common/CRUD/MenuCrud';
+import { Redirigir } from './Screens/Login/Redirigir';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Cargando } from './Screens/Common/Cargando';
 
 
 
@@ -26,12 +29,28 @@ export default function App() {
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
 
+  const [user, setUser] = useState(null);
+
+  const ListarUser = async () => {
+    const rolValue = await AsyncStorage.getItem('rol');
+    setUser(rolValue);
+  }
+
+  useEffect(() => {
+    ListarUser();
+  }, [ListarUser]);
+
   return (
 
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen name='Login' component={Login} /> */}
+      {user ? (
+          <Stack.Screen name='Redirigir2' component={Redirigir} />
+        ) : (
+          <Stack.Screen name='Login-' component={Login} /> 
+        )}
 
+        <Stack.Screen name='Login' component={Login} /> 
         <Stack.Screen
           name="Inicio"
           component={CustomBottomTabBar}
@@ -47,6 +66,9 @@ export default function App() {
 
         <Stack.Screen name='Menu-Camion' component={MenuCamiones} />
         <Stack.Screen name='Menu-CRUD' component={MenuCrud} />
+
+        <Stack.Screen name='Redirigir' component={Redirigir} />
+        <Stack.Screen name='Cargando' component={Cargando} />
         {/* Rutas secundarias */}
       </Stack.Navigator>
     </NavigationContainer>

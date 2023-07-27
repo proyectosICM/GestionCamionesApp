@@ -24,7 +24,7 @@ export default function InicioMecanico({ navigation }) {
         console.log("Error al obtener el usuario de AsyncStorage:", error);
       }
     };
-
+ 
     // Llamar a la función para obtener el valor de 'user' al cargar el componente
     getUserFromAsyncStorage();
 
@@ -43,12 +43,17 @@ export default function InicioMecanico({ navigation }) {
     setAbrir(false);
   };
 
+  const  handleMenu = async() => {
+    await AsyncStorage.setItem('menucam', 'habilitados')
+    navigation.navigate('Menu-Camion')
+  }
+
   return abrir ? (
     <QRScanner cerrar={handleCerrarCamera} navigate={navigation.navigate} />
   ) : (
     <View style={styles.container}>
       <Text style={styles.tittleText}>
-        Escanear QR de camion {user}
+        Escanear QR de camion
       </Text>
       <Text></Text>
       <Button
@@ -78,7 +83,7 @@ export default function InicioMecanico({ navigation }) {
           color: 'white',
         }}
         iconRight
-        onPress={() => navigation.navigate('Menu-Camion')}
+        onPress={() => handleMenu() }
       />
     </View>
   );

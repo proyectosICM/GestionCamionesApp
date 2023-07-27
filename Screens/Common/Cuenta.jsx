@@ -5,7 +5,7 @@ import { styles } from "../../Styles/General";
 import { Button } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export function Cuenta() {
+export function Cuenta({navigation}) {
   const [user, setUser] = useState("");
 
   useEffect(() => {
@@ -34,8 +34,21 @@ export function Cuenta() {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.clear();
+      setUser("");
+      console.log("Sesión cerrada. Todos los datos eliminados de AsyncStorage.");
+      navigation.navigate('Login-')
+
+    } catch (error) {
+      console.log("Error al cerrar la sesión:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
+     {/* 
       <Text style={styles.tittleText}>Cuenta usted es</Text>
       <Button
         title="Conductor"
@@ -55,6 +68,14 @@ export function Cuenta() {
         onPress={() => handleUser("ADMINISTRADOR")}
       />
       <Text>{user}</Text>
+     */} 
+    
+      <Button
+        title="Cerrar Sesion"
+        buttonStyle={styles.styleButton}
+        titleStyle={styles.tittleText}
+        onPress={() => handleLogout()}
+      />
     </View>
   );
 }

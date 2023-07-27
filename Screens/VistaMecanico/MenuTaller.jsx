@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Card, Button } from "react-native-elements";
 import { MenuCamiones } from "../Common/MenuCamiones";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ScrollView } from "react-native";
 
 export function MenuTaller({ navigation }) {
   const handleAdminOption = () => {
@@ -16,9 +18,49 @@ export function MenuTaller({ navigation }) {
     navigation.navigate("VehiculosMalEstadoScreen");
   };
 
+  const [sede, setSede] = useState(null);
+
+  const fetchData = useCallback(async () => {
+    const sedev = await AsyncStorage.getItem("sede");
+    setSede(sedev);
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const handleDeshabilitados = async () => {
+    await AsyncStorage.setItem("menucam", "deshabilitados");
+    navigation.navigate("Menu-Camion");
+  };
+
+  const handlePendiente = async () => {
+    await AsyncStorage.setItem("menucam", "pendiente");
+    navigation.navigate("Menu-Camion");
+  };
+
+  const handleEnReparacion = async () => {
+    await AsyncStorage.setItem("menucam", "enreparacion");
+    navigation.navigate("Menu-Camion");
+  };
+
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.tittleText}>Buenos días, Mecanico</Text>
+      <Text style={styles.tittleText}> Sede: {sede ? sede : "Cargando.."}</Text>
+      <Card containerStyle={styles.cardContainer}>
+        <Card.Title>Ver Camiones Deshabilitados</Card.Title>
+        <Card.Divider />
+        <Text style={styles.cardText}>
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry.
+        </Text>
+        <Button
+          title="Ver más"
+          buttonStyle={styles.cardButton}
+          onPress={() => handleDeshabilitados()}
+        />
+      </Card>
       <Card containerStyle={styles.cardContainer}>
         <Card.Title>Ver Camiones pendientes a reparacion</Card.Title>
         <Card.Divider />
@@ -29,7 +71,7 @@ export function MenuTaller({ navigation }) {
         <Button
           title="Ver más"
           buttonStyle={styles.cardButton}
-          onPress={() => navigation.navigate('Menu-Camion')}
+          onPress={() => handlePendiente()}
         />
       </Card>
 
@@ -43,17 +85,16 @@ export function MenuTaller({ navigation }) {
         <Button
           title="Ver más"
           buttonStyle={styles.cardButton}
-          onPress={() => navigation.navigate('Menu-Camion')}
+          onPress={() => handleEnReparacion()}
         />
       </Card>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
+    flexGrow: 1,
     alignItems: "center",
     padding: 20,
     backgroundColor: "#f0f0f0",
@@ -79,3 +120,35 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 });
+
+/* 
+
+      <Card containerStyle={styles.cardContainer}>
+        <Card.Title>Ver Camiones pendientes a reparacion</Card.Title>
+        <Card.Divider />
+        <Text style={styles.cardText}>
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry.
+        </Text>
+        <Button
+          title="Ver más"
+          buttonStyle={styles.cardButton}
+          onPress={() => handlePendientes()}
+        />
+      </Card>
+
+      <Card containerStyle={styles.cardContainer}>
+        <Card.Title>Ver camiones en reparacion</Card.Title>
+        <Card.Divider />
+        <Text style={styles.cardText}>
+        Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry.
+        </Text>
+        <Button
+          title="Ver más"
+          buttonStyle={styles.cardButton}
+          onPress={() => navigation.navigate('Menu-Camion')}
+        />
+      </Card>
+
+*/

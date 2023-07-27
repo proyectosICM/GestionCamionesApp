@@ -23,7 +23,7 @@ export function useListarElementos(url, setDatos) {
         console.log(token);
       } else {
         // Otro error, manejarlo adecuadamente
-        console.error("Error al obtener los datos del camión:", error);
+        //console.error(`Error al obtener los datos del camión: ${url}`, error);
       }
     }
   }, [navigation, setDatos, url]);
