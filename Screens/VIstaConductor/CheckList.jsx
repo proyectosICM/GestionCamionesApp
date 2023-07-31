@@ -2,95 +2,48 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 
 import { Button } from "react-native-elements";
-import { useState } from "react";
+import { useState, useEffect } from "react"; // Importamos useEffect
 import { Tabla } from "../Common/Tabla";
 import { styles } from "../../Styles/General";
 import { CustomBottomTabBar } from "../../CustomBottomTabBar";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { CheckDatos } from "./CheckDatos";
+import { tables } from "../../API/datosCLConductor";
+import { useCallback } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function CheckList() {
+  const [camion, setCamion] = useState();
+  const [rol, setRol] = useState();
+  const [camionid, setCamionid] = useState();
+  const [usuario, setUsuario] = useState();
+
+  const route = useRoute();
+  //const usuario2 = route.params.usuario;
+
+  const datosAsync = useCallback(async () => {
+    const rolv = await AsyncStorage.getItem("rol");
+    const camionidv = await AsyncStorage.getItem("camionid");
+    const usuariov = await AsyncStorage.getItem("usuario");
+    setRol(rolv);
+    setCamionid(camionidv);
+    setUsuario(usuariov);
+  }, []);
+
+  useEffect(() => {
+    datosAsync();
+  }, [datosAsync]);
+
   const [currentTable, setCurrentTable] = useState(0);
-
-  const tables = [
-    {
-      titulo: "Llantas",
-      datos: [
-        "Revisar ajuste",
-        "Cortes y averias",
-        "Revisar Presion recomendada",
-      ],
-    },
-    {
-      titulo: "Motor",
-      datos: [
-        "Niveles de Motor",
-        "Sistema de lubricacion de fugas",
-        "Sistema de combustible",
-      ],
-    },
-    {
-      titulo: "Sistema Electrico",
-      datos: [
-        "Luces",
-        "Sistema de carga",
-        "Mandos tablero",
-        "Sistema de arranque",
-        "Ruidos anormales",
-        "Otros equipos electricos",
-      ],
-    },
-    {
-      titulo: "Trasmision",
-      datos: [
-        "Embrague",
-        "Caja de cambio",
-        "Diferencial",
-        "Cardanes",
-        "Ruidos Anormales",
-      ],
-    },
-    {
-      titulo: "Direccion",
-      datos: [
-        "Seryo",
-        "Alineamiento",
-        "Pines, bocinas, terminales",
-        "Caja de Direcion",
-      ],
-    },
-    {
-      titulo: "Frenos",
-      datos: [
-        "Limpieza y regulacion",
-        "Presion de aire",
-        "Freno de estacionamiento",
-      ],
-    },
-    {
-      titulo: "Suspension",
-      datos: [
-        "Muelles, Bolsas de aire",
-        "Amortiguadores",
-        "Ejes barra estabilizadora",
-      ],
-    },
-    {
-      titulo: "Cabina",
-      datos: [
-        "Carroceria: Parabrisas, puertas, chapas, asientos",
-        "Chasis: Tornamesas, Bastidor",
-      ],
-    },
-  ];
-
-  /*
-  const [marcar, setMarcar] = useState(
-    Array.from({ length: tables.length }, () => Array(tables[0].datos.length).fill(null))
-  );
-*/
-
   const [marcar, setMarcar] = useState(() =>
     tables.map((table) => Array(table.datos.length).fill(null))
   );
+
+  const navigate = useNavigation();
+
+  const allTablesMarked = () => {
+    return marcar.every((table) => allItemsMarked(table));
+  };
 
   const handleBack = () => {
     if (currentTable > 0) {
@@ -98,14 +51,40 @@ export default function CheckList() {
     }
   };
 
+  const allItemsMarked = (marcarArr) => {
+    return marcarArr.every((item) => item !== null);
+  };
+
   const handleNext = () => {
-    if (currentTable < tables.length - 1) {
+    if (
+      currentTable < tables.length - 1 &&
+      allItemsMarked(marcar[currentTable])
+    ) {
       setCurrentTable(currentTable + 1);
     }
   };
 
+  const handleEnviar = () => {
+    navigate.navigate("CheckDatos", { datos: marcar, tiempo: tiempo }); // Envía los datos de 'marcar' a la pantalla CheckDatosScreen
+  };
+
+  // Agregamos un estado para el temporizador y una función para actualizarlo
+  const [tiempo, setTiempo] = useState(0);
+  const actualizarTiempo = () => {
+    setTiempo((prevTiempo) => prevTiempo + 1);
+  };
+
+  // Usamos useEffect para iniciar el temporizador al renderizar el componente
+  useEffect(() => {
+    const interval = setInterval(actualizarTiempo, 1000); // Temporizador actualizado cada 1 segundo
+
+    return () => clearInterval(interval); // Limpiamos el intervalo cuando el componente se desmonte
+  }, []);
+
   return (
     <View style={styles.container}>
+      <Text>d {usuario}</Text>
+      <Text>Tiempo: {tiempo} segundos</Text>
       <Text style={styles.tittleText}>CheckList</Text>
       <Tabla
         titulo={tables[currentTable].titulo}
@@ -132,10 +111,22 @@ export default function CheckList() {
         type="outline"
         onPress={handleNext}
         buttonStyle={{ backgroundColor: "white", width: 150 }}
-        disabled={currentTable === tables.length - 1}
+        disabled={
+          currentTable === tables.length - 1 ||
+          !allItemsMarked(marcar[currentTable])
+        }
       >
         Siguiente
       </Button>
+      {currentTable === tables.length - 1 && allTablesMarked() && (
+        <Button
+          title="Enviar datos"
+          type="solid"
+          buttonStyle={{ backgroundColor: "blue", width: 200, marginTop: 20 }}
+          titleStyle={{ color: "white" }}
+          onPress={() => handleEnviar()}
+        />
+      )}
     </View>
   );
 }

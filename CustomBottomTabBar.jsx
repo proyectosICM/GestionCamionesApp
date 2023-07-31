@@ -11,6 +11,7 @@ import { Configuracion } from "./Screens/Common/Configuracion";
 import { InicioAdministrador } from "./Screens/VistaAdministrador/InicioAdministrador";
 import { MenuTaller } from "./Screens/VistaMecanico/MenuTaller";
 import { Cargando } from "./Screens/Common/Cargando";
+import { CamionSelect } from "./Screens/VIstaConductor/CamionSelect";
 
 const Tab = createBottomTabNavigator();
 
@@ -51,7 +52,7 @@ export function CustomBottomTabBar() {
             : rol === "MECANICO"
             ? IncioMecanico
             : rol === "ADMINISTRADOR"
-            ? InicioAdministrador 
+            ? InicioAdministrador
             : Cargando
         }
         options={{
@@ -60,6 +61,17 @@ export function CustomBottomTabBar() {
           ),
         }}
       />
+      {rol === "CONDUCTOR" && (
+        <Tab.Screen
+          name="Asignado"
+          component={CamionSelect}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <FontAwesome5 name="truck" color={color} size={size} />
+            ),
+          }}
+        />
+      )}
       {rol === "MECANICO" && (
         <Tab.Screen
           name="Taller"

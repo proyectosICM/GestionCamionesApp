@@ -20,6 +20,7 @@ import { MenuCrud } from './Screens/Common/CRUD/MenuCrud';
 import { Redirigir } from './Screens/Login/Redirigir';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Cargando } from './Screens/Common/Cargando';
+import { CheckDatos } from './Screens/VIstaConductor/CheckDatos';
 
 
 
@@ -69,6 +70,8 @@ export default function App() {
 
         <Stack.Screen name='Redirigir' component={Redirigir} />
         <Stack.Screen name='Cargando' component={Cargando} />
+
+        <Stack.Screen name='CheckDatos' component={CheckDatos} />
         {/* Rutas secundarias */}
       </Stack.Navigator>
     </NavigationContainer>

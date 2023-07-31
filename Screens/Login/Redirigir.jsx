@@ -37,6 +37,7 @@ export function Redirigir({ navigation }) {
         await AsyncStorage.setItem("rol", info.rolesModel.nombre);
         await AsyncStorage.setItem("empresa", info.empresasModel.id.toString());
         await AsyncStorage.setItem("sede", info.sedesModel.id.toString());
+        await AsyncStorage.setItem("usuario", info.id.toString());
         navigation.navigate("Inicio");
         setTimeout(() => {
           setShowText(true); // Ocultar el texto después de 2 segundos

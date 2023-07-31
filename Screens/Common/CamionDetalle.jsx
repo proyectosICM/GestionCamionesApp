@@ -24,11 +24,18 @@ export default function CamionDetalle({ navigation }) {
     datosAsync();
   }, [datosAsync]);
 
-  const ListarCamion = useListarElementos(`${baseURL}camiones/${camionid}`, setCamion);
+  const ListarCamion = useListarElementos(
+    `${baseURL}camiones/${camionid}`,
+    setCamion
+  );
 
   useEffect(() => {
     ListarCamion();
   }, [ListarCamion]);
+
+  const handleListChecklist = () => {
+    navigation.navigate("CheckList");
+  };
 
   return (
     <View style={styles.container}>
@@ -88,7 +95,7 @@ export default function CamionDetalle({ navigation }) {
                   color: "white",
                 }}
                 iconRight
-                onPress={() => navigation.navigate("CheckList")}
+                onPress={() => handleListChecklist()}
               />
             </>
           )}

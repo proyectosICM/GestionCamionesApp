@@ -17,20 +17,7 @@ export default function VerificacionCamion({ navigation }) {
   const handleCerrarCamera = () => {
     setAbrir(false);
   };
-/*
-  const obtenerRol = async () => {
-    try {
-      const rol = await AsyncStorage.getItem("rol");
-      return rol;
-    } catch (error) {
-      console.log("Error al obtener el rol desde AsyncStorage:", error);
-      return null;
-    }
-  };
 
-  // Llamar a la función para obtener el rol
-  const rol = obtenerRol();
-*/
   return abrir ? (
     <QRScanner cerrar={handleCerrarCamera} navigate={navigation.navigate} />
   ) : (
