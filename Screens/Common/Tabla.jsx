@@ -3,8 +3,15 @@ import { FlatList } from "react-native";
 import { View, Text, StyleSheet } from "react-native";
 import { Button, Card, ListItem } from "react-native-elements";
 import { CustomBottomTabBar } from "../../CustomBottomTabBar";
+import { useState } from "react";
 
 export function Tabla({ titulo, datos }) {
+  const [marcar, setMarcar] = useState(null);
+
+  const handlePress = (estado) => {
+    setMarcar(estado);
+  }
+
   return (
     <View style={styles2.container}>
       <Card>
@@ -31,6 +38,7 @@ export function Tabla({ titulo, datos }) {
                   size: 10,
                   color: "white",
                 }}
+                onPress={() => handlePress(true)}
               />
               <Button
                 type="outline"
@@ -42,9 +50,10 @@ export function Tabla({ titulo, datos }) {
                   size: 10,
                   color: "white",
                 }}
+                onPress={() => handlePress(false)}
               />
-              <Text>Sin estado</Text>
-            </View>
+              <Text>{marcar == null ? "Sin estado" : marcar ? "Buen estado" : "Mal estado"}</Text>
+            </View> 
           );
         })}
       </Card>

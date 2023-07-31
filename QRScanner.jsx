@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const QRScanner = ({cerrar, navigate}) => {
@@ -15,10 +16,11 @@ const QRScanner = ({cerrar, navigate}) => {
     })();
   }, []);
 
-  const handleBarCodeScanned = ({ data }) => {
+  const handleBarCodeScanned = async({ data }) => {
     setScanned(true);
     cerrar();
-    alert(`Código QR escaneado: ${data}`);
+    //alert(`Código QR escaneado: ${data}`);
+    await AsyncStorage.setItem('camionid', data);
     navigate('Detalles');
   };
 

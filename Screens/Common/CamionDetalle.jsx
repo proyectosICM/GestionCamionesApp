@@ -11,17 +11,20 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function CamionDetalle({ navigation }) {
   const [camion, setCamion] = useState();
   const [rol, setRol] = useState();
+  const [camionid, setCamionid] = useState();
 
   const datosAsync = useCallback(async () => {
     const rolv = await AsyncStorage.getItem("rol");
+    const camionidv = await AsyncStorage.getItem("camionid");
     setRol(rolv);
+    setCamionid(camionidv);
   }, []);
 
   useEffect(() => {
     datosAsync();
   }, [datosAsync]);
 
-  const ListarCamion = useListarElementos(`${baseURL}camiones/1`, setCamion);
+  const ListarCamion = useListarElementos(`${baseURL}camiones/${camionid}`, setCamion);
 
   useEffect(() => {
     ListarCamion();
@@ -72,7 +75,7 @@ export default function CamionDetalle({ navigation }) {
                 iconRight
                 onPress={() => navigation.navigate("CheckList")}
               />
-              
+
               <Button
                 title=" Realizar Checklist mas reciente "
                 type="outline"
