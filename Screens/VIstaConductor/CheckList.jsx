@@ -82,8 +82,14 @@ export default function CheckList() {
     },
   ];
 
+  /*
   const [marcar, setMarcar] = useState(
     Array.from({ length: tables.length }, () => Array(tables[0].datos.length).fill(null))
+  );
+*/
+
+  const [marcar, setMarcar] = useState(() =>
+    tables.map((table) => Array(table.datos.length).fill(null))
   );
 
   const handleBack = () => {
