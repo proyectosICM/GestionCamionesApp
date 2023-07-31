@@ -1,16 +1,13 @@
-import React from "react";
-import { FlatList } from "react-native";
+import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { Button, Card, ListItem } from "react-native-elements";
-import { CustomBottomTabBar } from "../../CustomBottomTabBar";
-import { useState } from "react";
+import { Button, Card } from "react-native-elements";
 
-export function Tabla({ titulo, datos }) {
-  const [marcar, setMarcar] = useState(null);
-
-  const handlePress = (estado) => {
-    setMarcar(estado);
-  }
+export function Tabla({ titulo, datos, marcar, setMarcar }) {
+  const handlePress = (index, estado) => {
+    const newMarcar = [...marcar];
+    newMarcar[index] = estado;
+    setMarcar(newMarcar);
+  };
 
   return (
     <View style={styles2.container}>
@@ -18,11 +15,10 @@ export function Tabla({ titulo, datos }) {
         <Card.Title>{titulo}</Card.Title>
         <Card.Divider />
         <View style={styles2.user}>
-        <Text style={styles2.name}>Revise</Text>
-        <Text style={styles2.name2}>Marque</Text>
-        <Text style={styles2.name2}>Estado</Text>
+          <Text style={styles2.name}>Revise</Text>
+          <Text style={styles2.name2}>Marque</Text>
+          <Text style={styles2.name2}>Estado</Text>
         </View>
- 
 
         {datos.map((u, i) => {
           return (
@@ -30,7 +26,10 @@ export function Tabla({ titulo, datos }) {
               <Text style={styles2.name}>{u}</Text>
               <Button
                 type="outline"
-                buttonStyle={styles2.successButton}
+                buttonStyle={[
+                  styles2.successButton,
+                  marcar[i] === true ? styles2.buttonActive : null,
+                ]}
                 titleStyle={styles2.buttonTitle}
                 icon={{
                   name: "check",
@@ -38,11 +37,14 @@ export function Tabla({ titulo, datos }) {
                   size: 10,
                   color: "white",
                 }}
-                onPress={() => handlePress(true)}
+                onPress={() => handlePress(i, true)}
               />
               <Button
                 type="outline"
-                buttonStyle={styles2.dangerButton}
+                buttonStyle={[
+                  styles2.dangerButton,
+                  marcar[i] === false ? styles2.buttonActive : null,
+                ]}
                 titleStyle={styles2.buttonTitle}
                 icon={{
                   name: "times",
@@ -50,10 +52,20 @@ export function Tabla({ titulo, datos }) {
                   size: 10,
                   color: "white",
                 }}
-                onPress={() => handlePress(false)}
+                onPress={() => handlePress(i, false)}
               />
-              <Text>{marcar == null ? "Sin estado" : marcar ? "Buen estado" : "Mal estado"}</Text>
-            </View> 
+              <View style={{ marginHorizontal: 10 }}>
+                {marcar[i] === null ? (
+                  <Text style={{ color: "black" }}>
+                    Sin estado
+                  </Text>
+                ) : marcar[i] ? (
+                  <Text style={{ color: "green" }}>Buen estado</Text>
+                ) : (
+                  <Text style={{ color: "red" }}>Mal estado</Text>
+                )}
+              </View>
+            </View>
           );
         })}
       </Card>
@@ -81,11 +93,11 @@ const styles2 = StyleSheet.create({
   },
   successButton: {
     borderColor: "green",
-    backgroundColor: "green"
+    backgroundColor: "green",
   },
   dangerButton: {
     borderColor: "red",
-    backgroundColor: "red"
+    backgroundColor: "red",
   },
   buttonTitle: {
     color: "black",
@@ -101,12 +113,16 @@ const styles2 = StyleSheet.create({
   },
   name: {
     fontSize: 16,
-    width: '60%',
+    width: "50%",
     marginTop: 5,
+    textAlign: "center",
+
   },
   name2: {
     fontSize: 16,
-    width: '20%',
+    width: "20%",
     marginTop: 5,
+    textAlign: "center",
+    marginHorizontal: 6,
   },
 });

@@ -82,6 +82,10 @@ export default function CheckList() {
     },
   ];
 
+  const [marcar, setMarcar] = useState(
+    Array.from({ length: tables.length }, () => Array(tables[0].datos.length).fill(null))
+  );
+
   const handleBack = () => {
     if (currentTable > 0) {
       setCurrentTable(currentTable - 1);
@@ -100,13 +104,19 @@ export default function CheckList() {
       <Tabla
         titulo={tables[currentTable].titulo}
         datos={tables[currentTable].datos}
+        marcar={marcar[currentTable]}
+        setMarcar={(estado) => {
+          const newMarcar = [...marcar];
+          newMarcar[currentTable] = estado;
+          setMarcar(newMarcar);
+        }}
       />
       <Button
         title="Atras"
         type="outline"
         onPress={handleBack}
-        buttonStyle={{backgroundColor:"#ccc", width: 150,  }}
-        titleStyle={{color:"black"}}
+        buttonStyle={{ backgroundColor: "#ccc", width: 150 }}
+        titleStyle={{ color: "black" }}
         disabled={currentTable === 0}
       >
         Anterior
@@ -115,7 +125,7 @@ export default function CheckList() {
         title="Siguiente"
         type="outline"
         onPress={handleNext}
-        buttonStyle={{backgroundColor:"white", width: 150,  }}
+        buttonStyle={{ backgroundColor: "white", width: 150 }}
         disabled={currentTable === tables.length - 1}
       >
         Siguiente
@@ -123,4 +133,3 @@ export default function CheckList() {
     </View>
   );
 }
-
