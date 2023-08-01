@@ -6,8 +6,8 @@ import { tables } from "../../API/datosCLConductor";
 import { ScrollView } from "react-native";
 import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { useAgregarElemento } from "../../Hooks/CRUDHook";
-import { checkListURL } from "../../API/apiurl";
+import { useAgregarElemento, useEditarUnElemento } from "../../Hooks/CRUDHook";
+import { checkListURL, usuarioURL } from "../../API/apiurl";
 import { useState } from "react";
 import { useCallback } from "react";
 import { useEffect } from "react";
@@ -93,19 +93,21 @@ export function CheckDatos() {
       chasis: datos[7][1],
 
       tiempo: tiempo,
-
-
     };
     //console.log(requestData);
     try {
       await useAgregarElemento(checkListURL, requestData);
-      navigation.navigate("Asignado");
+      const cm = { id: camionid };
+      await useEditarUnElemento(usuarioURL, usuario, "camionesModel", cm);
+      navigation.navigate("VerificacionCarreta");
     } catch (error) {
       console.log("Error al enviar los datos:", error);
       // Maneja el error adecuadamente, muestra un mensaje de error o realiza otras acciones
     }
     //navigation.navigate("Asignado");
   };
+
+
 
   return (
     <ScrollView>
@@ -136,7 +138,7 @@ export function CheckDatos() {
             </View>
           </View>
         ))}
-        <Text>{camionid ? camionid : "no jay" }</Text>
+        <Text>{camionid ? camionid : "no jay"}</Text>
         <Text style={styles.tittleText}>
           Tiempo: {convertirAMinutos(tiempo)}
         </Text>

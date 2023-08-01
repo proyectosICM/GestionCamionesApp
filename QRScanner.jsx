@@ -23,7 +23,7 @@ const QRScanner = ({cerrar, navigate}) => {
     cerrar();
     //alert(`Código QR escaneado: ${data}`);
     await AsyncStorage.setItem('camionid', data);
-    navigate('Detalles');
+    navigate('Detalles'); 
   };
 
   if (hasCameraPermission === null) {

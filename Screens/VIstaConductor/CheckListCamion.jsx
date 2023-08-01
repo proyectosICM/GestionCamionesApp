@@ -12,7 +12,7 @@ import { tables } from "../../API/datosCLConductor";
 import { useCallback } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function CheckList() {
+export default function CheckListCamion() {
   const [camion, setCamion] = useState();
   const [rol, setRol] = useState();
   const [camionid, setCamionid] = useState();

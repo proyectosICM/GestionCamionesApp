@@ -11,3 +11,6 @@ export const camionesxsede = `${baseURL}camiones/xsede/`;
 //CheckList
 export const checkListxcamionURL = `${baseURL}checkList/xcamion/`
 export const checkListURL = `${baseURL}checkList`; 
+
+//Usuario
+export const usuarioURL = `${baseURL}usuarios`;

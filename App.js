@@ -9,7 +9,7 @@ import { Button } from 'react-native-elements';
 import { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import CheckList from './Screens/VIstaConductor/CheckList';
+import CheckList from './Screens/VIstaConductor/CheckListCamion';
 import VerificacionCamion from './Screens/VIstaConductor/VerificacionCamion';
 import { FontAwesome5, MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -21,6 +21,12 @@ import { Redirigir } from './Screens/Login/Redirigir';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Cargando } from './Screens/Common/Cargando';
 import { CheckDatos } from './Screens/VIstaConductor/CheckDatos';
+import { InfoDetallada } from './Screens/VIstaConductor/InformacionDetallada/InfoDetallada';
+import { NotificacionesConductor } from './Screens/VIstaConductor/NotificacionesConductor/NotificacionesConductor';
+import { RegistrarCambioLlantas } from './Screens/VIstaConductor/RegistarCambioLlantas/RegistrarCambioLlantas';
+import { Observaciones } from './Screens/VIstaConductor/Observaciones/Observaciones';
+import VerificacionCarreta from './Screens/VIstaConductor/VerificarCarreta';
+import CheckListCamion from './Screens/VIstaConductor/CheckListCamion';
 
 
 
@@ -60,8 +66,9 @@ export default function App() {
         <Stack.Screen name='InicioMecanico' component={IncioMecanico} />
 
         <Stack.Screen name='VerificacionCamion' component={VerificacionCamion} />
+        <Stack.Screen name='VerificacionCarreta' component={VerificacionCarreta} />
         <Stack.Screen name='Detalles' component={CamionDetalle} />
-        <Stack.Screen name='CheckList' component={CheckList} />
+        <Stack.Screen name='CheckList' component={CheckListCamion} />
 
         <Stack.Screen name='InicioMecanico2' component={IncioMecanico} />
 
@@ -72,6 +79,12 @@ export default function App() {
         <Stack.Screen name='Cargando' component={Cargando} />
 
         <Stack.Screen name='CheckDatos' component={CheckDatos} />
+
+        <Stack.Screen name='InfoDetallada' component={InfoDetallada} />
+
+        <Stack.Screen name='Notificaciones-Conductor' component={NotificacionesConductor} />
+        <Stack.Screen name='Cambio de llantas' component={RegistrarCambioLlantas} />
+        <Stack.Screen name='Observaciones' component={Observaciones} />
         {/* Rutas secundarias */}
       </Stack.Navigator>
     </NavigationContainer>

@@ -50,3 +50,25 @@ export async function useAgregarElemento(url, requestData) {
     throw error; // Lanza el error para que puedas manejarlo en el componente
   }
 }
+export async function useEditarUnElemento(url, id, est, value) {
+  const nurl = `${url}/${id}`;
+  const token = await AsyncStorage.getItem("token");
+
+  try {
+    const response = await axios.get(nurl, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const elemento = response.data;
+    elemento[est] = value;
+    await axios.put(nurl, elemento, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}

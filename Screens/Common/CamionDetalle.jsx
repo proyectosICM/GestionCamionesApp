@@ -41,7 +41,7 @@ export default function CamionDetalle({ navigation }) {
     <View style={styles.container}>
       {camion ? (
         <>
-          <Text style={styles.tittleText}>{rol && rol}</Text>
+          <Text style={styles.tittleText}>{camion.tiposCModel.nombre}</Text>
           <Text style={styles.tittleText}>Placa {camion.placa}</Text>
           <Text style={styles.tittleText}>
             Marca {camion.marcasModel.nombre}
