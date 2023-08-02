@@ -11,10 +11,10 @@ import { CheckDatos } from "./CheckDatos";
 
 import { useCallback } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { tablesCam } from "../../API/datosCLConductor";
+import { tablesCarr } from "../../API/datosCLConductor";
 
-export default function CheckListCamion() {
-  const tables = tablesCam
+export default function CheckListCarreta() {
+  const tables = tablesCarr
   const [camion, setCamion] = useState();
   const [rol, setRol] = useState();
   const [camionid, setCamionid] = useState();

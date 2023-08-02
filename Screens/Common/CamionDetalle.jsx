@@ -7,11 +7,14 @@ import { Button } from "react-native-elements";
 import { base, baseURL } from "../../API/apiurl";
 import { useCallback } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRoute } from "@react-navigation/native";
 
 export default function CamionDetalle({ navigation }) {
   const [camion, setCamion] = useState();
   const [rol, setRol] = useState();
   const [camionid, setCamionid] = useState();
+  const route = useRoute();
+  const tc = route.params.tc;
 
   const datosAsync = useCallback(async () => {
     const rolv = await AsyncStorage.getItem("rol");
@@ -34,13 +37,21 @@ export default function CamionDetalle({ navigation }) {
   }, [ListarCamion]);
 
   const handleListChecklist = () => {
-    navigation.navigate("CheckList");
+    if(tc == "Camion"){
+      navigation.navigate("CheckList Carreta", {tc: tc});
+    } else if( tc ="Carreta"){
+      navigation.navigate("CheckList Carreta", {tc: tc});
+    }
+
   };
+
+
 
   return (
     <View style={styles.container}>
       {camion ? (
         <>
+        <Text>{tc}</Text>
           <Text style={styles.tittleText}>{camion.tiposCModel.nombre}</Text>
           <Text style={styles.tittleText}>Placa {camion.placa}</Text>
           <Text style={styles.tittleText}>
@@ -62,7 +73,7 @@ export default function CamionDetalle({ navigation }) {
                 color: "white",
               }}
               iconRight
-              onPress={() => navigation.navigate("CheckList")}
+              onPress={() => handleListChecklist()}
             />
           )}
 

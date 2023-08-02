@@ -19,7 +19,7 @@ export default function VerificacionCarreta({ navigation }) {
   };
 
   return abrir ? (
-    <QRScanner cerrar={handleCerrarCamera} navigate={navigation.navigate} />
+    <QRScanner cerrar={handleCerrarCamera} navigate={navigation.navigate} tc={"Carreta"} />
   ) : (
     <View style={styles.container}>
       <Text style={styles.tittleText}>

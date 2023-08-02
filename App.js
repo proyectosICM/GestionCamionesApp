@@ -27,6 +27,7 @@ import { RegistrarCambioLlantas } from './Screens/VIstaConductor/RegistarCambioL
 import { Observaciones } from './Screens/VIstaConductor/Observaciones/Observaciones';
 import VerificacionCarreta from './Screens/VIstaConductor/VerificarCarreta';
 import CheckListCamion from './Screens/VIstaConductor/CheckListCamion';
+import CheckListCarreta from './Screens/VIstaConductor/CheckListCarreta';
 
 
 
@@ -68,7 +69,8 @@ export default function App() {
         <Stack.Screen name='VerificacionCamion' component={VerificacionCamion} />
         <Stack.Screen name='VerificacionCarreta' component={VerificacionCarreta} />
         <Stack.Screen name='Detalles' component={CamionDetalle} />
-        <Stack.Screen name='CheckList' component={CheckListCamion} />
+        <Stack.Screen name='CheckList Camion' component={CheckListCamion} />
+        <Stack.Screen name='CheckList Carreta' component={CheckListCarreta} />
 
         <Stack.Screen name='InicioMecanico2' component={IncioMecanico} />
 

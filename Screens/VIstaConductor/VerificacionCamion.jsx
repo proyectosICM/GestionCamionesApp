@@ -19,7 +19,7 @@ export default function VerificacionCamion({ navigation }) {
   };
 
   return abrir ? (
-    <QRScanner cerrar={handleCerrarCamera} navigate={navigation.navigate} />
+    <QRScanner cerrar={handleCerrarCamera} navigate={navigation.navigate} tc={"Camion"} />
   ) : (
     <View style={styles.container}>
       <Text style={styles.tittleText}>

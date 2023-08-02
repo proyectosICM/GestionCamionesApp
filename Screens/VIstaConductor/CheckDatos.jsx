@@ -2,7 +2,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import React from "react";
 import { Text, View } from "react-native";
 import { styles } from "../../Styles/General";
-import { tables } from "../../API/datosCLConductor";
+
 import { ScrollView } from "react-native";
 import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -12,9 +12,27 @@ import { useState } from "react";
 import { useCallback } from "react";
 import { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { tablesCam, tablesCarr } from "../../API/datosCLConductor";
 
 export function CheckDatos() {
+  const [tables, setTables] = useState(tablesCam);
+  
+
+
+
   const route = useRoute();
+
+  const tc = route.params.tc;
+
+  useEffect(() => {
+    if (tc == "Camion") {
+      setTables(tablesCam);
+    } else if (tc == "Carreta") {
+      setTables(tablesCarr);
+    }
+  }, [tc]);
+
+  
   const datos = route.params.datos;
   const tiempo = route.params.tiempo;
   const navigation = useNavigation();

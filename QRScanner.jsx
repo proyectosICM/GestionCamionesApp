@@ -5,7 +5,7 @@ import * as Permissions from 'expo-permissions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const QRScanner = ({cerrar, navigate}) => {
+const QRScanner = ({cerrar, navigate, tc}) => {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
@@ -23,7 +23,7 @@ const QRScanner = ({cerrar, navigate}) => {
     cerrar();
     //alert(`Código QR escaneado: ${data}`);
     await AsyncStorage.setItem('camionid', data);
-    navigate('Detalles'); 
+    navigate('Detalles', {tc : tc} ); 
   };
 
   if (hasCameraPermission === null) {
