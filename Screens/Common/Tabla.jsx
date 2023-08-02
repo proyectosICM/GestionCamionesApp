@@ -25,7 +25,7 @@ export function Tabla({ titulo, datos, marcar, setMarcar }) {
             <View key={i} style={styles2.user}>
               <Text style={styles2.name}>{u}</Text>
               <Button
-                type="outline"
+         
                 buttonStyle={[
                   styles2.successButton,
                   marcar[i] === true ? styles2.buttonActive : null,
@@ -40,7 +40,7 @@ export function Tabla({ titulo, datos, marcar, setMarcar }) {
                 onPress={() => handlePress(i, true)}
               />
               <Button
-                type="outline"
+
                 buttonStyle={[
                   styles2.dangerButton,
                   marcar[i] === false ? styles2.buttonActive : null,

@@ -8,9 +8,12 @@ export const camionesURL = `${baseURL}camiones`;
 export const camionesxhabilitados = `${baseURL}camiones/estado/`;
 export const camionesxsede = `${baseURL}camiones/xsede/`;
 
-//CheckList
-export const checkListxcamionURL = `${baseURL}checkList/xcamion/`
-export const checkListURL = `${baseURL}checkList`; 
+//CheckList Camion
+export const checkListxcamionURL = `${baseURL}checkListCamion/xcamion/`
+export const checkListCamionURL = `${baseURL}checkListCamion`; 
+
+//CheckList Carreta
+export const checkListCarretaURL = `${baseURL}checkListCarreta`; 
 
 //Usuario
 export const usuarioURL = `${baseURL}usuarios`;

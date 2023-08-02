@@ -21,7 +21,6 @@ export function CamionSelect() {
 
   useEffect(() => {
     obtenerDatos();
-    console.log("1");
     //const interval = setInterval(obtenerDatos, 1000);
     //return () => clearInterval(interval);
   }, [obtenerDatos]);
@@ -46,12 +45,13 @@ export function CamionSelect() {
           <Text style={styles.tittleText}>
             Placa Camion: {userData.camionesModel.placa}
           </Text>
-          <Text style={styles.tittleText}>Placa Tracto: {userData.camionesModel.placa}</Text>
+          <Text style={styles.tittleText}>Placa Tracto: {userData.carreta.placa}</Text>
+          <BotonesCamionAsignado datos = {userData} />
         </>
       ) : (
         <Text>No hay Camion Asignado</Text>
       )}
-      <BotonesCamionAsignado />
+    
     </View>
   );
 }

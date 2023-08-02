@@ -21,7 +21,7 @@ export default function CheckListCamion() {
   const [usuario, setUsuario] = useState();
 
   const route = useRoute();
-  //const usuario2 = route.params.usuario;
+  const tc = route.params.tc;
 
   const datosAsync = useCallback(async () => {
     const rolv = await AsyncStorage.getItem("rol");
@@ -67,7 +67,7 @@ export default function CheckListCamion() {
   };
 
   const handleEnviar = () => {
-    navigate.navigate("CheckDatos", { datos: marcar, tiempo: tiempo }); // Envía los datos de 'marcar' a la pantalla CheckDatosScreen
+    navigate.navigate("CheckDatos", { datos: marcar, tiempo: tiempo, tc: tc }); // Envía los datos de 'marcar' a la pantalla CheckDatosScreen
   };
 
   // Agregamos un estado para el temporizador y una función para actualizarlo
@@ -85,7 +85,6 @@ export default function CheckListCamion() {
 
   return (
     <View style={styles.container}>
-      <Text>d {usuario}</Text>
       <Text>Tiempo: {tiempo} segundos</Text>
       <Text style={styles.tittleText}>CheckList</Text>
       <Tabla

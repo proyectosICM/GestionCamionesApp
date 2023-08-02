@@ -5,13 +5,13 @@ import { Text } from 'react-native';
 import { Card } from 'react-native-elements';
 import { StyleSheet } from 'react-native';
 
-export function PanelCDetalle({ tipoc, placa, modelo, marca }) {
+export function PanelCDetalle({ tipoc, placa, marca, modelo }) {
   return (
     <Card containerStyle={localStyles.card}>
       <Text style={[styles.tittleText, { textAlign: 'center' }]}>{tipoc}</Text>
-      <Text style={styles.tittleText}>Placa: ABC-002 </Text>
-      <Text style={styles.tittleText}>Marca: Nissan </Text>
-      <Text style={styles.tittleText}>Modelo:  AJ32-d </Text>
+      <Text style={styles.tittleText}>Placa: {placa} </Text>
+      <Text style={styles.tittleText}>Marca: {marca} </Text>
+      <Text style={styles.tittleText}>Modelo:  {modelo} </Text>
     </Card>
   )
 }

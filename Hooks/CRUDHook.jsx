@@ -62,6 +62,7 @@ export async function useEditarUnElemento(url, id, est, value) {
     });
     const elemento = response.data;
     elemento[est] = value;
+    console.log(elemento);
     await axios.put(nurl, elemento, {
       headers: {
         Authorization: `Bearer ${token}`,

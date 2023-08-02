@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import { Button, Icon } from "react-native-elements";
 
-export function BotonesCamionAsignado() {
+export function BotonesCamionAsignado({datos}) {
   const navigation = useNavigation();
   return (
     <>
@@ -14,7 +14,7 @@ export function BotonesCamionAsignado() {
             title={"Informacion detallada del camion"}
             titleStyle={localStyles.buttonText}
             buttonStyle={localStyles.button}
-            onPress={() => navigation.navigate('InfoDetallada') }
+            onPress={() => navigation.navigate('InfoDetallada', {datos: datos}) }
             icon={<Icon name="info" size={20} color="white" />} // Agrega el icono al botón
           />
 

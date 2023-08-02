@@ -38,8 +38,8 @@ export default function CamionDetalle({ navigation }) {
 
   const handleListChecklist = () => {
     if(tc == "Camion"){
-      navigation.navigate("CheckList Carreta", {tc: tc});
-    } else if( tc ="Carreta"){
+      navigation.navigate("CheckList Camion", {tc: tc});
+    } else if( tc == "Carreta"){
       navigation.navigate("CheckList Carreta", {tc: tc});
     }
 
