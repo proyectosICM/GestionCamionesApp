@@ -125,7 +125,7 @@ export function CheckDatos() {
         const cm = { id: camionid };
         await useEditarUnElemento(usuarioURL, usuario, "camionesModel", cm);
         console.log("ID de la respuesta:", data.id);
-        await AsyncStorage.setItem('clcam', data.id);
+        //await AsyncStorage.setItem('clcam', data.id);
         navigation.navigate("VerificacionCarreta");
       } catch (error) {
         console.log("Error al enviar los datos:", error);

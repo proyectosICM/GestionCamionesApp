@@ -40,12 +40,12 @@ export function CamionSelect() {
 
   return (
     <View style={styles.container}>
-      {userData ? (
+      {userData && userData.camionesModel ? (
         <>
           <Text style={styles.tittleText}>
-            Placa Camion: {userData.camionesModel.placa}
+            Placa Camion: {userData.camionesModel ?  userData.camionesModel.placa : "dsad"}
           </Text>
-          <Text style={styles.tittleText}>Placa Tracto: {userData.carreta.placa}</Text>
+          <Text style={styles.tittleText}>Placa Tracto: {userData.carreta ? userData.carreta.placa : "ds"}</Text>
           <BotonesCamionAsignado datos = {userData} />
         </>
       ) : (

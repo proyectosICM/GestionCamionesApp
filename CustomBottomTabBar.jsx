@@ -45,7 +45,7 @@ export function CustomBottomTabBar() {
     <Tab.Navigator>
       {/* Configurar las opciones de cada pantalla en el TabNavigator */}
       <Tab.Screen
-        name="Inicio"
+        name="Home"
         component={
           rol === "CONDUCTOR"
             ? VerificacionCamion
