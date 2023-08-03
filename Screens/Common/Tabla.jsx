@@ -73,8 +73,6 @@ export function Tabla({ titulo, datos, marcar, setMarcar }) {
   );
 }
 
-// Resto del código se mantiene igual
-
 const styles2 = StyleSheet.create({
   title: {
     fontSize: 24,

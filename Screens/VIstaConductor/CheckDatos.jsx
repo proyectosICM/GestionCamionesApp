@@ -40,11 +40,13 @@ export function CheckDatos() {
 
   const [camionid, setCamionid] = useState();
   const [usuario, setUsuario] = useState();
+  const [clcamcond, setClcamcond] = useState();
 
   useEffect(() => {
     const obtenerDatosAsync = async () => {
       const camionidv = await AsyncStorage.getItem("camionid");
       const usuariov = await AsyncStorage.getItem("usuario");
+      //const clccamcondv = await AsyncStorage.getItem("clcam")
       setCamionid(camionidv);
       setUsuario(usuariov);
     };
@@ -119,9 +121,11 @@ export function CheckDatos() {
       };
       //console.log(requestData);
       try {
-        await useAgregarElemento(checkListCamionURL, requestData);
+        const { data } = await useAgregarElemento(checkListCamionURL, requestData);
         const cm = { id: camionid };
         await useEditarUnElemento(usuarioURL, usuario, "camionesModel", cm);
+        console.log("ID de la respuesta:", data.id);
+        await AsyncStorage.setItem('clcam', data.id);
         navigation.navigate("VerificacionCarreta");
       } catch (error) {
         console.log("Error al enviar los datos:", error);
@@ -129,7 +133,7 @@ export function CheckDatos() {
       //navigation.navigate("Asignado");
     } else if (tc === "Carreta") {
       console.log("hola");
-       const requestData = {
+      const requestData = {
         camionesModel: {
           id: camionid,
         },
@@ -155,14 +159,16 @@ export function CheckDatos() {
       };
       //console.log(requestData);
       try {
-        await useAgregarElemento(checkListCarretaURL, requestData);
+        const { data } = await useAgregarElemento(checkListCarretaURL, requestData);
         const cm = { id: camionid };
         await useEditarUnElemento(usuarioURL, usuario, "carreta", cm);
+        console.log("ID de la respuesta:", data.id);
+        //console.log("CheckList cam ", clcamcond.toString());
         navigation.navigate("Asignado");
       } catch (error) {
         console.log("Error al enviar los datos:", error);
-      } 
-      //navigation.navigate("Asignado"); 
+      }
+      //navigation.navigate("Asignado");
     }
   };
 

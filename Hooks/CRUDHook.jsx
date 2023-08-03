@@ -38,13 +38,13 @@ export function useListarElementos(url, setDatos) {
 export async function useAgregarElemento(url, requestData) {
   try {
     const token = await AsyncStorage.getItem("token");
-    console.log("datos", requestData);
+    //console.log("datos", requestData);
     const response = await axios.post(url, requestData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    return response.data; // Retorna el resultado de la solicitud POST
+    return response; // Retorna el resultado de la solicitud POST
   } catch (error) {
     console.log(error);
     throw error; // Lanza el error para que puedas manejarlo en el componente

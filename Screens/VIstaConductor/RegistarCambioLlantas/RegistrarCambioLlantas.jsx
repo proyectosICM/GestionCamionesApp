@@ -18,7 +18,7 @@ export function RegistrarCambioLlantas() {
       setMostrar("carreta");
     }
   };
-
+  const rows = [[1, , 2], [[19], 20, [21], 22], [[23], 24, [25], 26], ["RP"]];
   return (
     <View style={styles.container}>
         <Button

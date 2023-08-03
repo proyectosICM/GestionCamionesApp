@@ -1,40 +1,65 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { TextInput, View } from "react-native";
 import { StyleSheet } from "react-native";
 import { Text } from "react-native";
 import { Button } from "react-native-elements";
 import { styles } from "../../../Styles/General";
-import { ScrollView } from "react-native";
 
 export function CambiarCamion() {
-  const rows = [
-    [1, , 2],
-    [[3], 4, [5], 6],
-    [[7], 8, [9], 10],
-  ];
+  const rows = [[1, , 2], [[3], 4, [5], 6], [[7], 8, [9], 10], ["RP"]];
 
-  const [cambio, setCambio] = useState(false);
+  const [texto, setTexto] = useState("");
+  const [llantaSelect, setLlantaSelect] = useState("")
+  const [cambios, setCambios] = useState(
+    rows.map((row) => row.map(() => false)) // Inicializamos todos los botones como no seleccionados
+  );
 
-  const handleCambiar = (n) => {
-    setCambio(true);
+  const handleCambiar = (rowIndex, buttonIndex) => {
+    const newCambios = cambios.map((row, rIndex) =>
+      row.map((button, bIndex) => rIndex === rowIndex && bIndex === buttonIndex)
+    );
+    setCambios(newCambios);
+    setLlantaSelect(String(rows[rowIndex][buttonIndex])); // Convertimos el valor a cadena
   };
+
   return (
-    <ScrollView>
+    <>
       <Text style={styles.tittleText}>Camion</Text>
+      {cambios.some((row) => row.includes(true)) && (
+        <>
+          <Text style={[styles.tittleText, { margin: 10 }]}>
+            Registro de cambio {llantaSelect}
+          </Text>
+          <TextInput
+            style={localStyles.input} // Estilos para el TextInput
+            placeholder="Observacion"
+            value={texto}
+            onChangeText={(text) => setTexto(text)} // Actualiza el valor de inputValue
+          />
+          <Button
+            title={"Enviar"}
+            buttonStyle={[styles.styleButton, { marginVertical: 15 }]}
+          />
+        </>
+      )}
       {rows.map((row, rowIndex) => (
         <View key={rowIndex} style={localStyles.buttonRow}>
-          {row.map((number) => (
-            <React.Fragment key={number}>
+          {row.map((number, buttonIndex) => (
+            <React.Fragment key={buttonIndex}>
               {Array.isArray(number) ? (
                 <>
-                  {number.map((nestedNumber) => (
-                    <React.Fragment key={nestedNumber}>
+                  {number.map((nestedNumber, nestedIndex) => (
+                    <React.Fragment key={nestedIndex}>
                       <Button
                         title={String(nestedNumber)}
-                        buttonStyle={localStyles.button}
-                        onPress={() => handleCambiar(nestedNumber)}
+                        buttonStyle={[
+                          localStyles.button,
+                          cambios[rowIndex][buttonIndex] &&
+                            localStyles.buttonSelected,
+                        ]}
+                        onPress={() => handleCambiar(rowIndex, buttonIndex)}
                       />
-                      {number.indexOf(nestedNumber) < number.length - 1 && (
+                      {nestedIndex < number.length - 1 && (
                         <View style={localStyles.buttonSeparator} />
                       )}
                     </React.Fragment>
@@ -44,10 +69,14 @@ export function CambiarCamion() {
                 <>
                   <Button
                     title={String(number)}
-                    onPress={() => handleCambiar(number)}
-                    buttonStyle={localStyles.button}
+                    buttonStyle={[
+                      localStyles.button,
+                      cambios[rowIndex][buttonIndex] &&
+                        localStyles.buttonSelected,
+                    ]}
+                    onPress={() => handleCambiar(rowIndex, buttonIndex)}
                   />
-                  {row.indexOf(number) < row.length - 1 && (
+                  {buttonIndex < row.length - 1 && (
                     <View style={localStyles.buttonSeparator} />
                   )}
                 </>
@@ -56,19 +85,7 @@ export function CambiarCamion() {
           ))}
         </View>
       ))}
-      <View style={localStyles.buttonSeparator} />
-      <Button
-        title={"RP"}
-        buttonStyle={localStyles.button}
-        onPress={() => handleCambiar("RP")}
-      />
-      <View style={localStyles.buttonSeparator} />
-      {cambio && (
-        <Text style={[styles.tittleText, { margin: 10 }]}>
-          Registro de cambio
-        </Text>
-      )}
-    </ScrollView>
+    </>
   );
 }
 
@@ -84,7 +101,18 @@ const localStyles = StyleSheet.create({
     padding: 10,
     width: 50,
   },
+  buttonSelected: {
+    backgroundColor: "red", // Cambia el color a rojo cuando está seleccionado
+  },
   buttonSeparator: {
     width: 20,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginBottom: 10,
   },
 });
