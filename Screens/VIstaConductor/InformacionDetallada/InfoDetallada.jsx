@@ -13,16 +13,16 @@ export function InfoDetallada() {
   return (
     <View style={styles.container}>
       <PanelCDetalle
-        tipoc={datos.camionesModel.tiposCModel.nombre}
-        placa={datos.camionesModel.placa}
-        marca={datos.camionesModel.marcasModel.nombre}
-        modelo={datos.camionesModel.modeloModel.nombre}
+        tipoc={datos.rgsModel.checkListCamionModel.camionesModel.tiposCModel.nombre}
+        placa={datos.rgsModel.checkListCamionModel.camionesModel.placa}
+        marca={datos.rgsModel.checkListCamionModel.camionesModel.marcasModel.nombre}
+        modelo={datos.rgsModel.checkListCamionModel.camionesModel.modeloModel.nombre}
       />
       <PanelCDetalle
-        tipoc={datos.carreta.tiposCModel.nombre}
-        placa={datos.carreta.placa}
-        marca={datos.carreta.marcasModel.nombre}
-        modelo={datos.carreta.modeloModel.nombre}
+        tipoc={datos.rgsModel.checkListCarretaModel.camionesModel.tiposCModel.nombre}
+        placa={datos.rgsModel.checkListCarretaModel.camionesModel.placa}
+        marca={datos.rgsModel.checkListCarretaModel.camionesModel.marcasModel.nombre}
+        modelo={datos.rgsModel.checkListCarretaModel.camionesModel.modeloModel.nombre}
       />
     </View>
   );

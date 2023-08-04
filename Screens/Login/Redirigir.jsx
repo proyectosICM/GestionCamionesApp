@@ -38,12 +38,12 @@ export function Redirigir({ navigation }) {
         await AsyncStorage.setItem("empresa", info.empresasModel.id.toString());
         await AsyncStorage.setItem("sede", info.sedesModel.id.toString());
         await AsyncStorage.setItem("usuario", info.id.toString());
-        if (info.camionesModel != null) {
+        /*if (info.camionesModel != null) {
           await AsyncStorage.setItem(
             "camion",
             info.camionesModel.id.toString()
           );
-        }
+        }*/
 
         navigation.navigate("Inicio");
         setTimeout(() => {

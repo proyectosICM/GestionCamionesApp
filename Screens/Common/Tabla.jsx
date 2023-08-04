@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Button, Card } from "react-native-elements";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Card } from "react-native-elements";
+import { FontAwesome } from "@expo/vector-icons";
+import { styles } from "../../Styles/General";
 
 export function Tabla({ titulo, datos, marcar, setMarcar }) {
   const handlePress = (index, estado) => {
@@ -24,41 +26,36 @@ export function Tabla({ titulo, datos, marcar, setMarcar }) {
           return (
             <View key={i} style={styles2.user}>
               <Text style={styles2.name}>{u}</Text>
-              <Button
-         
-                buttonStyle={[
+              <TouchableOpacity
+                style={[
                   styles2.successButton,
-                  marcar[i] === true ? styles2.buttonActive : null,
-                ]}
-                titleStyle={styles2.buttonTitle}
-                icon={{
-                  name: "check",
-                  type: "font-awesome",
-                  size: 10,
-                  color: "white",
-                }}
-                onPress={() => handlePress(i, true)}
-              />
-              <Button
+                  //marcar[i] === true ? styles2.successButton : null,
 
-                buttonStyle={[
-                  styles2.dangerButton,
-                  marcar[i] === false ? styles2.buttonActive : null,
                 ]}
-                titleStyle={styles2.buttonTitle}
-                icon={{
-                  name: "times",
-                  type: "font-awesome",
-                  size: 10,
-                  color: "white",
-                }}
+                onPress={() => handlePress(i, true)}
+              >
+                <FontAwesome
+                  name="check"
+                  size={10}
+                  color="white"
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles2.dangerButton,
+                  //marcar[i] === true ? styles2.dangerButton : null,
+                ]}
                 onPress={() => handlePress(i, false)}
-              />
+              >
+                <FontAwesome
+                  name="times"
+                  size={10}
+                  color="white"
+                />
+              </TouchableOpacity>
               <View style={{ marginHorizontal: 10 }}>
                 {marcar[i] === null ? (
-                  <Text style={{ color: "black" }}>
-                    Sin estado
-                  </Text>
+                  <Text style={{ color: "black" }}>Sin estado</Text>
                 ) : marcar[i] ? (
                   <Text style={{ color: "green" }}>Buen estado</Text>
                 ) : (
@@ -72,7 +69,6 @@ export function Tabla({ titulo, datos, marcar, setMarcar }) {
     </View>
   );
 }
-
 const styles2 = StyleSheet.create({
   title: {
     fontSize: 24,
@@ -92,10 +88,18 @@ const styles2 = StyleSheet.create({
   successButton: {
     borderColor: "green",
     backgroundColor: "green",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    margin: 2
   },
   dangerButton: {
     borderColor: "red",
     backgroundColor: "red",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    margin: 2
   },
   buttonTitle: {
     color: "black",

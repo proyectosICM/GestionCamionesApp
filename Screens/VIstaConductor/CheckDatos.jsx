@@ -8,6 +8,7 @@ import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useAgregarElemento, useEditarUnElemento } from "../../Hooks/CRUDHook";
 import {
+  RGS_URL,
   checkListCamionURL,
   checkListCarretaURL,
   checkListURL,
@@ -46,9 +47,10 @@ export function CheckDatos() {
     const obtenerDatosAsync = async () => {
       const camionidv = await AsyncStorage.getItem("camionid");
       const usuariov = await AsyncStorage.getItem("usuario");
-      //const clccamcondv = await AsyncStorage.getItem("clcam")
+      const clccamcondv = await AsyncStorage.getItem("clcam");
       setCamionid(camionidv);
       setUsuario(usuariov);
+      setClcamcond(clccamcondv);
     };
 
     obtenerDatosAsync();
@@ -61,16 +63,11 @@ export function CheckDatos() {
   };
 
   const handleEnviar = async () => {
-    console.log("hol");
     console.log(tc);
     if (tc === "Camion") {
-      console.log("hol2");
       const requestData = {
         camionesModel: {
           id: camionid,
-        },
-        usuariosModel: {
-          id: usuario,
         },
         //Llantas
         revisarAjuste: datos[0][0],
@@ -121,24 +118,23 @@ export function CheckDatos() {
       };
       //console.log(requestData);
       try {
-        const { data } = await useAgregarElemento(checkListCamionURL, requestData);
+        const { data } = await useAgregarElemento(
+          checkListCamionURL,
+          requestData
+        );
         const cm = { id: camionid };
         await useEditarUnElemento(usuarioURL, usuario, "camionesModel", cm);
         console.log("ID de la respuesta:", data.id);
-        //await AsyncStorage.setItem('clcam', data.id);
+        await AsyncStorage.setItem("clcam", data.id.toString());
         navigation.navigate("VerificacionCarreta");
       } catch (error) {
         console.log("Error al enviar los datos:", error);
       }
-      //navigation.navigate("Asignado");
     } else if (tc === "Carreta") {
       console.log("hola");
       const requestData = {
         camionesModel: {
           id: camionid,
-        },
-        usuariosModel: {
-          id: usuario,
         },
         //Llantas
         revisarAjuste: datos[0][0],
@@ -159,16 +155,34 @@ export function CheckDatos() {
       };
       //console.log(requestData);
       try {
-        const { data } = await useAgregarElemento(checkListCarretaURL, requestData);
-        const cm = { id: camionid };
-        await useEditarUnElemento(usuarioURL, usuario, "carreta", cm);
+        const { data } = await useAgregarElemento(
+          checkListCarretaURL,
+          requestData
+        );
+
         console.log("ID de la respuesta:", data.id);
-        //console.log("CheckList cam ", clcamcond.toString());
-        navigation.navigate("Asignado");
+        console.log("as2", clcamcond);
+        const rgsRequest = {
+          checkListCamionModel: {
+            id: clcamcond,
+          },
+          checkListCarretaModel: {
+            id: data.id,
+          },
+        };
+        try {
+          const { data } = await useAgregarElemento(RGS_URL, rgsRequest);
+          const cm = { id: data.id };
+          console.log("asas", data.id);
+          await useEditarUnElemento(usuarioURL, usuario, "rgsModel", cm);
+          //navigation.navigate("Asignado");
+        } catch (error) {
+          console.log("Error al enviar los datos:", error);
+        }
       } catch (error) {
         console.log("Error al enviar los datos:", error);
       }
-      //navigation.navigate("Asignado");
+      navigation.navigate("Asignado");
     }
   };
 

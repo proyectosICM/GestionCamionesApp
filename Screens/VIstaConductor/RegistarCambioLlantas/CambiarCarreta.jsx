@@ -4,8 +4,13 @@ import { StyleSheet } from "react-native";
 import { Text } from "react-native";
 import { Button } from "react-native-elements";
 import { styles } from "../../../Styles/General";
+import { useRoute } from "@react-navigation/native";
+import { useAgregarElemento } from "../../../Hooks/CRUDHook";
+import { CambioLlantasURL } from "../../../API/apiurl";
 
 export function CambiarCarreta() {
+  const route = useRoute();
+  const datos = route.params.datos;
   const rows = [[[15], 16, [17], 18], [[19], 20, [21], 22], [[23], 24, [25], 26], ["RP"]];
 
   const [texto, setTexto] = useState("");
@@ -20,6 +25,36 @@ export function CambiarCarreta() {
     );
     setCambios(newCambios);
     setLlantaSelect(String(rows[rowIndex][buttonIndex])); // Convertimos el valor a cadena
+  };
+
+  const handleEnviar = async () => {
+    console.log("ads");
+    console.log(texto);
+    console.log(llantaSelect);
+    console.log(
+      "Id de camion",
+      datos.rgsModel.checkListCarretaModel.camionesModel.id
+    );
+    console.log("Id de RGS", datos.rgsModel.id);
+    const request = {
+      camionesModel: {
+        id: datos.rgsModel.checkListCarretaModel.camionesModel.id,
+      },
+      nroLlanta: llantaSelect,
+      observacion: texto,
+      rgsModel: {
+        id: datos.rgsModel.id,
+      },
+    };
+    try {
+      await useAgregarElemento(CambioLlantasURL, request);
+      setCambios(
+        rows.map((row) => row.map(() => false)) // Reset all buttons to not selected
+      );
+      setTexto("")
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -38,6 +73,7 @@ export function CambiarCarreta() {
           />
           <Button
             title={"Enviar"}
+            onPress={() => handleEnviar()}
             buttonStyle={[styles.styleButton, { marginVertical: 15 }]}
           />
         </>

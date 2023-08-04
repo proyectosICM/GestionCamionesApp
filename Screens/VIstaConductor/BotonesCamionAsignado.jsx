@@ -3,7 +3,7 @@ import React from "react";
 import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import { Button, Icon } from "react-native-elements";
-
+ 
 export function BotonesCamionAsignado({datos}) {
   const navigation = useNavigation();
   return (
@@ -23,7 +23,7 @@ export function BotonesCamionAsignado({datos}) {
             titleStyle={localStyles.buttonText}
             buttonStyle={localStyles.button}
             icon={<Icon name="edit" size={20} color="white" />}
-            onPress={() => navigation.navigate('Cambio de llantas') } 
+            onPress={() => navigation.navigate('Cambio de llantas', {datos: datos}) } 
           />
         </View>
 

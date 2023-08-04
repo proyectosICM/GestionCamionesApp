@@ -4,12 +4,17 @@ import { StyleSheet } from "react-native";
 import { Text } from "react-native";
 import { Button } from "react-native-elements";
 import { styles } from "../../../Styles/General";
+import { useRoute } from "@react-navigation/native";
+import { useAgregarElemento } from "../../../Hooks/CRUDHook";
+import { CambioLlantasURL } from "../../../API/apiurl";
 
 export function CambiarCamion() {
+  const route = useRoute();
+  const datos = route.params.datos;
   const rows = [[1, , 2], [[3], 4, [5], 6], [[7], 8, [9], 10], ["RP"]];
 
   const [texto, setTexto] = useState("");
-  const [llantaSelect, setLlantaSelect] = useState("")
+  const [llantaSelect, setLlantaSelect] = useState("");
   const [cambios, setCambios] = useState(
     rows.map((row) => row.map(() => false)) // Inicializamos todos los botones como no seleccionados
   );
@@ -20,6 +25,36 @@ export function CambiarCamion() {
     );
     setCambios(newCambios);
     setLlantaSelect(String(rows[rowIndex][buttonIndex])); // Convertimos el valor a cadena
+  };
+
+  const handleEnviar = async () => {
+    console.log("ads");
+    console.log(texto);
+    console.log(llantaSelect);
+    console.log(
+      "Id de camion",
+      datos.rgsModel.checkListCamionModel.camionesModel.id
+    );
+    console.log("Id de RGS", datos.rgsModel.id);
+    const request = {
+      camionesModel: {
+        id: datos.rgsModel.checkListCamionModel.camionesModel.id,
+      },
+      nroLlanta: llantaSelect,
+      observacion: texto,
+      rgsModel: {
+        id: datos.rgsModel.id,
+      },
+    };
+    try {
+      await useAgregarElemento(CambioLlantasURL, request);
+      setCambios(
+        rows.map((row) => row.map(() => false)) // Reset all buttons to not selected
+      );
+      setTexto("")
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -38,6 +73,7 @@ export function CambiarCamion() {
           />
           <Button
             title={"Enviar"}
+            onPress={() => handleEnviar()}
             buttonStyle={[styles.styleButton, { marginVertical: 15 }]}
           />
         </>
