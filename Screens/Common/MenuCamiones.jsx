@@ -4,7 +4,7 @@ import { styles } from "../../Styles/General";
 import { ItemCamion } from "./MenuCamiones/ItemCamion";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useListarElementos } from "../../Hooks/CRUDHook";
-import { camionesxsede } from "../../API/apiurl";
+import { camionesxreparacion, camionesxsede } from "../../API/apiurl";
 
 export function MenuCamiones() {
   const [camiones, setCamiones] = useState([]);
@@ -12,6 +12,7 @@ export function MenuCamiones() {
   const [empresa, setEmpresa] = useState(null);
   const [url, setUrl] = useState(null);
   const [titulo, setTitulo] = useState(null);
+  const [op , setOp] = useState("");
 
   const datosAsync = useCallback(async () => {
     const sedev = await AsyncStorage.getItem("sede");
@@ -22,18 +23,22 @@ export function MenuCamiones() {
     if (menucam === "habilitados") {
       setUrl(`${camionesxsede}${empresav}/${sedev}/1`);
       setTitulo("Camiones Habilitados (En buen estado)");
+      setOp('Habilitados')
     } else if (menucam === "deshabilitados") {
       setUrl(`${camionesxsede}${empresav}/${sedev}/0`);
       setTitulo("Camiones Deshabilitados (En mal estado)");
+      setOp('Deshabilitados')
     } else if (menucam === "pendiente") {
-      setUrl(`${camionesxsede}${empresav}/${sedev}/0`);
-      setTitulo("Camiones Pendientes a reparacion"); // Establecer título a null si el menú no está habilitado
+      setUrl(`${camionesxreparacion}${empresav}/${sedev}/0/0`);
+      setTitulo("Camiones Pendientes a reparacion"); 
+      setOp('Pendiente')
     } else if (menucam === "enreparacion") {
-      setUrl(`${camionesxsede}${empresav}/${sedev}/0`);
-      setTitulo("Camiones en reparacion"); // Establecer título a null si el menú no está habilitado
+      setUrl(`${camionesxreparacion}${empresav}/${sedev}/0/1`);
+      setTitulo("Camiones en reparacion"); 
+      setOp('enreparacion')
     }else {
-      setUrl(null); // Establecer url a null si el menú no está habilitado
-      setTitulo(null); // Establecer título a null si el menú no está habilitado
+      setUrl(null); 
+      setTitulo(null); 
     }
   }, []);
 
@@ -55,9 +60,11 @@ export function MenuCamiones() {
       title={item.placa}
       description={item.tiposCModel.nombre}
       estado={item.estado}
+      enreparacion={item.enreparacion}
+      op = {op}
     />
   );
-
+ 
   return (
     <View>
       {titulo && (

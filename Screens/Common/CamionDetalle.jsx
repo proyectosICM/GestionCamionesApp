@@ -36,6 +36,10 @@ export default function CamionDetalle({ navigation }) {
     ListarCamion();
   }, [ListarCamion]);
 
+  const handleAlerta = () => {
+    alert("ED")
+  }
+
   const handleListChecklist = () => {
     if(tc == "Camion"){
       navigation.navigate("CheckList Camion", {tc: tc});
@@ -51,7 +55,7 @@ export default function CamionDetalle({ navigation }) {
     <View style={styles.container}>
       {camion ? (
         <>
-        <Text>{tc}</Text>
+  
           <Text style={styles.tittleText}>{camion.tiposCModel.nombre}</Text>
           <Text style={styles.tittleText}>Placa {camion.placa}</Text>
           <Text style={styles.tittleText}>
@@ -91,7 +95,7 @@ export default function CamionDetalle({ navigation }) {
                   color: "white",
                 }}
                 iconRight
-                onPress={() => navigation.navigate("CheckList")}
+                onPress={() => handleAlerta()}
               />
 
               <Button

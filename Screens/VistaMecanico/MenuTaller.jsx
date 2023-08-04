@@ -48,7 +48,7 @@ export function MenuTaller({ navigation }) {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.tittleText}>Buenos días, Mecanico</Text>
       <Text style={styles.tittleText}> Sede: {sede ? sede : "Cargando.."}</Text>
-      <Card containerStyle={styles.cardContainer}>
+{    /*  <Card containerStyle={styles.cardContainer}>
         <Card.Title>Ver Camiones Deshabilitados</Card.Title>
         <Card.Divider />
         <Text style={styles.cardText}>
@@ -60,7 +60,7 @@ export function MenuTaller({ navigation }) {
           buttonStyle={styles.cardButton}
           onPress={() => handleDeshabilitados()}
         />
-      </Card>
+  </Card> */}
       <Card containerStyle={styles.cardContainer}>
         <Card.Title>Ver Camiones pendientes a reparacion</Card.Title>
         <Card.Divider />
