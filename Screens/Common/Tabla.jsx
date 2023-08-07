@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { Card } from "react-native-elements";
+import { Button, Card } from "react-native-elements";
 import { FontAwesome } from "@expo/vector-icons";
 import { styles } from "../../Styles/General";
+import { useNavigation } from "@react-navigation/native";
 
 export function Tabla({ titulo, datos, marcar, setMarcar }) {
+  const navigation = useNavigation();
   const handlePress = (index, estado) => {
     const newMarcar = [...marcar];
     newMarcar[index] = estado;
     setMarcar(newMarcar);
+  };
+
+  const handleTomarFoto = () => {
+    navigation.navigate('Adjuntar Fotos')
   };
 
   return (
@@ -25,7 +31,7 @@ export function Tabla({ titulo, datos, marcar, setMarcar }) {
         {datos.map((u, i) => {
           return (
             <View key={i} style={styles2.user}>
-              <Text style={styles2.name}>{u}</Text>
+              <Text style={styles2.name}>{u.nombre}</Text>
               <TouchableOpacity
                 style={[
                   styles2.successButton,
@@ -65,6 +71,7 @@ export function Tabla({ titulo, datos, marcar, setMarcar }) {
             </View>
           );
         })}
+        <Button title={'Adjuntar Fotos'} onPress={() => handleTomarFoto()} />
       </Card>
     </View>
   );

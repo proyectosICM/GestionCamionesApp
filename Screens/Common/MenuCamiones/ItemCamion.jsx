@@ -4,13 +4,35 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import { FontAwesome } from "react-native-vector-icons/FontAwesome";
+import { styles as general } from "../../../Styles/General";
 
-export function ItemCamion({ title, description, estado, op }) {
+export function ItemCamion({
+  id,
+  title,
+  title2,
+  description,
+  description2,
+  estado,
+  op,
+}) {
   const navigation = useNavigation();
+
+  const handleCheck = () => {
+    alert("Hola p");
+  };
+
+  const handleVerCheck = () => {
+    navigation.navigate('Ver CheckLists', {id: id})
+  };
+
   return (
     <View style={styles.cardContainer}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={{ textAlign: "center" }}>{description}</Text>
+      <Text style={styles.title}>
+        {title} - {title2}
+      </Text>
+      <Text style={{ textAlign: "center" }}>
+        {description} - {description2}
+      </Text>
       {estado ? (
         <View style={{ alignItems: "center" }}>
           <FontAwesome5 name="check" color="green" size={20} />
@@ -22,12 +44,19 @@ export function ItemCamion({ title, description, estado, op }) {
         </View>
       )}
 
-      <TouchableOpacity
-        style={[styles.button, { margin: 2, width: "100%" }]}
-        onPress={() => navigation.navigate("Detalles")}
-      >
-        <Text style={styles.buttonText}>Detalles </Text>
-      </TouchableOpacity>
+      <Button
+        title={"Ver"}
+        buttonStyle={general.styleButton}
+        titleStyle={general.textoButton}
+        onPress={() => handleCheck()}
+      />
+
+      <Button
+        title={"Realizar CheckList"}
+        buttonStyle={general.styleButton}
+        titleStyle={general.textoButton}
+        onPress={() => handleVerCheck()}
+      />
 
       {op === "Pendiente" && (
         <Button

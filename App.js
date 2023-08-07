@@ -28,6 +28,9 @@ import { Observaciones } from './Screens/VIstaConductor/Observaciones/Observacio
 import VerificacionCarreta from './Screens/VIstaConductor/VerificarCarreta';
 import CheckListCamion from './Screens/VIstaConductor/CheckListCamion';
 import CheckListCarreta from './Screens/VIstaConductor/CheckListCarreta';
+import { AdjuntarFotos } from './Screens/Common/AdjuntarFotos';
+import { VerCL } from './Screens/VistaMecanico/VerCL';
+import { VerDatos } from './Screens/VistaMecanico/VerDatos';
 
 
 
@@ -81,12 +84,16 @@ export default function App() {
         <Stack.Screen name='Cargando' component={Cargando} />
 
         <Stack.Screen name='CheckDatos' component={CheckDatos} />
+        <Stack.Screen name='Ver CheckLists' component={VerCL} />
+        <Stack.Screen name='Ver Datos' component={VerDatos} />
 
         <Stack.Screen name='InfoDetallada' component={InfoDetallada} />
 
         <Stack.Screen name='Notificaciones-Conductor' component={NotificacionesConductor} />
         <Stack.Screen name='Cambio de llantas' component={RegistrarCambioLlantas} />
         <Stack.Screen name='Observaciones' component={Observaciones} />
+
+        <Stack.Screen name='Adjuntar Fotos' component={AdjuntarFotos} />
         {/* Rutas secundarias */}
       </Stack.Navigator>
     </NavigationContainer>

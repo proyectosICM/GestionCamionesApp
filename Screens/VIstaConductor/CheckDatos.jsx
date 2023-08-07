@@ -21,7 +21,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { tablesCam, tablesCarr } from "../../API/datosCLConductor";
 
 export function CheckDatos() {
-  const [tables, setTables] = useState();
+  const [tables, setTables] = useState(tablesCam);
 
   const route = useRoute();
 
@@ -36,21 +36,27 @@ export function CheckDatos() {
   }, [tc]);
 
   const datos = route.params.datos;
+  const rol = route.params.rol;
+  console.log("ds·", datos.sistemaDeArranque);
+
   const tiempo = route.params.tiempo;
   const navigation = useNavigation();
 
   const [camionid, setCamionid] = useState();
   const [usuario, setUsuario] = useState();
   const [clcamcond, setClcamcond] = useState();
+  //const [rol, setRol] = useState();
 
   useEffect(() => {
     const obtenerDatosAsync = async () => {
       const camionidv = await AsyncStorage.getItem("camionid");
       const usuariov = await AsyncStorage.getItem("usuario");
+      const rolv = await AsyncStorage.getItem("rol");
       const clccamcondv = await AsyncStorage.getItem("clcam");
       setCamionid(camionidv);
       setUsuario(usuariov);
       setClcamcond(clccamcondv);
+      setRol(rolv);
     };
 
     obtenerDatosAsync();
@@ -61,7 +67,7 @@ export function CheckDatos() {
     const segundosRestantes = segundos % 60;
     return `${minutos} minutos y ${segundosRestantes} segundos`;
   };
-
+  console.log("drol2", rol);
   const handleEnviar = async () => {
     console.log(tc);
     if (tc === "Camion") {
@@ -190,6 +196,7 @@ export function CheckDatos() {
     <ScrollView>
       {tc === "Camion" && (
         <View style={styles.container}>
+          <Text>{rol}</Text>
           {tablesCam.map((table, index) => (
             <View key={index} style={{ alignItems: "center" }}>
               <Text style={styles.tittleText}>{table.titulo}</Text>
@@ -197,7 +204,7 @@ export function CheckDatos() {
                 {table.datos.map((dato, datoIndex) => (
                   <View key={datoIndex}>
                     <Text>
-                      {dato}
+                      {dato.nombre}
                       {datos[index][datoIndex] ? (
                         <Text style={{ color: "green" }}>
                           {" "}
@@ -227,44 +234,45 @@ export function CheckDatos() {
         </View>
       )}
 
-      {tc === "Carreta" && (
-        <View style={styles.container}>
-          {tablesCarr.map((table, index) => (
-            <View key={index} style={{ alignItems: "center" }}>
-              <Text style={styles.tittleText}>{table.titulo}</Text>
-              <View style={{ alignItems: "center" }}>
-                {table.datos.map((dato, datoIndex) => (
-                  <View key={datoIndex}>
-                    <Text>
-                      {dato}
-                      {datos[index][datoIndex] ? (
-                        <Text style={{ color: "green" }}>
-                          {" "}
-                          Buen estado{" "}
-                          <Icon name="check" size={20} color="green" />
-                        </Text>
-                      ) : (
-                        <Text style={{ color: "red" }}>
-                          {" "}
-                          Mal estado <Icon name="close" size={20} color="red" />
-                        </Text>
-                      )}
-                    </Text>
-                  </View>
-                ))}
-              </View>
+{tc === "Carreta" && (
+      <View style={styles.container}>
+        {tablesCarr.map((table, index) => (
+          <View key={index} style={{ alignItems: "center" }}>
+            <Text style={styles.tittleText}>{table.titulo}</Text>
+            <View style={{ alignItems: "center" }}>
+              {table.datos.map((dato, datoIndex) => (
+                <View key={datoIndex}>
+                  <Text>
+                    {dato.nombre}
+                    {datos[index][datoIndex] ? (
+                      <Text style={{ color: "green" }}>
+                        {" "}
+                        Buen estado{" "}
+                        <Icon name="check" size={20} color="green" />
+                      </Text>
+                    ) : (
+                      <Text style={{ color: "red" }}>
+                        {" "}
+                        Mal estado{" "}
+                        <Icon name="close" size={20} color="red" />
+                      </Text>
+                    )}
+                  </Text>
+                </View>
+              ))}
             </View>
-          ))}
-          <Text>{camionid ? camionid : "no jay"}</Text>
-          <Text style={styles.tittleText}>
-            Tiempo: {convertirAMinutos(tiempo)}
-          </Text>
-          <Button
-            title={"Confirmar Envio de datos"}
-            onPress={() => handleEnviar()}
-          />
-        </View>
-      )}
-    </ScrollView>
-  );
+          </View>
+        ))}
+        <Text>{camionid ? camionid : "no jay"}</Text>
+        <Text style={styles.tittleText}>
+          Tiempo: {convertirAMinutos(tiempo)}
+        </Text>
+        <Button
+          title={"Confirmar Envio de datos"}
+          onPress={() => handleEnviar()}
+        />
+      </View>
+    )}
+  </ScrollView>
+);
 }

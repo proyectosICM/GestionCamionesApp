@@ -11,10 +11,11 @@ import { CheckDatos } from "./CheckDatos";
 
 import { useCallback } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { tablesCam } from "../../API/datosCLConductor";
+import { tablesCam, tablesCarr } from "../../API/datosCLConductor";
 
 export default function CheckListCamion() {
-  const tables = tablesCam
+  const [tables, setTables] = useState(tablesCam);
+  //const tables = tablesCam
   const [camion, setCamion] = useState();
   const [rol, setRol] = useState();
   const [camionid, setCamionid] = useState();
@@ -30,6 +31,11 @@ export default function CheckListCamion() {
     setRol(rolv);
     setCamionid(camionidv);
     setUsuario(usuariov);
+    if(rolv == "CONDUCTOR"){
+      setTables(tablesCam);
+    } else if(rolv == "MECANICO") {
+      setTables(tablesCarr)
+    } 
   }, []);
 
   useEffect(() => {

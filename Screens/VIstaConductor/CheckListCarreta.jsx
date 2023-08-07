@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 
 import { Button } from "react-native-elements";
-import { useState, useEffect } from "react"; // Importamos useEffect
+import { useState, useEffect } from "react";
 import { Tabla } from "../Common/Tabla";
 import { styles } from "../../Styles/General";
 import { CustomBottomTabBar } from "../../CustomBottomTabBar";
@@ -11,10 +11,11 @@ import { CheckDatos } from "./CheckDatos";
 
 import { useCallback } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { tablesCarr } from "../../API/datosCLConductor";
+import { tablesCam, tablesCarr } from "../../API/datosCLConductor";
 import { ScrollView } from "react-native";
 
 export default function CheckListCarreta() {
+  //const [tables, setTables] = useState();
   const tables = tablesCarr;
   const [camion, setCamion] = useState();
   const [rol, setRol] = useState();

@@ -4,7 +4,11 @@ import { styles } from "../../Styles/General";
 import { ItemCamion } from "./MenuCamiones/ItemCamion";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useListarElementos } from "../../Hooks/CRUDHook";
-import { camionesxreparacion, camionesxsede } from "../../API/apiurl";
+import {
+  RGS_xEmpresa,
+  camionesxreparacion,
+  camionesxsede,
+} from "../../API/apiurl";
 
 export function MenuCamiones() {
   const [camiones, setCamiones] = useState([]);
@@ -12,7 +16,7 @@ export function MenuCamiones() {
   const [empresa, setEmpresa] = useState(null);
   const [url, setUrl] = useState(null);
   const [titulo, setTitulo] = useState(null);
-  const [op , setOp] = useState("");
+  const [op, setOp] = useState("");
 
   const datosAsync = useCallback(async () => {
     const sedev = await AsyncStorage.getItem("sede");
@@ -21,24 +25,25 @@ export function MenuCamiones() {
     setSede(sedev);
     setEmpresa(empresav);
     if (menucam === "habilitados") {
-      setUrl(`${camionesxsede}${empresav}/${sedev}/1`);
+      //setUrl(`${camionesxsede}${empresav}/${sedev}/1`);
+      setUrl(`${RGS_xEmpresa}${empresav}/${sedev}/1`);
       setTitulo("Camiones Habilitados (En buen estado)");
-      setOp('Habilitados')
+      setOp("Habilitados");
     } else if (menucam === "deshabilitados") {
       setUrl(`${camionesxsede}${empresav}/${sedev}/0`);
       setTitulo("Camiones Deshabilitados (En mal estado)");
-      setOp('Deshabilitados')
+      setOp("Deshabilitados");
     } else if (menucam === "pendiente") {
       setUrl(`${camionesxreparacion}${empresav}/${sedev}/0/0`);
-      setTitulo("Camiones Pendientes a reparacion"); 
-      setOp('Pendiente')
+      setTitulo("Camiones Pendientes a reparacion");
+      setOp("Pendiente");
     } else if (menucam === "enreparacion") {
       setUrl(`${camionesxreparacion}${empresav}/${sedev}/0/1`);
-      setTitulo("Camiones en reparacion"); 
-      setOp('enreparacion')
-    }else {
-      setUrl(null); 
-      setTitulo(null); 
+      setTitulo("Camiones en reparacion");
+      setOp("enreparacion");
+    } else {
+      setUrl(null);
+      setTitulo(null);
     }
   }, []);
 
@@ -54,17 +59,31 @@ export function MenuCamiones() {
       ListarCamiones();
     }
   }, [empresa, sede, url, ListarCamiones]);
+  console.log(camiones);
+  const renderItem = ({ item }) =>
+    op === "Habilitados" ? (
+      <ItemCamion
+        id={item.id}
+        title={item.checkListCamionModel.camionesModel.placa}
+        title2={item.checkListCarretaModel.camionesModel.placa}
+        description={item.checkListCamionModel.camionesModel.tiposCModel.nombre}
+        description2={
+          item.checkListCarretaModel.camionesModel.tiposCModel.nombre
+        }
+        estado={item.checkListCamionModel.camionesModel.estado}
+        enreparacion={item.checkListCamionModel.camionesModel.enreparacion}
+        op={op}
+      />
+    ) : (
+      <ItemCamion
+        title={item.placa}
+        description={item.tiposCModel.nombre}
+        estado={item.estado}
+        enreparacion={item.enreparacion}
+        op={op}
+      />
+    );
 
-  const renderItem = ({ item }) => (
-    <ItemCamion
-      title={item.placa}
-      description={item.tiposCModel.nombre}
-      estado={item.estado}
-      enreparacion={item.enreparacion}
-      op = {op}
-    />
-  );
- 
   return (
     <View>
       {titulo && (

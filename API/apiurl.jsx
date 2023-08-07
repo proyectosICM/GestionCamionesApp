@@ -24,6 +24,9 @@ export const usuarioURL = `${baseURL}usuarios`;
 
 //Registro General de Salidas
 export const RGS_URL = `${baseURL}RGS`;
+export const RGS_xEmpresa = `${RGS_URL}/xempresa-sede/`
 
 //Registro Cambio de llantas de Salidas
 export const CambioLlantasURL = `${baseURL}cambio-llantas`;
+
+

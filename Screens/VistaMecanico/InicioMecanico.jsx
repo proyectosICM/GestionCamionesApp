@@ -37,11 +37,11 @@ export default function InicioMecanico({ navigation }) {
 
   const handleAbrirCamera = () => {
     setAbrir(true);
-  };
+  }; 
 
   const handleCerrarCamera = () => {
     setAbrir(false);
-  };
+  }; 
 
   const  handleMenu = async() => {
     await AsyncStorage.setItem('menucam', 'habilitados')
@@ -49,7 +49,7 @@ export default function InicioMecanico({ navigation }) {
   }
 
   return abrir ? (
-    <QRScanner cerrar={handleCerrarCamera} navigate={navigation.navigate} />
+    <QRScanner cerrar={handleCerrarCamera} navigate={navigation.navigate} tc={"Camion"} />
   ) : (
     <View style={styles.container}>
       <Text style={styles.tittleText}>
