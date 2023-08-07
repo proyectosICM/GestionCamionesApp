@@ -12,9 +12,10 @@ import { CheckDatos } from "./CheckDatos";
 import { useCallback } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { tablesCam, tablesCarr } from "../../API/datosCLConductor";
+import { ScrollView } from "react-native";
 
 export default function CheckListCamion() {
-  const [tables, setTables] = useState(tablesCam);
+  // const [tables, setTables] = useState(tablesCam);
   //const tables = tablesCam
   const [camion, setCamion] = useState();
   const [rol, setRol] = useState();
@@ -23,7 +24,7 @@ export default function CheckListCamion() {
 
   const route = useRoute();
   const tc = route.params.tc;
-
+  const tables = route.params.tablesD;
   const datosAsync = useCallback(async () => {
     const rolv = await AsyncStorage.getItem("rol");
     const camionidv = await AsyncStorage.getItem("camionid");
@@ -31,11 +32,11 @@ export default function CheckListCamion() {
     setRol(rolv);
     setCamionid(camionidv);
     setUsuario(usuariov);
-    if(rolv == "CONDUCTOR"){
-      setTables(tablesCam);
-    } else if(rolv == "MECANICO") {
-      setTables(tablesCarr)
-    } 
+    if (rolv == "CONDUCTOR") {
+      //setTables(tablesCam);
+    } else if (rolv == "MECANICO") {
+      //setTables(tablesCarr)
+    }
   }, []);
 
   useEffect(() => {
@@ -90,50 +91,52 @@ export default function CheckListCamion() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text>Tiempo: {tiempo} segundos</Text>
-      <Text style={styles.tittleText}>CheckList</Text>
-      <Tabla
-        titulo={tables[currentTable].titulo}
-        datos={tables[currentTable].datos}
-        marcar={marcar[currentTable]}
-        setMarcar={(estado) => {
-          const newMarcar = [...marcar];
-          newMarcar[currentTable] = estado;
-          setMarcar(newMarcar);
-        }}
-      />
-      <Button
-        title="Atras"
-        type="outline"
-        onPress={handleBack}
-        buttonStyle={{ backgroundColor: "#ccc", width: 150 }}
-        titleStyle={{ color: "black" }}
-        disabled={currentTable === 0}
-      >
-        Anterior
-      </Button>
-      <Button
-        title="Siguiente"
-        type="outline"
-        onPress={handleNext}
-        buttonStyle={{ backgroundColor: "white", width: 150 }}
-        disabled={
-          currentTable === tables.length - 1 ||
-          !allItemsMarked(marcar[currentTable])
-        }
-      >
-        Siguiente
-      </Button>
-      {currentTable === tables.length - 1 && allTablesMarked() && (
-        <Button
-          title="Enviar datos"
-          type="solid"
-          buttonStyle={{ backgroundColor: "blue", width: 200, marginTop: 20 }}
-          titleStyle={{ color: "white" }}
-          onPress={() => handleEnviar()}
+    <ScrollView>
+      <View style={styles.container}>
+        <Text>Tiempo: {tiempo} segundos</Text>
+        <Text style={styles.tittleText}>CheckList</Text>
+        <Tabla
+          titulo={tables[currentTable].titulo}
+          datos={tables[currentTable].datos}
+          marcar={marcar[currentTable]}
+          setMarcar={(estado) => {
+            const newMarcar = [...marcar];
+            newMarcar[currentTable] = estado;
+            setMarcar(newMarcar);
+          }}
         />
-      )}
-    </View>
+        <Button
+          title="Atras"
+          type="outline"
+          onPress={handleBack}
+          buttonStyle={{ backgroundColor: "#ccc", width: 150 }}
+          titleStyle={{ color: "black" }}
+          disabled={currentTable === 0}
+        >
+          Anterior
+        </Button>
+        <Button
+          title="Siguiente"
+          type="outline"
+          onPress={handleNext}
+          buttonStyle={{ backgroundColor: "white", width: 150 }}
+          disabled={
+            currentTable === tables.length - 1 ||
+            !allItemsMarked(marcar[currentTable])
+          }
+        >
+          Siguiente
+        </Button>
+        {currentTable === tables.length - 1 && allTablesMarked() && (
+          <Button
+            title="Enviar datos"
+            type="solid"
+            buttonStyle={{ backgroundColor: "blue", width: 200, marginTop: 20 }}
+            titleStyle={{ color: "white" }}
+            onPress={() => handleEnviar()}
+          />
+        )}
+      </View>
+    </ScrollView>
   );
 }

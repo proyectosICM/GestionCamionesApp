@@ -5,6 +5,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import { FontAwesome } from "react-native-vector-icons/FontAwesome";
 import { styles as general } from "../../../Styles/General";
+import { servicioExpress } from "../../../API/datosCLMecanico";
 
 export function ItemCamion({
   id,
@@ -18,7 +19,7 @@ export function ItemCamion({
   const navigation = useNavigation();
 
   const handleCheck = () => {
-    alert("Hola p");
+    navigation.navigate("CheckList Camion", {tc: "Expreso", tablesD: servicioExpress});
   };
 
   const handleVerCheck = () => {
@@ -48,14 +49,14 @@ export function ItemCamion({
         title={"Ver"}
         buttonStyle={general.styleButton}
         titleStyle={general.textoButton}
-        onPress={() => handleCheck()}
+        onPress={() => handleVerCheck()}
       />
 
       <Button
         title={"Realizar CheckList"}
         buttonStyle={general.styleButton}
         titleStyle={general.textoButton}
-        onPress={() => handleVerCheck()}
+        onPress={() => handleCheck()}
       />
 
       {op === "Pendiente" && (

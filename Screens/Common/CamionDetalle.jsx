@@ -8,6 +8,7 @@ import { base, baseURL } from "../../API/apiurl";
 import { useCallback } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRoute } from "@react-navigation/native";
+import { tablesCam, tablesCarr } from "../../API/datosCLConductor";
 
 export default function CamionDetalle({ navigation }) {
   const [camion, setCamion] = useState();
@@ -38,13 +39,13 @@ export default function CamionDetalle({ navigation }) {
 
   const handleAlerta = () => {
     alert("ED")
-  }
+  } 
 
   const handleListChecklist = () => {
     if(tc == "Camion"){
-      navigation.navigate("CheckList Camion", {tc: tc});
+      navigation.navigate("CheckList Camion", {tc: tc, tablesD: tablesCam});
     } else if( tc == "Carreta"){
-      navigation.navigate("CheckList Carreta", {tc: tc});
+      navigation.navigate("CheckList Camion", {tc: tc, tablesD: tablesCarr});
     }
 
   };

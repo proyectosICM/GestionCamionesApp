@@ -9,6 +9,7 @@ import {
   camionesxreparacion,
   camionesxsede,
 } from "../../API/apiurl";
+import { ScrollView } from "react-native";
 
 export function MenuCamiones() {
   const [camiones, setCamiones] = useState([]);
@@ -85,7 +86,7 @@ export function MenuCamiones() {
     );
 
   return (
-    <View>
+    <>
       {titulo && (
         <View style={{ alignItems: "center" }}>
           <Text style={styles.tittleText}>{titulo}</Text>
@@ -99,6 +100,6 @@ export function MenuCamiones() {
         numColumns={2}
         contentContainerStyle={styles.flatListContent}
       />
-    </View>
+    </>
   );
 }
