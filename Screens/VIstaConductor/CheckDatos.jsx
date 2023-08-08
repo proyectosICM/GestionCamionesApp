@@ -11,6 +11,7 @@ import {
   RGS_URL,
   checkListCamionURL,
   checkListCarretaURL,
+  checkListExpresoURL,
   checkListURL,
   usuarioURL,
 } from "../../API/apiurl";
@@ -19,6 +20,8 @@ import { useCallback } from "react";
 import { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { tablesCam, tablesCarr } from "../../API/datosCLConductor";
+import { servicioExpress } from "../../API/datosCLMecanico";
+import axios from "axios";
 
 export function CheckDatos() {
   const [tables, setTables] = useState(tablesCam);
@@ -26,6 +29,8 @@ export function CheckDatos() {
   const route = useRoute();
 
   const tc = route.params.tc;
+  const tablesD = route.params.tablesD;
+  const ide = route.params.ide;
 
   useEffect(() => {
     if (tc == "Camion") {
@@ -45,6 +50,7 @@ export function CheckDatos() {
   const [camionid, setCamionid] = useState();
   const [usuario, setUsuario] = useState();
   const [clcamcond, setClcamcond] = useState();
+  const [token, setToken] = useState();
   //const [rol, setRol] = useState();
 
   useEffect(() => {
@@ -53,9 +59,11 @@ export function CheckDatos() {
       const usuariov = await AsyncStorage.getItem("usuario");
       const rolv = await AsyncStorage.getItem("rol");
       const clccamcondv = await AsyncStorage.getItem("clcam");
+      const tokenv = await AsyncStorage.getItem("token"); 
       setCamionid(camionidv);
       setUsuario(usuariov);
       setClcamcond(clccamcondv);
+      setToken(tokenv)
       //setRol(rolv);
     };
 
@@ -126,29 +134,42 @@ export function CheckDatos() {
         const rgsURL = RGS_URL;
 
         const requestData = {
-          camionesModel: { id: camionId },
-          tiempo: tiempo,
+          // rgsModel: { id: 1 },
           ...datos.reduce((acc, dataGroup, index) => {
             dataGroup.forEach((dataItem, itemIndex) => {
-              const atributo = tablesCarr[index].datos[itemIndex].atributo;
+              const atributo = servicioExpress[index].datos[itemIndex].atributo;
               acc[atributo] = dataItem;
             });
             return acc;
           }, {}),
         };
+  
 
-        const { data } = await useAgregarElemento(carretaURL, requestData);
+        const { data } = await useAgregarElemento(
+          checkListExpresoURL,
+          requestData
+        );
+
+        console.log(data.id);
+        console.log(ide);
 
         const rgsRequest = {
-          checkListCamionModel: { id: clcamcond },
-          checkListCarretaModel: { id: data.id },
+          checkListExpresoModel: { id: data.id },
         };
 
-        const rgsResponse = await useAgregarElemento(rgsURL, rgsRequest);
-v
-        const cm = { id: rgsResponse.data.id };
-        await useEditarUnElemento(usuarioURL, usuario, "rgsModel", cm);
-        navigation.navigate("Asignado");
+
+        try {
+          await axios.put(`${RGS_URL}/${ide}`, rgsRequest, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        } catch (error) {
+          console.log(error);
+          throw error;
+        }
+
+        navigation.navigate("Inicio");
       }
     } catch (error) {
       console.log("Error al enviar los datos:", error);
@@ -157,84 +178,44 @@ v
 
   return (
     <ScrollView>
-      {tc === "Camion" && (
-        <View style={styles.container}>
-          <Text>{rol}</Text>
-          {tablesCam.map((table, index) => (
-            <View key={index} style={{ alignItems: "center" }}>
-              <Text style={styles.tittleText}>{table.titulo}</Text>
-              <View style={{ alignItems: "center" }}>
-                {table.datos.map((dato, datoIndex) => (
-                  <View key={datoIndex}>
-                    <Text>
-                      {dato.nombre}
-                      {datos[index][datoIndex] ? (
-                        <Text style={{ color: "green" }}>
-                          {" "}
-                          Buen estado{" "}
-                          <Icon name="check" size={20} color="green" />
-                        </Text>
-                      ) : (
-                        <Text style={{ color: "red" }}>
-                          {" "}
-                          Mal estado <Icon name="close" size={20} color="red" />
-                        </Text>
-                      )}
-                    </Text>
-                  </View>
-                ))}
-              </View>
+      <View style={styles.container}>
+        <Text>{ide && ide} Asqw</Text>
+        <Text>{rol}</Text>
+        {tablesD.map((table, index) => (
+          <View key={index} style={{ alignItems: "center" }}>
+            <Text style={styles.tittleText}>{table.titulo}</Text>
+            <View style={{ alignItems: "center" }}>
+              {table.datos.map((dato, datoIndex) => (
+                <View key={datoIndex}>
+                  <Text>
+                    {dato.nombre}
+                    {datos[index][datoIndex] ? (
+                      <Text style={{ color: "green" }}>
+                        {" "}
+                        Buen estado{" "}
+                        <Icon name="check" size={20} color="green" />
+                      </Text>
+                    ) : (
+                      <Text style={{ color: "red" }}>
+                        {" "}
+                        Mal estado <Icon name="close" size={20} color="red" />
+                      </Text>
+                    )}
+                  </Text>
+                </View>
+              ))}
             </View>
-          ))}
-          <Text>{camionid ? camionid : "no jay"}</Text>
-          <Text style={styles.tittleText}>
-            Tiempo: {convertirAMinutos(tiempo)}
-          </Text>
-          <Button
-            title={"Confirmar Envio de datos"}
-            onPress={() => handleEnviar()}
-          />
-        </View>
-      )}
-
-      {tc === "Carreta" && (
-        <View style={styles.container}>
-          {tablesCarr.map((table, index) => (
-            <View key={index} style={{ alignItems: "center" }}>
-              <Text style={styles.tittleText}>{table.titulo}</Text>
-              <View style={{ alignItems: "center" }}>
-                {table.datos.map((dato, datoIndex) => (
-                  <View key={datoIndex}>
-                    <Text>
-                      {dato.nombre}
-                      {datos[index][datoIndex] ? (
-                        <Text style={{ color: "green" }}>
-                          {" "}
-                          Buen estado{" "}
-                          <Icon name="check" size={20} color="green" />
-                        </Text>
-                      ) : (
-                        <Text style={{ color: "red" }}>
-                          {" "}
-                          Mal estado <Icon name="close" size={20} color="red" />
-                        </Text>
-                      )}
-                    </Text>
-                  </View>
-                ))}
-              </View>
-            </View>
-          ))}
-          <Text>{camionid ? camionid : "no jay"}</Text>
-          <Text style={styles.tittleText}>
-            Tiempo: {convertirAMinutos(tiempo)}
-          </Text>
-          <Button
-            title={"Confirmar Envio de datos"}
-            onPress={() => handleEnviar()}
-          />
-        </View>
-      )}
+          </View>
+        ))}
+        <Text>{camionid ? camionid : "no jay"}</Text>
+        <Text style={styles.tittleText}>
+          Tiempo: {convertirAMinutos(tiempo)}
+        </Text>
+        <Button
+          title={"Confirmar Envio de datos"}
+          onPress={() => handleEnviar()}
+        />
+      </View>
     </ScrollView>
   );
 }

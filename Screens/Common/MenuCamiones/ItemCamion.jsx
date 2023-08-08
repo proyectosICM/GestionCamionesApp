@@ -19,7 +19,7 @@ export function ItemCamion({
   const navigation = useNavigation();
 
   const handleCheck = () => {
-    navigation.navigate("CheckList Camion", {tc: "Expreso", tablesD: servicioExpress});
+    navigation.navigate("CheckList Camion", {tc: "Expreso", tablesD: servicioExpress, ide: id});
   };
 
   const handleVerCheck = () => {

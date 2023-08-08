@@ -21,10 +21,12 @@ export default function CheckListCamion() {
   const [rol, setRol] = useState();
   const [camionid, setCamionid] = useState();
   const [usuario, setUsuario] = useState();
-
+ 
   const route = useRoute();
   const tc = route.params.tc;
   const tables = route.params.tablesD;
+  const ide = route.params.ide;
+
   const datosAsync = useCallback(async () => {
     const rolv = await AsyncStorage.getItem("rol");
     const camionidv = await AsyncStorage.getItem("camionid");
@@ -74,7 +76,7 @@ export default function CheckListCamion() {
   };
 
   const handleEnviar = () => {
-    navigate.navigate("CheckDatos", { datos: marcar, tiempo: tiempo, tc: tc }); // Envía los datos de 'marcar' a la pantalla CheckDatosScreen
+    navigate.navigate("CheckDatos", { datos: marcar, tiempo: tiempo, tc: tc, tablesD: tables, ide: ide }); // Envía los datos de 'marcar' a la pantalla CheckDatosScreen
   };
 
   // Agregamos un estado para el temporizador y una función para actualizarlo
@@ -89,10 +91,11 @@ export default function CheckListCamion() {
 
     return () => clearInterval(interval); // Limpiamos el intervalo cuando el componente se desmonte
   }, []);
-
+ 
   return (
     <ScrollView>
       <View style={styles.container}>
+        <Text>{ide  && ide} dd</Text>
         <Text>Tiempo: {tiempo} segundos</Text>
         <Text style={styles.tittleText}>CheckList</Text>
         <Tabla

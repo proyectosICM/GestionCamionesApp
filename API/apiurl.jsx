@@ -19,6 +19,9 @@ export const checkListCamionURL = `${baseURL}checkListCamion`;
 //CheckList Carreta
 export const checkListCarretaURL = `${baseURL}checkListCarreta`; 
 
+//CheckList Expreso
+export const checkListExpresoURL = `${baseURL}cle`;
+
 //Usuario
 export const usuarioURL = `${baseURL}usuarios`;
 
