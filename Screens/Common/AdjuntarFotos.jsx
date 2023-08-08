@@ -13,12 +13,14 @@ import { FallasImagenURL } from "../../API/apiurl";
 import { StyleSheet } from "react-native";
 import { useCallback } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Alert } from "react-native";
+import { useRoute } from "@react-navigation/native";
 
 export function AdjuntarFotos() {
 
   const [usuario, setUsuario] = useState();
-
-
+  const route = useRoute();
+  const rgs = route.params.rgs;
 
   const datosAsync = useCallback(async () => {
     const usuariov = await AsyncStorage.getItem("usuario");
@@ -84,8 +86,8 @@ export function AdjuntarFotos() {
               id: usuario,
             },
             rgsModel: {
-              id: 1,
-            },
+              id: rgs
+            }
           };
           console.log(requestData);
           console.log(FallasImagenURL);
@@ -93,6 +95,7 @@ export function AdjuntarFotos() {
 
           setImage(null);
           setObservacion("");
+          Alert.alert("La imagen se subio correctamente");
         } else {
           console.log("Error al subir la imagen:", response.data);
         }

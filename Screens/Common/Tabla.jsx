@@ -71,7 +71,7 @@ export function Tabla({ titulo, datos, marcar, setMarcar }) {
             </View>
           );
         })}
-        <Button title={'Adjuntar Fotos'} onPress={() => handleTomarFoto()} />
+{   /*     <Button title={'Adjuntar Fotos'} onPress={() => handleTomarFoto()} /> */}
       </Card>
     </View>
   );

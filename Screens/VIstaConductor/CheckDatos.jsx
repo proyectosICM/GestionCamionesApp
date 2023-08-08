@@ -8,6 +8,7 @@ import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useAgregarElemento, useEditarUnElemento } from "../../Hooks/CRUDHook";
 import {
+  FallasImagenURL,
   RGS_URL,
   checkListCamionURL,
   checkListCarretaURL,
@@ -22,6 +23,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { tablesCam, tablesCarr } from "../../API/datosCLConductor";
 import { servicioExpress } from "../../API/datosCLMecanico";
 import axios from "axios";
+import { Alert } from "react-native";
 
 export function CheckDatos() {
   const [tables, setTables] = useState(tablesCam);
@@ -49,7 +51,7 @@ export function CheckDatos() {
 
   const [camionid, setCamionid] = useState();
   const [usuario, setUsuario] = useState();
-  const [clcamcond, setClcamcond] = useState();
+  const [rgs, setRgs] = useState();
   const [token, setToken] = useState();
   //const [rol, setRol] = useState();
 
@@ -58,12 +60,12 @@ export function CheckDatos() {
       const camionidv = await AsyncStorage.getItem("camionid");
       const usuariov = await AsyncStorage.getItem("usuario");
       const rolv = await AsyncStorage.getItem("rol");
-      const clccamcondv = await AsyncStorage.getItem("clcam");
-      const tokenv = await AsyncStorage.getItem("token"); 
+      const rgsv = await AsyncStorage.getItem("rgs");
+      const tokenv = await AsyncStorage.getItem("token");
       setCamionid(camionidv);
       setUsuario(usuariov);
-      setClcamcond(clccamcondv);
-      setToken(tokenv)
+      setRgs(rgsv);
+      setToken(tokenv);
       //setRol(rolv);
     };
 
@@ -98,12 +100,37 @@ export function CheckDatos() {
 
         const { data } = await useAgregarElemento(camionURL, requestData);
         const cm = { id: camionId };
+
         await useEditarUnElemento(usuarioURL, usuario, "camionesModel", cm);
-        await AsyncStorage.setItem("clcam", data.id.toString());
+
+        const requestRGS = {
+          checkListCamionModel: { id: data.id },
+        };
+
+        const RGS = await useAgregarElemento(RGS_URL, requestRGS);
+        await AsyncStorage.setItem("rgs", RGS.data.id.toString());
+        console.log(RGS.data.id);
+
+        Alert.alert(
+          "Desea Agregar fotos",
+          "",
+          [
+            {
+              text: "Sí",
+              onPress: () => navigation.navigate("Adjuntar Fotos", {rgs: RGS.data.id}), // Redirección a la pantalla de imagen
+            },
+            {
+              text: "No",
+              onPress: () => navigation.navigate("CheckListCarreta"), // Redirección a la pantalla CheckListCarreta
+              style: "cancel",
+            },
+          ],
+          { cancelable: false }
+        );
+
         navigation.navigate("VerificacionCarreta");
       } else if (tc === "Carreta") {
         const carretaURL = checkListCarretaURL;
-        const rgsURL = RGS_URL;
 
         const requestData = {
           camionesModel: { id: camionId },
@@ -116,18 +143,33 @@ export function CheckDatos() {
             return acc;
           }, {}),
         };
- 
-        const { data } = await useAgregarElemento(carretaURL, requestData);
 
-        const rgsRequest = {
-          checkListCamionModel: { id: clcamcond },
+        const { data } = await useAgregarElemento(
+          checkListCarretaURL,
+          requestData
+        );
+
+        const requestRGS = {
           checkListCarretaModel: { id: data.id },
         };
+        console.log("dsd 2 -> ");
+        console.log("e " + rgs);
 
-        const rgsResponse = await useAgregarElemento(rgsURL, rgsRequest);
+        try {
+          await axios.put(`${RGS_URL}/${rgs}`, requestRGS, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        } catch (error) {
+          console.log(error);
+          throw error;
+        }
 
-        const cm = { id: rgsResponse.data.id };
+        console.log("e", ide);
+        const cm = { id: rgs };
         await useEditarUnElemento(usuarioURL, usuario, "rgsModel", cm);
+
         navigation.navigate("Asignado");
       } else if (tc === "Expreso") {
         const carretaURL = checkListCarretaURL;
@@ -143,7 +185,6 @@ export function CheckDatos() {
             return acc;
           }, {}),
         };
-  
 
         const { data } = await useAgregarElemento(
           checkListExpresoURL,
@@ -157,9 +198,8 @@ export function CheckDatos() {
           checkListExpresoModel: { id: data.id },
         };
 
-
         try {
-          await axios.put(`${RGS_URL}/${ide}`, rgsRequest, {
+          await axios.put(`${RGS_URL}/${rgs}`, rgsRequest, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
