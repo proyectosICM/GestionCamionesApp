@@ -121,14 +121,14 @@ export function CheckDatos() {
             },
             {
               text: "No",
-              onPress: () => navigation.navigate("CheckListCarreta"), // Redirección a la pantalla CheckListCarreta
+              onPress: () => navigation.navigate("VerificacionCarreta"), // Redirección a la pantalla CheckListCarreta
               style: "cancel",
             },
           ],
           { cancelable: false }
         );
 
-        navigation.navigate("VerificacionCarreta");
+        //navigation.navigate("VerificacionCarreta");
       } else if (tc === "Carreta") {
         const carretaURL = checkListCarretaURL;
 
@@ -169,8 +169,22 @@ export function CheckDatos() {
         console.log("e", ide);
         const cm = { id: rgs };
         await useEditarUnElemento(usuarioURL, usuario, "rgsModel", cm);
-
-        navigation.navigate("Asignado");
+        Alert.alert(
+          "Desea Agregar fotos",
+          "",
+          [
+            {
+              text: "Sí",
+              onPress: () => navigation.navigate("Adjuntar Fotos", {rgs: rgs}), // Redirección a la pantalla de imagen
+            },
+            {
+              text: "No",
+              onPress: () => navigation.navigate("Asignado"), // Redirección a la pantalla CheckListCarreta
+              style: "cancel",
+            },
+          ],
+          { cancelable: false }
+        );
       } else if (tc === "Expreso") {
         const carretaURL = checkListCarretaURL;
         const rgsURL = RGS_URL;
