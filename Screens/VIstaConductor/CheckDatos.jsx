@@ -128,7 +128,7 @@ export function CheckDatos() {
           { cancelable: false }
         );
 
-        //navigation.navigate("VerificacionCarreta");
+        navigation.navigate("VerificacionCarreta");
       } else if (tc === "Carreta") {
         const carretaURL = checkListCarretaURL;
 
