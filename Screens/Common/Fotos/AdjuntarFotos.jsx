@@ -18,21 +18,19 @@ import { useRoute } from "@react-navigation/native";
 import { styles } from "../../../Styles/General";
 
 export function AdjuntarFotos() {
-
   const [usuario, setUsuario] = useState();
   const route = useRoute();
   const rgs = route.params.rgs;
+  const [isLoading, setIsLoading] = useState(false);
 
   const datosAsync = useCallback(async () => {
     const usuariov = await AsyncStorage.getItem("usuario");
     setUsuario(usuariov);
-
   }, []);
 
   useEffect(() => {
     datosAsync();
   }, [datosAsync]);
-
 
   const [image, setImage] = useState(null);
   const [observacion, setObservacion] = useState(null);
@@ -60,6 +58,7 @@ export function AdjuntarFotos() {
   const handleEnviar = async () => {
     if (image) {
       try {
+        setIsLoading(true);
         const formData = new FormData();
         formData.append("image", {
           uri: image,
@@ -90,8 +89,8 @@ export function AdjuntarFotos() {
               id: usuario,
             },
             rgsModel: {
-              id: rgs
-            }
+              id: rgs,
+            },
           };
           console.log(requestData);
           console.log(FallasImagenURL);
@@ -103,8 +102,10 @@ export function AdjuntarFotos() {
         } else {
           console.log("Error al subir la imagen:", response.data);
         }
+        setIsLoading(false);
       } catch (error) {
         console.log("Error al subir la imagen:", error);
+        setIsLoading(false);
       }
     }
   };
@@ -132,10 +133,11 @@ export function AdjuntarFotos() {
             value={observacion}
           />
           <Button
-            title={"Enviar"}
+            title={isLoading ? "Cargando..." : "Enviar"}
             onPress={handleEnviar}
             buttonStyle={styles.styleButton}
             titleStyle={styles.tittleText}
+            disabled={isLoading} // Deshabilita el botón cuando está en modo de carga
           />
         </>
       ) : (

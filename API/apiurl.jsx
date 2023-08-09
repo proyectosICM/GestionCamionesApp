@@ -23,7 +23,8 @@ export const checkListCarretaURL = `${baseURL}checkListCarreta`;
 export const checkListExpresoURL = `${baseURL}cle`;
 
 //Fallas Imagen
-export const FallasImagenURL = `${baseURL}fallas-imagen`
+export const FallasImagenURL = `${baseURL}fallas-imagen`;
+//export const GaleriaImagesURL = `${base}`
 
 //Usuario
 export const usuarioURL = `${baseURL}usuarios`;

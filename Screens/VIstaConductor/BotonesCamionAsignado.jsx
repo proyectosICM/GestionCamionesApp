@@ -1,5 +1,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React from "react";
+import { Text } from "react-native";
 import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import { Button, Icon } from "react-native-elements";
@@ -7,6 +8,7 @@ import { Button, Icon } from "react-native-elements";
 export function BotonesCamionAsignado({ datos }) {
   const navigation = useNavigation();
   console.log(datos);
+
   return (
     <>
       <View style={localStyles.buttonRow}>
@@ -48,7 +50,9 @@ export function BotonesCamionAsignado({ datos }) {
             titleStyle={localStyles.buttonText}
             buttonStyle={localStyles.button}
             icon={<Icon name="build" size={20} color="white" />}
-            onPress={() => navigation.navigate("Adjuntar Fotos", {rgs: datos.rgsModel.id})}
+            onPress={() =>
+              navigation.navigate("Adjuntar Fotos", { rgs: datos.rgsModel.id })
+            }
           />
 
           <Button
@@ -64,10 +68,13 @@ export function BotonesCamionAsignado({ datos }) {
       <View style={localStyles.buttonRow}>
         <View style={localStyles.buttonContainer}>
           <Button
-            title={"Eliminar el camion asignado"}
+            title={"Ver fotos asociadas al Registro"}
             titleStyle={localStyles.buttonText}
             buttonStyle={localStyles.button}
-            icon={<Icon name="delete" size={20} color="white" />} // Agrega el icono al botón
+            icon={<Icon name="photo" size={20} color="white" />}
+            onPress={() =>
+              navigation.navigate("Galeria", { idRgs: datos.rgsModel.id })
+            }
           />
         </View>
       </View>

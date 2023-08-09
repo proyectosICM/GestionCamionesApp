@@ -31,6 +31,7 @@ import CheckListCarreta from './Screens/VIstaConductor/CheckListCarreta';
 import { VerCL } from './Screens/VistaMecanico/VerCL';
 import { VerDatos } from './Screens/VistaMecanico/VerDatos';
 import { AdjuntarFotos } from './Screens/Common/Fotos/AdjuntarFotos';
+import { GaleriaImagenes } from './Screens/Common/Fotos/GaleriaImagenes';
 
 
 
@@ -94,6 +95,7 @@ export default function App() {
         <Stack.Screen name='Observaciones' component={Observaciones} />
 
         <Stack.Screen name='Adjuntar Fotos' component={AdjuntarFotos} />
+        <Stack.Screen name='Galeria' component={GaleriaImagenes}/>
         {/* Rutas secundarias */}
       </Stack.Navigator>
     </NavigationContainer>
