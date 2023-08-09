@@ -7,11 +7,15 @@ import { StyleSheet } from "react-native";
 import { BotonesCamionAsignado } from "./BotonesCamionAsignado";
 import { useListarElementos } from "../../Hooks/CRUDHook";
 import { usuarioURL } from "../../API/apiurl";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 export function CamionSelect() {
   const [usuarioid, setUsuarioid] = useState();
   const [userData, setUserData] = useState();
   const [countdown, setCountdown] = useState(2); // Inicializa el contador en 2 segundos
+  const route = useRoute();
+  const navigation = useNavigation();
+  const actualizar = route.params?.actualizar;
 
   const obtenerDatos = useCallback(async () => {
     const usuarioidv = await AsyncStorage.getItem("usuario");
@@ -24,33 +28,40 @@ export function CamionSelect() {
   );
 
   useEffect(() => {
+    ListarInfoUser();
     obtenerDatos();
-    const interval = setInterval(() => {
+    if (actualizar != undefined) {
+      obtenerDatos();
       ListarInfoUser();
-      setCountdown(2); // Reinicia el contador a 2 segundos
-    }, 2000); // Llama cada 2 segundos
-
-    // Limpia el intervalo cuando el componente se desmonta
-    return () => clearInterval(interval);
+      console.log("Yas");
+    }
+    //ListarInfoUser()
+    if (actualizar) {
+      console.log("sd");
+      obtenerDatos();
+      ListarInfoUser(); // Realizar la actualización
+      navigation.setParams({ actualizar: false }); // Restablecer el parámetro
+    }
   }, [obtenerDatos, ListarInfoUser]);
 
   useEffect(() => {
     console.log("Valor actual de camionid:", usuarioid);
   }, [usuarioid]);
 
-  useEffect(() => {
-    // Actualiza el contador regresivo cada segundo
-    const interval = setInterval(() => {
-      setCountdown((prevCountdown) => Math.max(prevCountdown - 1, 0));
-    }, 1000);
+  const handleCargarCamion = () => {
+    obtenerDatos();
+    ListarInfoUser();
+  };
 
-    // Limpia el intervalo cuando el componente se desmonta
-    return () => clearInterval(interval);
-  }, []);
+  useEffect(() => {
+    if (actualizar) {
+      console.log("Es ", actualizar);
+      handleCargarCamion();
+    }
+  }, [actualizar]);
 
   return (
     <View style={styles.container}>
-      <Text>Próxima actualización en: {countdown} segundos</Text>
       {userData ? (
         <>
           <Text>{userData.rgsModel.id}</Text>
@@ -65,7 +76,13 @@ export function CamionSelect() {
           <BotonesCamionAsignado datos={userData} />
         </>
       ) : (
-        <Text>No hay Camion Asignado</Text>
+        <>
+          <Text>No hay Camion Asignado</Text>
+          {/*    <Button
+            title={"Cargar el camion asignado"}
+            onPress={() => handleCargarCamion()}
+      /> */}
+        </>
       )}
     </View>
   );

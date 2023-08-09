@@ -178,16 +178,16 @@ export function CheckDatos() {
               onPress: () =>
                 navigation.navigate("Adjuntar Fotos", { rgs: rgs }), // Redirección a la pantalla de imagen
             },
-            {
+            { 
               text: "No",
-              onPress: () => navigation.navigate("Asignado"), // Redirección a la pantalla CheckListCarreta
+              onPress: () => navigation.navigate("Asignado", {actualizar: true}), // Redirección a la pantalla CheckListCarreta
               style: "cancel",
             },
           ],
           { cancelable: false }
         );
 
-          navigation.navigate("Asignado");
+          navigation.navigate("Asignado", {actualizar: true});
         console.log("Fin");
       } else if (tc === "Expreso") {
         const carretaURL = checkListCarretaURL;
