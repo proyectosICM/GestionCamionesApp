@@ -30,7 +30,7 @@ export function Redirigir({ navigation }) {
   useEffect(() => {
     ListarInfo();
   }, [ListarInfo]);
-
+  
   useEffect(() => {
     const obtenerDatosUser = async () => {
       if (info) {

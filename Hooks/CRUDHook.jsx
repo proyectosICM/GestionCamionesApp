@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function useListarElementos(url, setDatos) {
   const navigation = useNavigation();
-  
+  console.log("Recargado")
   const fetchData = useCallback(async () => {
     try {
       const token = await AsyncStorage.getItem("token"); // Espera a que se resuelva la promesa para obtener el token

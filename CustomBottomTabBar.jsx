@@ -15,8 +15,9 @@ import { CamionSelect } from "./Screens/VIstaConductor/CamionSelect";
 
 const Tab = createBottomTabNavigator();
 
-export function CustomBottomTabBar() {
+export function CustomBottomTabBar({ navigation }) {
   const [rol, setRol] = useState(null);
+
 
   useEffect(() => {
     // Función asincrónica para obtener el valor de 'user' de AsyncStorage
