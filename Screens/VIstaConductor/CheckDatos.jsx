@@ -185,6 +185,7 @@ export function CheckDatos() {
           ],
           { cancelable: false }
         );
+        navigation.navigate("Asignado");
       } else if (tc === "Expreso") {
         const carretaURL = checkListCarretaURL;
         const rgsURL = RGS_URL;
