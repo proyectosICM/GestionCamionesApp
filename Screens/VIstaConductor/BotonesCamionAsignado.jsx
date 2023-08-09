@@ -3,9 +3,10 @@ import React from "react";
 import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import { Button, Icon } from "react-native-elements";
- 
-export function BotonesCamionAsignado({datos}) {
+
+export function BotonesCamionAsignado({ datos }) {
   const navigation = useNavigation();
+  console.log(datos);
   return (
     <>
       <View style={localStyles.buttonRow}>
@@ -14,7 +15,9 @@ export function BotonesCamionAsignado({datos}) {
             title={"Informacion detallada del camion"}
             titleStyle={localStyles.buttonText}
             buttonStyle={localStyles.button}
-            onPress={() => navigation.navigate('InfoDetallada', {datos: datos}) }
+            onPress={() =>
+              navigation.navigate("InfoDetallada", { datos: datos })
+            }
             icon={<Icon name="info" size={20} color="white" />} // Agrega el icono al botón
           />
 
@@ -23,25 +26,37 @@ export function BotonesCamionAsignado({datos}) {
             titleStyle={localStyles.buttonText}
             buttonStyle={localStyles.button}
             icon={<Icon name="edit" size={20} color="white" />}
-            onPress={() => navigation.navigate('Cambio de llantas', {datos: datos}) } 
+            onPress={() =>
+              navigation.navigate("Cambio de llantas", { datos: datos })
+            }
           />
         </View>
-
+        {/*
         <View style={localStyles.buttonContainer}>
           <Button
             title={"Notificaciones"}
             titleStyle={localStyles.buttonText}
             buttonStyle={localStyles.button}
             icon={<Icon name="notifications" size={20} color="white" />}
-            onPress={() => navigation.navigate('Notificaciones-Conductor') } 
+            onPress={() => navigation.navigate("Notificaciones-Conductor")}
+          />
+          */}
+
+        <View style={localStyles.buttonContainer}>
+          <Button
+            title={"Reportar una falla"}
+            titleStyle={localStyles.buttonText}
+            buttonStyle={localStyles.button}
+            icon={<Icon name="build" size={20} color="white" />}
+            onPress={() => navigation.navigate("Adjuntar Fotos", {rgs: datos.rgsModel.id})}
           />
 
           <Button
             title={"Observaciones"}
             titleStyle={localStyles.buttonText}
             buttonStyle={localStyles.button}
-            icon={<Icon name="comment" size={20} color="white" />} 
-            onPress={() => navigation.navigate('Observaciones') } 
+            icon={<Icon name="comment" size={20} color="white" />}
+            onPress={() => navigation.navigate("Observaciones")}
           />
         </View>
       </View>

@@ -117,7 +117,8 @@ export function CheckDatos() {
           [
             {
               text: "Sí",
-              onPress: () => navigation.navigate("Adjuntar Fotos", {rgs: RGS.data.id}), // Redirección a la pantalla de imagen
+              onPress: () =>
+                navigation.navigate("Adjuntar Fotos", { rgs: RGS.data.id }), // Redirección a la pantalla de imagen
             },
             {
               text: "No",
@@ -155,27 +156,27 @@ export function CheckDatos() {
         console.log("dsd 2 -> ");
         console.log("e " + rgs);
 
-        try {
-          await axios.put(`${RGS_URL}/${rgs}`, requestRGS, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-        } catch (error) {
-          console.log(error);
-          throw error;
-        }
+        const rgsRequest = {
+          checkListExpresoModel: { id: data.id },
+        };
 
-        console.log("e", ide);
+        const d = { id: data.id };
+
+        console.log("e22", rgs);
+        await useEditarUnElemento(RGS_URL, rgs, `checkListCarretaModel`, d);
+
+        //console.log("e22", ide);
         const cm = { id: rgs };
         await useEditarUnElemento(usuarioURL, usuario, "rgsModel", cm);
+
         Alert.alert(
           "Desea Agregar fotos",
           "",
           [
             {
               text: "Sí",
-              onPress: () => navigation.navigate("Adjuntar Fotos", {rgs: rgs}), // Redirección a la pantalla de imagen
+              onPress: () =>
+                navigation.navigate("Adjuntar Fotos", { rgs: rgs }), // Redirección a la pantalla de imagen
             },
             {
               text: "No",
@@ -185,7 +186,9 @@ export function CheckDatos() {
           ],
           { cancelable: false }
         );
-        navigation.navigate("Asignado");
+
+          navigation.navigate("Asignado");
+        console.log("Fin");
       } else if (tc === "Expreso") {
         const carretaURL = checkListCarretaURL;
         const rgsURL = RGS_URL;
@@ -213,8 +216,14 @@ export function CheckDatos() {
           checkListExpresoModel: { id: data.id },
         };
 
+        const cm = { id: data.id };
+        console.log(RGS_URL, " ", rgs);
+        console.log(ide);
+
+        useEditarUnElemento(RGS_URL, ide, `checkListExpresoModel`, cm);
+        /*
         try {
-          await axios.put(`${RGS_URL}/${rgs}`, rgsRequest, {
+          await axios.put(`${RGS_URL}/${ide}`, rgsRequest, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -223,6 +232,24 @@ export function CheckDatos() {
           console.log(error);
           throw error;
         }
+*/
+        Alert.alert(
+          "Desea Agregar fotos",
+          "",
+          [
+            {
+              text: "Sí",
+              onPress: () =>
+                navigation.navigate("Adjuntar Fotos", { rgs: rgs }), // Redirección a la pantalla de imagen
+            },
+            {
+              text: "No",
+              onPress: () => navigation.navigate("Inicio"), // Redirección a la pantalla CheckListCarreta
+              style: "cancel",
+            },
+          ],
+          { cancelable: false }
+        );
 
         navigation.navigate("Inicio");
       }

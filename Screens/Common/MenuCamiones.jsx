@@ -63,18 +63,24 @@ export function MenuCamiones() {
   console.log(camiones);
   const renderItem = ({ item }) =>
     op === "Habilitados" ? (
-      <ItemCamion
-        id={item.id}
-        title={item.checkListCamionModel.camionesModel.placa}
-        title2={item.checkListCarretaModel.camionesModel.placa}
-        description={item.checkListCamionModel.camionesModel.tiposCModel.nombre}
-        description2={
-          item.checkListCarretaModel.camionesModel.tiposCModel.nombre
-        }
-        estado={item.checkListCamionModel.camionesModel.estado}
-        enreparacion={item.checkListCamionModel.camionesModel.enreparacion}
-        op={op}
-      />
+      item.checkListCarretaModel ? (
+        <ItemCamion
+          id={item.id}
+          title={item.checkListCamionModel.camionesModel.placa}
+          description={
+            item.checkListCamionModel.camionesModel.tiposCModel.nombre
+          }
+          title2={item.checkListCarretaModel.camionesModel.placa}
+          description2={
+            item.checkListCarretaModel.camionesModel.tiposCModel.nombre
+          }
+          estado={item.checkListCamionModel.camionesModel.estado}
+          enreparacion={item.checkListCamionModel.camionesModel.enreparacion}
+          op={op}
+        />
+      ) : (
+        <Text>Fallado {item.id}</Text>
+      )
     ) : (
       <ItemCamion
         title={item.placa}
