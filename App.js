@@ -28,9 +28,9 @@ import { Observaciones } from './Screens/VIstaConductor/Observaciones/Observacio
 import VerificacionCarreta from './Screens/VIstaConductor/VerificarCarreta';
 import CheckListCamion from './Screens/VIstaConductor/CheckListCamion';
 import CheckListCarreta from './Screens/VIstaConductor/CheckListCarreta';
-import { AdjuntarFotos } from './Screens/Common/AdjuntarFotos';
 import { VerCL } from './Screens/VistaMecanico/VerCL';
 import { VerDatos } from './Screens/VistaMecanico/VerDatos';
+import { AdjuntarFotos } from './Screens/Common/Fotos/AdjuntarFotos';
 
 
 
