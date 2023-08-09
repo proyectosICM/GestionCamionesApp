@@ -47,8 +47,10 @@ export function AdjuntarFotos() {
       });
 
       if (!result.cancelled) {
-        //setImage(result.uri);
+        setImage(result.uri);
+
         console.log("axas");
+        //console.log(result);
       }
     } catch (error) {
       console.log("Error al tomar la foto:", error);
