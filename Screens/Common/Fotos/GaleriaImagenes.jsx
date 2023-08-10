@@ -62,11 +62,14 @@ export default function GaleriaImagenes() {
 
   console.log(idRgs);
 
-  const ListarImagenes = useListarElementos(`${FallasImgxRegistrosURL}${idRgs}`, setFallImg);
+  const ListarImagenes = useListarElementos(
+    `${FallasImgxRegistrosURL}${idRgs}`,
+    setFallImg
+  );
 
-  useEffect(()=>{
+  useEffect(() => {
     ListarImagenes();
-  },[ListarImagenes])
+  }, [ListarImagenes]);
   console.log(fallImg);
 
   useEffect(() => {
@@ -78,13 +81,14 @@ export default function GaleriaImagenes() {
       });
     }
   }, [activeIndex]);
+
   const renderItem = ({ item, index }) => (
     <TouchableOpacity
       style={styles.gridItem}
       onPress={() => handleThumbnailPress(index)}
     >
       <Image
-        source={{ uri: item.uri }}
+        source={{ uri: item.urlImage }}
         style={styles.thumbnail}
         resizeMode="cover"
       />
@@ -95,13 +99,13 @@ export default function GaleriaImagenes() {
     return (
       <View key={index} style={styles.slide}>
         <Image
-          source={{ uri: image.uri }}
+          source={{ uri: image.urlImage }}
           style={styles.image}
           resizeMode="contain"
         />
-        <Text style={styles.imageDescription}>{image.description}</Text>
-        <Text style={styles.imageDescription}>{image.usuario}</Text>
-        <Text style={styles.imageDescription}>{image.rol}</Text>
+        <Text style={styles.imageDescription}>{image.observacion}</Text>
+        <Text style={styles.imageDescription}>{image.usuariosModel.nombre} {image.usuariosModel.apellido}</Text>
+        <Text style={styles.imageDescription}>{image.usuariosModel.rolesModel.nombre}</Text>
       </View>
     );
   };
@@ -146,12 +150,12 @@ export default function GaleriaImagenes() {
           onScroll={handleScroll}
           scrollEventThrottle={200}
         >
-          {images.map((image, index) => renderImageItem(image, index))}
+          {fallImg.map((image, index) => renderImageItem(image, index))}
         </ScrollView>
       ) : (
         <>
           <FlatList
-            data={images}
+            data={fallImg}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
             numColumns={numColumns}
@@ -161,7 +165,7 @@ export default function GaleriaImagenes() {
 
       <TouchableOpacity style={styles.button} onPress={toggleThumbnails}>
         <Text style={styles.buttonText}>
-          {showThumbnails ? "Ver miniaturas" : "Ver galería"  }
+          {showThumbnails ? "Ver miniaturas" : "Ver galería"}
         </Text>
       </TouchableOpacity>
     </View>
@@ -186,7 +190,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height - 200,
+    height: Dimensions.get("window").height - 280,
   },
   imageDescription: {
     marginTop: 10,
