@@ -89,7 +89,7 @@ export function VerCL() {
         title={"Ver Imagenes de falla"}
         buttonStyle={styles.styleButton}
         titleStyle={styles.textoButton}
-        onPress={() => navigation.navigate('Galeria')}
+        onPress={() => navigation.navigate('Galeria', {idRgs: id})}
       />
     </View>
   );

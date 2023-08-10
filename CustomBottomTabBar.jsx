@@ -18,7 +18,6 @@ const Tab = createBottomTabNavigator();
 export function CustomBottomTabBar({ navigation }) {
   const [rol, setRol] = useState(null);
 
-
   useEffect(() => {
     // Función asincrónica para obtener el valor de 'user' de AsyncStorage
     const getUserFromAsyncStorage = async () => {
@@ -84,15 +83,19 @@ export function CustomBottomTabBar({ navigation }) {
           }}
         />
       )}
-      <Tab.Screen
-        name="Configuracion"
-        component={Configuracion}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="settings" color={color} size={size} />
-          ),
-        }}
-      />
+
+      {/*
+        <Tab.Screen
+          name="Configuracion"
+          component={Configuracion}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="settings" color={color} size={size} />
+            ),
+          }}
+        />
+        */}
+
       <Tab.Screen
         name="Cuenta"
         component={Cuenta}
