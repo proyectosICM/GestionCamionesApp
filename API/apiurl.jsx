@@ -34,6 +34,10 @@ export const usuarioURL = `${baseURL}usuarios`;
 export const RGS_URL = `${baseURL}RGS`;
 export const RGS_xEmpresa = `${RGS_URL}/xempresa-sede/`
 
+//Observaciones 
+export const ObsURL = `${baseURL}Obs`;
+export const ObsxRgsURL = `${ObsURL}/xRGS/`
+
 //Registro Cambio de llantas de Salidas
 export const CambioLlantasURL = `${baseURL}cambio-llantas`;
 

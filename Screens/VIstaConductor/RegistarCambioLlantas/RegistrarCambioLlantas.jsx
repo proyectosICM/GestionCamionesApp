@@ -7,6 +7,7 @@ import { CambiarCamion } from "./CambiarCamion";
 import { useState } from "react";
 import { CambiarCarreta } from "./CambiarCarreta";
 import { ScrollView } from "react-native";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 export function RegistrarCambioLlantas() {
   const [mostrar, setMostrar] = useState(null);
@@ -21,36 +22,37 @@ export function RegistrarCambioLlantas() {
   const rows = [[1, , 2], [[19], 20, [21], 22], [[23], 24, [25], 26], ["RP"]];
   return (
     <View style={styles.container}>
-        <Button
-          title={"Camion"}
-          titleStyle={styles.tittleText}
-          buttonStyle={styles.styleButton}
-          onPress={() => SelectTC("camion")}
-        />
+      <Button
+        title={" Camion"}
+        titleStyle={styles.tittleText}
+        buttonStyle={styles.styleButton}
+        onPress={() => SelectTC("camion")}
+        icon={<FontAwesome5 name="truck" size={20} color="white" />} // Agrega el icono aquí
+      />
 
-        <Button
-          title={"Carreta"}
-          titleStyle={styles.tittleText}
-          buttonStyle={styles.styleButton}
-          onPress={() => SelectTC("carreta")}
-        />
-        {mostrar != null && (
-          <>
-            <Text style={styles.tittleText}>Cambio de llantas</Text>
-            <Text style={styles.tittleText}>
-              Seleccione la llanta cambiada en ruta {mostrar}
-            </Text>
+      <Button
+        title={" Carreta"}
+        titleStyle={styles.tittleText}
+        buttonStyle={styles.styleButton}
+        onPress={() => SelectTC("carreta")}
+        icon={<FontAwesome5 name="truck-moving" size={20} color="white" />} // Agrega el icono aquí
+      />
+      {mostrar != null && (
+        <>
+          <Text style={styles.tittleText}>Cambio de llantas</Text>
+          <Text style={styles.tittleText}>
+            Seleccione la llanta cambiada en ruta {mostrar}
+          </Text>
 
-            {mostrar === "camion" ? (
-              <CambiarCamion />
-            ) : mostrar === "carreta" ? (
-              <CambiarCarreta />
-            ) : (
-              <Text>Seleccione un boton</Text>
-            )}
-          </>
-        )}
-
+          {mostrar === "camion" ? (
+            <CambiarCamion />
+          ) : mostrar === "carreta" ? (
+            <CambiarCarreta />
+          ) : (
+            <Text>Seleccione un boton</Text>
+          )}
+        </>
+      )}
     </View>
   );
 }

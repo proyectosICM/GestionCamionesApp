@@ -6,7 +6,7 @@ import { Button } from "react-native-elements";
 import { styles } from "../../../Styles/General";
 import { useRoute } from "@react-navigation/native";
 import { useAgregarElemento } from "../../../Hooks/CRUDHook";
-import { CambioLlantasURL } from "../../../API/apiurl";
+import { CambioLlantasURL, ObsURL } from "../../../API/apiurl";
 
 export function CambiarCarreta() {
   const route = useRoute();
@@ -46,12 +46,21 @@ export function CambiarCarreta() {
         id: datos.rgsModel.id,
       },
     };
+
+    const requestObs = {
+      nameObs: `Cambio de llanta registrado: ${texto} Llanta ${llantaSelect} Carreta`,
+      rgsModel: {
+          id: datos.rgsModel.id,
+      }
+    }
+
     try {
       await useAgregarElemento(CambioLlantasURL, request);
       setCambios(
         rows.map((row) => row.map(() => false)) // Reset all buttons to not selected
       );
       setTexto("")
+      await useAgregarElemento(ObsURL, requestObs);
     } catch (error) {
       console.log(error);
     }

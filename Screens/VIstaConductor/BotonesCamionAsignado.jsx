@@ -60,7 +60,7 @@ export function BotonesCamionAsignado({ datos }) {
             titleStyle={localStyles.buttonText}
             buttonStyle={localStyles.button}
             icon={<Icon name="comment" size={20} color="white" />}
-            onPress={() => navigation.navigate("Observaciones")}
+            onPress={() => navigation.navigate("Observaciones" , {rgs: datos.rgsModel.id })}
           />
         </View>
       </View>

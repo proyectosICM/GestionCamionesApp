@@ -1,46 +1,58 @@
 import React, { useState, useEffect } from "react";
-import { Text } from "react-native";
-import { View } from "react-native";
-import { styles } from "../../Styles/General";
+import { View, StyleSheet } from "react-native";
+import { Text, Icon } from "react-native-elements";
 import { Button } from "react-native-elements";
+import { FontAwesome } from "react-native-vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useListarElementos } from "../../Hooks/CRUDHook";
+import { infoURL } from "../../API/apiurl";
 
-export function Cuenta({navigation}) {
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f4f4f4",
+  },
+  buttonContainer: {
+    marginVertical: 20,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  iconContainer: {
+    marginBottom: 20,
+  },
+});
+
+export function Cuenta({ navigation }) {
   const [user, setUser] = useState("");
+  const [usuario, setUsuario] = useState({});
+  
+  useEffect(() => {
+    const obtenerDatosAsync = async () => {
+      const usuariov = await AsyncStorage.getItem("username");
+      setUser(usuariov);
+    };
+    obtenerDatosAsync();
+  }, []);
+
+  const ListarUsuarios = useListarElementos(`${infoURL}${user}`, setUsuario);
 
   useEffect(() => {
-    // Función asincrónica para obtener el valor de 'user' de AsyncStorage
-    const getUserFromAsyncStorage = async () => {
-      try {
-        const userValue = await AsyncStorage.getItem("user");
-        if (userValue !== null) {
-          setUser(userValue);
-        }
-      } catch (error) {
-        console.log("Error al obtener el usuario de AsyncStorage:", error);
-      }
-    };
-
-    // Llamar a la función para obtener el valor de 'user' al cargar el componente
-    getUserFromAsyncStorage();
-  }, []); // El arreglo vacío [] asegura que este efecto solo se ejecute una vez al montar el componente
-
-  const handleUser = async (op) => {
-    setUser(op);
-    try {
-      await AsyncStorage.setItem("user", op);
-    } catch (error) {
-      console.log("Error al guardar el usuario en AsyncStorage:", error);
-    }
-  };
+    ListarUsuarios();
+  }, [ListarUsuarios]);
 
   const handleLogout = async () => {
     try {
       await AsyncStorage.clear();
       setUser("");
-      console.log("Sesión cerrada. Todos los datos eliminados de AsyncStorage.");
-      navigation.navigate('Login-')
-
+      console.log(
+        "Sesión cerrada. Todos los datos eliminados de AsyncStorage."
+      );
+      navigation.navigate("Login-");
     } catch (error) {
       console.log("Error al cerrar la sesión:", error);
     }
@@ -48,33 +60,29 @@ export function Cuenta({navigation}) {
 
   return (
     <View style={styles.container}>
-     {/* 
-      <Text style={styles.tittleText}>Cuenta usted es</Text>
+      <View style={styles.iconContainer}>
+        <Icon name="user-circle" type="font-awesome" size={50} color="#333" />
+      </View>
+      <Text style={styles.title}>Hola, {user}</Text>
+      <Text style={styles.title}>
+        Nombre: {usuario.nombre} {usuario.apellido}
+      </Text>
+      <Text style={styles.title}>Rol: {usuario.rolesModel?.nombre}</Text>
+      <View style={styles.buttonContainer}>
+        <Button
+          title="  Cambiar Contraseña"
+          onPress={() => {
+            /* Agrega aquí la lógica para cambiar la contraseña */
+          }}
+          icon={<FontAwesome name="key" size={20} color="white" />}
+          buttonStyle={{ backgroundColor: "#007bff" }}
+        />
+      </View>
       <Button
-        title="Conductor"
-        buttonStyle={styles.styleButton}
-        onPress={() => handleUser("CONDUCTOR")}
-      />
-      <Text></Text>
-      <Button
-        title="Mecanico"
-        buttonStyle={styles.styleButton}
-        onPress={() => handleUser("MECANICO")}
-      />
-      <Text></Text>
-      <Button
-        title="Administrador"
-        buttonStyle={styles.styleButton}
-        onPress={() => handleUser("ADMINISTRADOR")}
-      />
-      <Text>{user}</Text>
-     */} 
-    
-      <Button
-        title="Cerrar Sesion"
-        buttonStyle={styles.styleButton}
-        titleStyle={styles.tittleText}
+        title="Cerrar Sesión"
         onPress={() => handleLogout()}
+        icon={<FontAwesome name="sign-out" size={20} color="white" />}
+        buttonStyle={{ backgroundColor: "#ff6347" }}
       />
     </View>
   );

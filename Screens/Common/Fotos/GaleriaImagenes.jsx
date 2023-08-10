@@ -171,7 +171,7 @@ export default function GaleriaImagenes() {
     </View>
   );
 }
-
+ 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
