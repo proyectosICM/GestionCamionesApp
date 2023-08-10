@@ -24,6 +24,7 @@ export const checkListExpresoURL = `${baseURL}cle`;
 
 //Fallas Imagen
 export const FallasImagenURL = `${baseURL}fallas-imagen`;
+export const FallasImgxRegistrosURL = `${FallasImagenURL}/xrgs/`
 //export const GaleriaImagesURL = `${base}`
 
 //Usuario

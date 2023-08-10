@@ -31,7 +31,8 @@ import CheckListCarreta from './Screens/VIstaConductor/CheckListCarreta';
 import { VerCL } from './Screens/VistaMecanico/VerCL';
 import { VerDatos } from './Screens/VistaMecanico/VerDatos';
 import { AdjuntarFotos } from './Screens/Common/Fotos/AdjuntarFotos';
-import { GaleriaImagenes } from './Screens/Common/Fotos/GaleriaImagenes';
+import GaleriaImagenes from './Screens/Common/Fotos/GaleriaImagenes';
+
 
 
 
