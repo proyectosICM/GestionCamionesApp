@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+const fondo1 = require("./fondo1.jpg");
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    //backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -30,6 +31,7 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
+    //color: "white"
   },
   marcaText: {
     fontSize: 18,
@@ -50,5 +52,9 @@ export const styles = StyleSheet.create({
     color: "white",
     fontSize: 18,
     fontWeight: "bold",
-  }
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
 });

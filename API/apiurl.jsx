@@ -3,6 +3,9 @@
 //export const base = "http://192.168.1.35:8080";
 //export const baseURL = "http://192.168.1.35:8080/api/";
 
+//Imgagen
+export const fondoURL = "../../Styles/fondo5.jpg";
+
 //Info
 export const infoURL = `${baseURL}usuarios/info/`
 

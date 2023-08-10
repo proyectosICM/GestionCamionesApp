@@ -6,10 +6,13 @@ import { Button, Icon } from "react-native-elements";
 import { StyleSheet } from "react-native";
 import { BotonesCamionAsignado } from "./BotonesCamionAsignado";
 import { useListarElementos } from "../../Hooks/CRUDHook";
-import { usuarioURL } from "../../API/apiurl";
+import { fondoURL, usuarioURL } from "../../API/apiurl";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { ImageBackground } from "react-native";
+
 
 export function CamionSelect() {
+  const fondo1 = require("../../Styles/fondo5.jpg");
   const [usuarioid, setUsuarioid] = useState();
   const [userData, setUserData] = useState();
   const [countdown, setCountdown] = useState(2); // Inicializa el contador en 2 segundos
@@ -51,7 +54,7 @@ export function CamionSelect() {
   const handleCargarCamion = () => {
     obtenerDatos();
     ListarInfoUser();
-  };
+  }; 
 
   useEffect(() => {
     if (actualizar) {
@@ -60,7 +63,9 @@ export function CamionSelect() {
     }
   }, [actualizar]);
 
+/*source={fondo1} */
   return (
+    <ImageBackground source={fondoURL}  style={styles.backgroundImage}>
     <View style={styles.container}>
       {userData ? (
         <>
@@ -85,5 +90,6 @@ export function CamionSelect() {
         </>
       )}
     </View>
+    </ImageBackground>
   );
 }

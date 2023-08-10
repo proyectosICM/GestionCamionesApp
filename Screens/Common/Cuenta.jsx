@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
-import { Text, Icon } from "react-native-elements";
+import { View, StyleSheet, ScrollView } from "react-native";
+import { Text, Icon, Divider } from "react-native-elements";
 import { Button } from "react-native-elements";
 import { FontAwesome } from "react-native-vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -10,27 +10,32 @@ import { infoURL } from "../../API/apiurl";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: "#f4f4f4",
+    padding: 20,
   },
-  buttonContainer: {
-    marginVertical: 20,
+  iconContainer: {
+    alignItems: "center",
+    marginTop: 30,
+    marginBottom: 20,
   },
   title: {
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
   },
-  iconContainer: {
-    marginBottom: 20,
+  subtitle: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  buttonContainer: {
+    marginTop: 20,
   },
 });
 
 export function Cuenta({ navigation }) {
   const [user, setUser] = useState("");
   const [usuario, setUsuario] = useState({});
-  
+
   useEffect(() => {
     const obtenerDatosAsync = async () => {
       const usuariov = await AsyncStorage.getItem("username");
@@ -59,31 +64,48 @@ export function Cuenta({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.iconContainer}>
-        <Icon name="user-circle" type="font-awesome" size={50} color="#333" />
+        <Icon name="user-circle" type="font-awesome" size={80} color="#333" />
       </View>
-      <Text style={styles.title}>Hola, {user}</Text>
-      <Text style={styles.title}>
+      <Text style={styles.title}>¡Hola, {user}!</Text>
+      <Divider style={{ backgroundColor: "#333", marginVertical: 10 }} />
+      <Text style={styles.subtitle}>
         Nombre: {usuario.nombre} {usuario.apellido}
       </Text>
-      <Text style={styles.title}>Rol: {usuario.rolesModel?.nombre}</Text>
+      <Text style={styles.subtitle}>Rol: {usuario.rolesModel?.nombre}</Text>
       <View style={styles.buttonContainer}>
         <Button
-          title="  Cambiar Contraseña"
+          title=" Cambiar Contraseña"
           onPress={() => {
-            /* Agrega aquí la lógica para cambiar la contraseña */
+            alert("Este modulo aun no esta disponible");
           }}
           icon={<FontAwesome name="key" size={20} color="white" />}
-          buttonStyle={{ backgroundColor: "#007bff" }}
+          buttonStyle={{ backgroundColor: "#007bff", marginBottom: 10 }}
+        />
+        <Button
+          title=" Editar Perfil"
+          onPress={() => {
+            alert("Este modulo aun no esta disponible");
+          }}
+          icon={<FontAwesome name="edit" size={20} color="white" />}
+          buttonStyle={{ backgroundColor: "#28a745", marginBottom: 10 }}
+        />
+        <Button
+          title=" Historial de Actividades"
+          onPress={() => {
+            alert("Este modulo aun no esta disponible");
+          }}
+          icon={<FontAwesome name="history" size={20} color="white" />}
+          buttonStyle={{ backgroundColor: "#6c757d" }}
         />
       </View>
       <Button
-        title="Cerrar Sesión"
+        title=" Cerrar Sesión"
         onPress={() => handleLogout()}
         icon={<FontAwesome name="sign-out" size={20} color="white" />}
-        buttonStyle={{ backgroundColor: "#ff6347" }}
+        buttonStyle={{ backgroundColor: "#ff6347", marginTop: 20 }}
       />
-    </View>
+    </ScrollView>
   );
 }
