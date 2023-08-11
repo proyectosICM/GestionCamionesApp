@@ -9,11 +9,34 @@ import { styles } from "../../Styles/General";
 import { Button } from "react-native-elements";
 import { ColorIcono, fondo } from '../../Styles/PaletaColores';
 import { ImageBackground } from 'react-native';
+import { BackHandler } from 'react-native';
+import { useBackHandler } from '../../Hooks/backHandler';
 
 export default function InicioMecanico({ navigation }) {
   const [abrir, setAbrir] = useState(false);
   const [user, setUser] = useState('');
+  
+  useBackHandler(navigation);
 
+/*
+  useEffect(() => {
+    const backAction = () => {
+      if (navigation.isFocused()) {
+        BackHandler.exitApp(); // Cierra la aplicación si estás en la pantalla "Inicio" y no hay usuario
+        return true;
+      }
+      return false;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [navigation]);
+
+*/
   useEffect(() => {
     // Función asincrónica para obtener el valor de 'user' de AsyncStorage
     const getUserFromAsyncStorage = async () => {

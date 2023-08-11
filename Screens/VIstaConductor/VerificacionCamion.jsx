@@ -5,6 +5,7 @@ import { ImageBackground } from "react-native";
 import QRScanner from "../../QRScanner";
 import { styles } from "../../Styles/General";
 import { ColorIcono, ColorTexto, fondo } from "../../Styles/PaletaColores";
+import { useBackHandler } from "../../Hooks/backHandler";
 
 const fondo1 = require("../../Styles/fondo5.jpg");
 const qr = require("../../Styles/icmLogo.png");
@@ -18,6 +19,8 @@ export default function VerificacionCamion({ navigation }) {
   const handleCerrarCamera = () => {
     setAbrir(false);
   };
+
+  useBackHandler(navigation);
 
   return abrir ? (
     <QRScanner

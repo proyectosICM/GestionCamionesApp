@@ -44,33 +44,40 @@ export default function App() {
 
   const [user, setUser] = useState(null);
 
-    const ListarUser = async () => {
-      const rolValue = await AsyncStorage.getItem('username');
-      setUser(rolValue);
-    }
-  
-    useEffect(() => {
-      ListarUser();
-    }, [ListarUser]);
+  const ListarUser = async () => {
+    const rolValue = await AsyncStorage.getItem('username');
+    setUser(rolValue);
+  }
 
+  useEffect(() => {
+    ListarUser();
+  }, [ListarUser]);
+  /* 
+          <Stack.Screen name='Login' component={Login} />
+          <Stack.Screen name='Redirigir' component={Redirigir} />
+  */
   return (
 
     <NavigationContainer>
       <Stack.Navigator>
         {/*user ? (
-          <Stack.Screen name='Redirigir' component={Redirigir} />
+        <Stack.Screen
+          name="Home"
+          component={CustomBottomTabBar}
+          options={{ headerShown: false }}
+        />
         ) : (
           <Stack.Screen name='Login' component={Login} />
         )*/}
+
         <Stack.Screen name='Login' component={Login} />
-        <Stack.Screen name='Redirigir' component={Redirigir} />
-
-
         <Stack.Screen
           name="Inicio"
           component={CustomBottomTabBar}
           options={{ headerShown: false }}
         />
+        <Stack.Screen name='Redirigir' component={Redirigir} />
+
         <Stack.Screen name='InicioMecanico' component={IncioMecanico} />
 
         <Stack.Screen name='VerificacionCamion' component={VerificacionCamion} />

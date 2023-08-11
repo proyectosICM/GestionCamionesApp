@@ -13,6 +13,8 @@ import { useCallback } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { tablesCam, tablesCarr } from "../../API/datosCLConductor";
 import { ScrollView } from "react-native";
+import { fondo } from "../../Styles/PaletaColores";
+import { ImageBackground } from "react-native";
 
 export default function CheckListCamion() {
   // const [tables, setTables] = useState(tablesCam);
@@ -92,7 +94,8 @@ export default function CheckListCamion() {
     return () => clearInterval(interval); // Limpiamos el intervalo cuando el componente se desmonte
   }, []);
  
-  return (
+  return ( 
+    <ImageBackground source={fondo} style={styles.backgroundImage}>
     <ScrollView>
       <View style={styles.container}>
         <Text>{ide  && ide} dd</Text>
@@ -141,5 +144,6 @@ export default function CheckListCamion() {
         )}
       </View>
     </ScrollView>
+    </ImageBackground>
   );
 }

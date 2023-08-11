@@ -7,6 +7,8 @@ import { infoURL } from "../../API/apiurl";
 import { Button } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import { styles } from "../../Styles/General";
+import { ActivityIndicator } from "react-native";
+
 
 export function Redirigir({ navigation }) {
   const [info, setInfo] = useState();
@@ -17,11 +19,8 @@ export function Redirigir({ navigation }) {
     const token = await AsyncStorage.getItem("token");
     const username = await AsyncStorage.getItem("username");
     setUser(username);
-    console.log(token);
-    console.log(username);
   }, []);
 
-  console.log("ya")
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -39,17 +38,9 @@ export function Redirigir({ navigation }) {
         await AsyncStorage.setItem("empresa", info.empresasModel.id.toString());
         await AsyncStorage.setItem("sede", info.sedesModel.id.toString());
         await AsyncStorage.setItem("usuario", info.id.toString());
-        /*if (info.camionesModel != null) {
-          await AsyncStorage.setItem(
-            "camion",
-            info.camionesModel.id.toString()
-          );
-        }*/
 
         navigation.navigate("Inicio");
-        setTimeout(() => {
-          setShowText(true); // Ocultar el texto después de 2 segundos
-        }, 2000); // Navegar a la pantalla "Inicio" después de 2 segundos
+// Navegar a la pantalla "Inicio" después de 2 segundos
       }
     };
     obtenerDatosUser();
@@ -70,7 +61,7 @@ export function Redirigir({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.tittleText}>Cargando... </Text>
+      <ActivityIndicator size={100} color="black" style={{ marginVertical: 15 }} />
       {showText && (
         <>
           <Text style={styles.tittleText}>
