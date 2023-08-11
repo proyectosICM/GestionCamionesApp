@@ -7,6 +7,7 @@ import { styles } from "../../../Styles/General";
 import { useRoute } from "@react-navigation/native";
 import { useAgregarElemento } from "../../../Hooks/CRUDHook";
 import { CambioLlantasURL, ObsURL } from "../../../API/apiurl";
+import { BotonLlantasActivo, BotonLlantas } from './../../../Styles/PaletaColores';
 
 export function CambiarCamion() {
   const route = useRoute();
@@ -75,7 +76,7 @@ export function CambiarCamion() {
             Registro de cambio {llantaSelect}
           </Text>
           <TextInput
-            style={localStyles.input} // Estilos para el TextInput
+            style={[localStyles.input,{backgroundColor: '#EBEFF2'}]} // Estilos para el TextInput
             placeholder="Observacion"
             value={texto}
             onChangeText={(text) => setTexto(text)} // Actualiza el valor de inputValue
@@ -141,13 +142,13 @@ const localStyles = StyleSheet.create({
     marginBottom: 10,
   },
   button: {
-    backgroundColor: "blue",
+    backgroundColor: BotonLlantas,
     borderRadius: 80,
     padding: 10,
     width: 50,
   },
   buttonSelected: {
-    backgroundColor: "red", // Cambia el color a rojo cuando está seleccionado
+    backgroundColor: BotonLlantasActivo, // Cambia el color a rojo cuando está seleccionado
   },
   buttonSeparator: {
     width: 20,

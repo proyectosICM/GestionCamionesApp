@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { BotonColorOscuro, ColorTexto, ColorTextoBoton, ColotTexto } from "./PaletaColores";
 const fondo1 = require("./fondo1.jpg");
 
 export const styles = StyleSheet.create({
@@ -16,7 +17,7 @@ export const styles = StyleSheet.create({
   },
   backButton: {
     backgroundColor: "#ccc",
-    color: "black",
+    color: ColorTexto,
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 8,
@@ -31,7 +32,7 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
-    //color: "white"
+    color: ColorTexto
   },
   marcaText: {
     fontSize: 18,
@@ -48,8 +49,15 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     margin: 2
   },
+  buttonPalette: {
+    backgroundColor: BotonColorOscuro,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    margin: 2
+  },
   textoButton: {
-    color: "white",
+    color: ColorTextoBoton,
     fontSize: 18,
     fontWeight: "bold",
   },

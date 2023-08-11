@@ -42,8 +42,14 @@ export function CustomBottomTabBar({ navigation }) {
   }, []);
 
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarActiveTintColor: "#A69677", // Cambia este color al que prefieras para los íconos seleccionados
+        tabBarInactiveTintColor: "#9CA4A6", // Cambia este color al que prefieras para los íconos no seleccionados
+      }}
+    >
       {/* Configurar las opciones de cada pantalla en el TabNavigator */}
+
       <Tab.Screen
         name="Home"
         component={

@@ -7,6 +7,8 @@ import QRScanner from "../../QRScanner";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { styles } from "../../Styles/General";
 import { Button } from "react-native-elements";
+import { ColorIcono, fondo } from '../../Styles/PaletaColores';
+import { ImageBackground } from 'react-native';
 
 export default function InicioMecanico({ navigation }) {
   const [abrir, setAbrir] = useState(false);
@@ -51,6 +53,7 @@ export default function InicioMecanico({ navigation }) {
   return abrir ? (
     <QRScanner cerrar={handleCerrarCamera} navigate={navigation.navigate} tc={"Camion"} />
   ) : (
+    <ImageBackground source={fondo}  style={styles.backgroundImage}>
     <View style={styles.container}>
       <Text style={styles.tittleText}>
         Escanear QR de camion
@@ -65,7 +68,7 @@ export default function InicioMecanico({ navigation }) {
           name: 'camera',
           type: 'font-awesome',
           size: 25,
-          color: 'white',
+          color: ColorIcono,
         }}
         iconRight
         onPress={handleAbrirCamera}
@@ -80,11 +83,12 @@ export default function InicioMecanico({ navigation }) {
           name: 'search', 
           type: 'font-awesome',
           size: 25,
-          color: 'white',
+          color: ColorIcono,
         }}
         iconRight
         onPress={() => handleMenu() }
       />
     </View>
+    </ImageBackground>
   );
 }

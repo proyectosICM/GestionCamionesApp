@@ -9,6 +9,7 @@ import { useListarElementos } from "../../Hooks/CRUDHook";
 import { fondoURL, usuarioURL } from "../../API/apiurl";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { ImageBackground } from "react-native";
+import { fondo } from "../../Styles/PaletaColores";
 
 
 export function CamionSelect() {
@@ -65,7 +66,7 @@ export function CamionSelect() {
 
 /*source={fondo1} */
   return (
-    <ImageBackground source={fondoURL}  style={styles.backgroundImage}>
+    <ImageBackground source={fondo}  style={styles.backgroundImage}>
     <View style={styles.container}>
       {userData ? (
         <>

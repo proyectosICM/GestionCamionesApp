@@ -8,8 +8,11 @@ import { useState } from "react";
 import { CambiarCarreta } from "./CambiarCarreta";
 import { ScrollView } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { ImageBackground } from "react-native";
+import { fondo } from "../../../Styles/PaletaColores";
 
 export function RegistrarCambioLlantas() {
+  const fondo1 = require("../../../Styles/fondo5.jpg");
   const [mostrar, setMostrar] = useState(null);
 
   const SelectTC = (op) => {
@@ -21,11 +24,12 @@ export function RegistrarCambioLlantas() {
   };
   const rows = [[1, , 2], [[19], 20, [21], 22], [[23], 24, [25], 26], ["RP"]];
   return (
+    <ImageBackground source={fondo} style={styles.backgroundImage}>
     <View style={styles.container}>
       <Button
         title={" Camion"}
         titleStyle={styles.tittleText}
-        buttonStyle={styles.styleButton}
+        buttonStyle={styles.buttonPalette}
         onPress={() => SelectTC("camion")}
         icon={<FontAwesome5 name="truck" size={20} color="white" />} // Agrega el icono aquí
       />
@@ -33,7 +37,7 @@ export function RegistrarCambioLlantas() {
       <Button
         title={" Carreta"}
         titleStyle={styles.tittleText}
-        buttonStyle={styles.styleButton}
+        buttonStyle={styles.buttonPalette}
         onPress={() => SelectTC("carreta")}
         icon={<FontAwesome5 name="truck-moving" size={20} color="white" />} // Agrega el icono aquí
       />
@@ -54,5 +58,6 @@ export function RegistrarCambioLlantas() {
         </>
       )}
     </View>
+    </ImageBackground>
   );
 }

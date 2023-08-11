@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { ImageBackground, View } from "react-native";
 import { styles } from "../../../Styles/General";
 import { Text } from "react-native";
 import { Button, Card } from "react-native-elements";
@@ -11,6 +11,7 @@ import { useListarElementos } from "../../../Hooks/CRUDHook";
 import { useRoute } from "@react-navigation/native";
 import { ObsxRgsURL } from "../../../API/apiurl";
 import { useEffect } from "react";
+import { fondo } from "../../../Styles/PaletaColores";
 
 export function Observaciones() {
   const [obs, setObs] = useState();
@@ -26,6 +27,7 @@ export function Observaciones() {
   console.log(obs);
 
   return (
+    <ImageBackground source={fondo} style={styles.backgroundImage}>
     <View style={styles.container}>
       <ScrollView>
         <Text style={styles.tittleText}>Observaciones</Text>
@@ -36,6 +38,7 @@ export function Observaciones() {
 
       </ScrollView>
     </View>
+    </ImageBackground>
   );
 }
 

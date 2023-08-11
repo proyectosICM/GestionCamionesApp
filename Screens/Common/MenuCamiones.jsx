@@ -10,6 +10,8 @@ import {
   camionesxsede,
 } from "../../API/apiurl";
 import { ScrollView } from "react-native";
+import { ImageBackground } from "react-native";
+import { fondo } from "../../Styles/PaletaColores";
 
 export function MenuCamiones() {
   const [camiones, setCamiones] = useState([]);
@@ -93,19 +95,21 @@ export function MenuCamiones() {
 
   return (
     <>
-      {titulo && (
-        <View style={{ alignItems: "center" }}>
-          <Text style={styles.tittleText}>{titulo}</Text>
-        </View>
-      )}
+      <ImageBackground source={fondo} style={styles.backgroundImage}>
+        {titulo && (
+          <View style={{ alignItems: "center" }}>
+            <Text style={styles.tittleText}>{titulo}</Text>
+          </View>
+        )}
 
-      <FlatList
-        data={camiones}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
-        numColumns={2}
-        contentContainerStyle={styles.flatListContent}
-      />
+        <FlatList
+          data={camiones}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={2}
+          contentContainerStyle={styles.flatListContent}
+        />
+      </ImageBackground>
     </>
   );
 }

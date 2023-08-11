@@ -16,6 +16,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { styles } from "../../../Styles/General";
+import { ImageBackground } from "react-native";
+import { ColorIcono, fondo } from "../../../Styles/PaletaColores";
 
 export function AdjuntarFotos() {
   const [usuario, setUsuario] = useState();
@@ -115,49 +117,51 @@ export function AdjuntarFotos() {
   };
 
   return (
-    <View style={styles.container}>
-      {image ? (
-        <>
-          <Image
-            source={{ uri: image }}
-            style={styles2.image}
-            resizeMode="contain"
-          />
-          <Text style={[styles.tittleText, { margin: 2 }]}>
-            Agrege la observacion
-          </Text>
-          <TextInput
-            style={styles2.input}
-            placeholder="Nombre de usuario"
-            onChangeText={(text) => setObservacion(text)}
-            value={observacion}
-          />
-          <Button
-            title={isLoading ? "Cargando..." : "Enviar"}
-            onPress={handleEnviar}
-            buttonStyle={styles.styleButton}
-            titleStyle={styles.tittleText}
-            disabled={isLoading} // Deshabilita el botón cuando está en modo de carga
-          />
-        </>
-      ) : (
-        <View style={styles2.previewContainer}>
-          <Button
-            title="Tomar Foto"
-            onPress={handleImagePicker}
-            buttonStyle={styles.styleButton}
-            titleStyle={styles.tittleText}
-            icon={{
-              name: "camera",
-              type: "font-awesome",
-              size: 25,
-              color: "white",
-            }}
-          />
-        </View>
-      )}
-      {/* zona para la imagen */}
-    </View>
+    <ImageBackground source={fondo} style={styles.backgroundImage}>
+      <View style={styles.container}>
+        {image ? (
+          <>
+            <Image
+              source={{ uri: image }}
+              style={styles2.image}
+              resizeMode="contain"
+            />
+            <Text style={[styles.tittleText, { margin: 2 }]}>
+              Agrege la observacion
+            </Text>
+            <TextInput
+              style={styles2.input}
+              placeholder="Nombre de usuario"
+              onChangeText={(text) => setObservacion(text)}
+              value={observacion}
+            />
+            <Button
+              title={isLoading ? "Cargando..." : "Enviar"}
+              onPress={handleEnviar}
+              buttonStyle={styles.styleButton}
+              titleStyle={styles.tittleText}
+              disabled={isLoading} // Deshabilita el botón cuando está en modo de carga
+            />
+          </>
+        ) : (
+          <View style={styles2.previewContainer}>
+            <Button
+              title="Tomar Foto"
+              onPress={handleImagePicker}
+              buttonStyle={styles.buttonPalette}
+              titleStyle={styles.tittleText}
+              icon={{
+                name: "camera",
+                type: "font-awesome",
+                size: 25,
+                color: ColorIcono
+              }}
+            />
+          </View>
+        )}
+        {/* zona para la imagen */}
+      </View>
+    </ImageBackground>
   );
 }
 

@@ -13,6 +13,9 @@ import { VerCL } from "../../VistaMecanico/VerCL";
 import { useListarElementos } from "../../../Hooks/CRUDHook";
 import { useRoute } from "@react-navigation/native";
 import { FallasImgxRegistrosURL } from "../../../API/apiurl";
+import { ImageBackground } from "react-native";
+import { fondo } from "../../../Styles/PaletaColores";
+import { styles as general } from "../../../Styles/General";
 
 const images = [
   {
@@ -104,8 +107,12 @@ export default function GaleriaImagenes() {
           resizeMode="contain"
         />
         <Text style={styles.imageDescription}>{image.observacion}</Text>
-        <Text style={styles.imageDescription}>{image.usuariosModel.nombre} {image.usuariosModel.apellido}</Text>
-        <Text style={styles.imageDescription}>{image.usuariosModel.rolesModel.nombre}</Text>
+        <Text style={styles.imageDescription}>
+          {image.usuariosModel.nombre} {image.usuariosModel.apellido}
+        </Text>
+        <Text style={styles.imageDescription}>
+          {image.usuariosModel.rolesModel.nombre}
+        </Text>
       </View>
     );
   };
@@ -139,39 +146,41 @@ export default function GaleriaImagenes() {
   };
 
   return (
-    <View style={styles.container}>
-      {showThumbnails ? (
-        <ScrollView
-          ref={scrollViewRef}
-          style={styles.wrapper}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          onScroll={handleScroll}
-          scrollEventThrottle={200}
-        >
-          {fallImg.map((image, index) => renderImageItem(image, index))}
-        </ScrollView>
-      ) : (
-        <>
-          <FlatList
-            data={fallImg}
-            renderItem={renderItem}
-            keyExtractor={(item, index) => index.toString()}
-            numColumns={numColumns}
-          />
-        </>
-      )}
+    <ImageBackground style={general.backgroundImage}>
+      <View style={styles.container}>
+        {showThumbnails ? (
+          <ScrollView
+            ref={scrollViewRef}
+            style={styles.wrapper}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onScroll={handleScroll}
+            scrollEventThrottle={200}
+          >
+            {fallImg.map((image, index) => renderImageItem(image, index))}
+          </ScrollView>
+        ) : (
+          <>
+            <FlatList
+              data={fallImg}
+              renderItem={renderItem}
+              keyExtractor={(item, index) => index.toString()}
+              numColumns={numColumns}
+            />
+          </>
+        )}
 
-      <TouchableOpacity style={styles.button} onPress={toggleThumbnails}>
-        <Text style={styles.buttonText}>
-          {showThumbnails ? "Ver miniaturas" : "Ver galería"}
-        </Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity style={styles.button} onPress={toggleThumbnails}>
+          <Text style={styles.buttonText}>
+            {showThumbnails ? "Ver miniaturas" : "Ver galería"}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </ImageBackground>
   );
 }
- 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

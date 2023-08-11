@@ -6,33 +6,13 @@ import { FontAwesome } from "react-native-vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useListarElementos } from "../../Hooks/CRUDHook";
 import { infoURL } from "../../API/apiurl";
+import { ImageBackground } from "react-native";
+import { ColorIcono, ColorTexto, ColorTextoBoton, fondo } from "../../Styles/PaletaColores";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f4f4f4",
-    padding: 20,
-  },
-  iconContainer: {
-    alignItems: "center",
-    marginTop: 30,
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 16,
-    marginBottom: 5,
-  },
-  buttonContainer: {
-    marginTop: 20,
-  },
-});
+
 
 export function Cuenta({ navigation }) {
+  const fondo1 = require("../../Styles/fondo5.jpg");
   const [user, setUser] = useState("");
   const [usuario, setUsuario] = useState({});
 
@@ -64,6 +44,7 @@ export function Cuenta({ navigation }) {
   };
 
   return (
+    <ImageBackground source={fondo}  style={styles.backgroundImage}>
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.iconContainer}>
         <Icon name="user-circle" type="font-awesome" size={80} color="#333" />
@@ -80,32 +61,68 @@ export function Cuenta({ navigation }) {
           onPress={() => {
             alert("Este modulo aun no esta disponible");
           }}
-          icon={<FontAwesome name="key" size={20} color="white" />}
+          icon={<FontAwesome name="key" size={20} color={ColorIcono} />}
           buttonStyle={{ backgroundColor: "#007bff", marginBottom: 10 }}
+          titleStyle={{color: ColorTextoBoton}}
         />
         <Button
           title=" Editar Perfil"
           onPress={() => {
             alert("Este modulo aun no esta disponible");
           }}
-          icon={<FontAwesome name="edit" size={20} color="white" />}
+          icon={<FontAwesome name="edit" size={20} color={ColorIcono} />}
           buttonStyle={{ backgroundColor: "#28a745", marginBottom: 10 }}
+          titleStyle={{color: ColorTextoBoton}}
         />
         <Button
           title=" Historial de Actividades"
           onPress={() => {
             alert("Este modulo aun no esta disponible");
           }}
-          icon={<FontAwesome name="history" size={20} color="white" />}
+          icon={<FontAwesome name="history" size={20} color={ColorIcono} />}
           buttonStyle={{ backgroundColor: "#6c757d" }}
+          titleStyle={{color: ColorTextoBoton}}
         />
       </View>
       <Button
         title=" Cerrar Sesión"
         onPress={() => handleLogout()}
-        icon={<FontAwesome name="sign-out" size={20} color="white" />}
+        icon={<FontAwesome name="sign-out" size={20} color={ColorIcono} />}
         buttonStyle={{ backgroundColor: "#ff6347", marginTop: 20 }}
+        titleStyle={{color: ColorTextoBoton}}
       />
     </ScrollView>
+    </ImageBackground>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    //backgroundColor: "#f4f4f4",
+    padding: 80,
+  },
+  iconContainer: {
+    alignItems: "center",
+    marginTop: 30,
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: ColorTexto
+  },
+  subtitle: {
+    fontSize: 16,
+    marginBottom: 5,
+    color: ColorTexto
+  },
+  buttonContainer: {
+    marginTop: 20,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
+});

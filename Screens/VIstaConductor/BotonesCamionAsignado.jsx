@@ -4,6 +4,7 @@ import { Text } from "react-native";
 import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import { Button, Icon } from "react-native-elements";
+import { BotonColorOscuro, ColorIcono, ColorTextoBoton } from "../../Styles/PaletaColores";
 
 export function BotonesCamionAsignado({ datos }) {
   const navigation = useNavigation();
@@ -20,14 +21,14 @@ export function BotonesCamionAsignado({ datos }) {
             onPress={() =>
               navigation.navigate("InfoDetallada", { datos: datos })
             }
-            icon={<Icon name="info" size={20} color="white" />} // Agrega el icono al botón
+            icon={<Icon name="info" size={20} color={ColorIcono}  />} // Agrega el icono al botón
           />
 
           <Button
             title={"Registrar cambio de llantas"}
             titleStyle={localStyles.buttonText}
             buttonStyle={localStyles.button}
-            icon={<Icon name="edit" size={20} color="white" />}
+            icon={<Icon name="edit" size={20} color={ColorIcono} />}
             onPress={() =>
               navigation.navigate("Cambio de llantas", { datos: datos })
             }
@@ -49,7 +50,7 @@ export function BotonesCamionAsignado({ datos }) {
             title={"Reportar una falla"}
             titleStyle={localStyles.buttonText}
             buttonStyle={localStyles.button}
-            icon={<Icon name="build" size={20} color="white" />}
+            icon={<Icon name="build" size={20} color={ColorIcono}  />}
             onPress={() =>
               navigation.navigate("Adjuntar Fotos", { rgs: datos.rgsModel.id })
             }
@@ -59,7 +60,7 @@ export function BotonesCamionAsignado({ datos }) {
             title={"Observaciones"}
             titleStyle={localStyles.buttonText}
             buttonStyle={localStyles.button}
-            icon={<Icon name="comment" size={20} color="white" />}
+            icon={<Icon name="comment" size={20} color={ColorIcono} />}
             onPress={() => navigation.navigate("Observaciones" , {rgs: datos.rgsModel.id })}
           />
         </View>
@@ -71,7 +72,7 @@ export function BotonesCamionAsignado({ datos }) {
             title={"Ver fotos asociadas al Registro"}
             titleStyle={localStyles.buttonText}
             buttonStyle={localStyles.button}
-            icon={<Icon name="photo" size={20} color="white" />}
+            icon={<Icon name="photo" size={20} color={ColorIcono} />}
             onPress={() =>
               navigation.navigate("Galeria", { idRgs: datos.rgsModel.id })
             }
@@ -99,7 +100,7 @@ const localStyles = StyleSheet.create({
     marginHorizontal: 10,
   },
   button: {
-    backgroundColor: "blue",
+    backgroundColor: BotonColorOscuro,
     flexDirection: "column",
     borderRadius: 8,
     padding: 10,
@@ -108,8 +109,11 @@ const localStyles = StyleSheet.create({
     marginTop: 8,
   },
   buttonText: {
-    color: "white",
+    color: ColorTextoBoton,
     marginTop: 8,
     fontSize: 18,
   },
+  iconoColor: {
+    color: ColorIcono
+  }
 });
