@@ -9,26 +9,17 @@ import { infoURL } from "../../API/apiurl";
 import { ImageBackground } from "react-native";
 import { ColorIcono, ColorTexto, ColorTextoBoton, fondo } from "../../Styles/PaletaColores";
 
-
-
 export function Cuenta({ navigation }) {
-  const fondo1 = require("../../Styles/fondo5.jpg");
   const [user, setUser] = useState("");
   const [usuario, setUsuario] = useState({});
+  const obtenerDatosAsync = async () => {
+    const usuariov = await AsyncStorage.getItem("username");
+    setUser(usuariov);
+  };
 
   useEffect(() => {
-    const obtenerDatosAsync = async () => {
-      const usuariov = await AsyncStorage.getItem("username");
-      setUser(usuariov);
-    };
     obtenerDatosAsync();
-  }, []);
-
-  const ListarUsuarios = useListarElementos(`${infoURL}${user}`, setUsuario);
-
-  useEffect(() => {
-    ListarUsuarios();
-  }, [ListarUsuarios]);
+  }, [obtenerDatosAsync]);
 
   const handleLogout = async () => {
     try {
@@ -37,11 +28,19 @@ export function Cuenta({ navigation }) {
       console.log(
         "Sesión cerrada. Todos los datos eliminados de AsyncStorage."
       );
-      navigation.navigate("Login-");
+      navigation.navigate("Login");
     } catch (error) {
       console.log("Error al cerrar la sesión:", error);
     }
   };
+
+  const ListarUsuarios = useListarElementos(`${infoURL}${user}`, setUsuario, "logout");
+
+  useEffect(() => {
+    ListarUsuarios();
+  }, [ListarUsuarios]);
+ 
+
 
   return (
     <ImageBackground source={fondo}  style={styles.backgroundImage}>
@@ -49,7 +48,7 @@ export function Cuenta({ navigation }) {
       <View style={styles.iconContainer}>
         <Icon name="user-circle" type="font-awesome" size={80} color="#333" />
       </View>
-      <Text style={styles.title}>¡Hola, {user}!</Text>
+      <Text style={[styles.title, {textAlign:"center"}]}>¡Hola, {user}!</Text>
       <Divider style={{ backgroundColor: "#333", marginVertical: 10 }} />
       <Text style={styles.subtitle}>
         Nombre: {usuario.nombre} {usuario.apellido}

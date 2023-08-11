@@ -63,8 +63,6 @@ export default function GaleriaImagenes() {
   const route = useRoute();
   const idRgs = route.params.idRgs;
 
-  console.log(idRgs);
-
   const ListarImagenes = useListarElementos(
     `${FallasImgxRegistrosURL}${idRgs}`,
     setFallImg
@@ -73,7 +71,6 @@ export default function GaleriaImagenes() {
   useEffect(() => {
     ListarImagenes();
   }, [ListarImagenes]);
-  console.log(fallImg);
 
   useEffect(() => {
     // Asigna el ref después de que el componente ha sido montado

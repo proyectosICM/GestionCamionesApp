@@ -1,29 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
-import * as Permissions from 'expo-permissions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-const QRScanner = ({cerrar, navigate, tc}) => {
+const QRScanner = ({ cerrar, navigate, tc }) => {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
-
-
   useEffect(() => {
     (async () => {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA);
+      const { status } = await Camera.requestCameraPermissionsAsync();
       setHasCameraPermission(status === 'granted');
     })();
   }, []);
 
-  const handleBarCodeScanned = async({ data }) => {
+  const handleBarCodeScanned = async ({ data }) => {
     setScanned(true);
     cerrar();
-    //alert(`Código QR escaneado: ${data}`);
     await AsyncStorage.setItem('camionid', data);
-    navigate('Detalles', {tc : tc} ); 
+    navigate('Detalles', { tc: tc });
   };
 
   if (hasCameraPermission === null) {
@@ -44,9 +39,9 @@ const QRScanner = ({cerrar, navigate, tc}) => {
           <Text style={styles.scanAgainText}>Escanear de nuevo</Text>
         </TouchableOpacity>
       )}
-        <TouchableOpacity onPress={() => cerrar()} style={styles.scanAgain}>
-          <Text style={styles.scanAgainText}>Cerrar Camara</Text>
-        </TouchableOpacity>
+      <TouchableOpacity onPress={() => cerrar()} style={styles.scanAgain}>
+        <Text style={styles.scanAgainText}>Cerrar Cámara</Text>
+      </TouchableOpacity>
     </View>
   );
 };

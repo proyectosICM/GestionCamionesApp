@@ -2,10 +2,10 @@ import axios from "axios";
 import { useCallback, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { infoURL } from "../API/apiurl";
 
 export function useListarElementos(url, setDatos) {
   const navigation = useNavigation();
-  console.log("Recargado")
   const fetchData = useCallback(async () => {
     try {
       const token = await AsyncStorage.getItem("token"); // Espera a que se resuelva la promesa para obtener el token
@@ -18,12 +18,18 @@ export function useListarElementos(url, setDatos) {
     } catch (error) {
       if (error.response && error.response.status === 500) {
         // Token expirado, redirigir al inicio de sesión
-        //navigation.navigate("Login");
-        console.log(url);
-        console.log(token);
+        console.log(url)
+/*
+        if(!logout){
+          alert("Su sesion a caducado, la sesion se cerro");
+        }
+        */
+        await AsyncStorage.clear();
+        navigation.navigate("Login");
       } else {
         // Otro error, manejarlo adecuadamente
         //console.error(`Error al obtener los datos del camión: ${url}`, error);
+        // Token expirado, redirigir al inicio de sesión
       }
     }
   }, [navigation, setDatos, url]);

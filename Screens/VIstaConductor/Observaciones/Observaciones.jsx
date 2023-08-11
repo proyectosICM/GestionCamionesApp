@@ -24,7 +24,6 @@ export function Observaciones() {
     ListarObservaciones();
   }, [ListarObservaciones]);
 
-  console.log(obs);
 
   return (
     <ImageBackground source={fondo} style={styles.backgroundImage}>

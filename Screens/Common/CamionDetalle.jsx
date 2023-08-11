@@ -1,14 +1,21 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
+} from "react-native";
 import { useListarElementos } from "../../Hooks/CRUDHook";
 import { useEffect } from "react";
 import { styles } from "../../Styles/General";
-import { Button } from "react-native-elements";
+import { Button, Card } from "react-native-elements";
 import { base, baseURL } from "../../API/apiurl";
 import { useCallback } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRoute } from "@react-navigation/native";
 import { tablesCam, tablesCarr } from "../../API/datosCLConductor";
+import { fondo } from "../../Styles/PaletaColores";
 
 export default function CamionDetalle({ navigation }) {
   const [camion, setCamion] = useState();
@@ -38,33 +45,46 @@ export default function CamionDetalle({ navigation }) {
   }, [ListarCamion]);
 
   const handleAlerta = () => {
-    alert("ED")
-  } 
-
-  const handleListChecklist = () => {
-    if(tc == "Camion"){
-      navigation.navigate("CheckList Camion", {tc: tc, tablesD: tablesCam});
-    } else if( tc == "Carreta"){
-      navigation.navigate("CheckList Camion", {tc: tc, tablesD: tablesCarr});
-    }
-
+    alert("ED");
   };
 
-
+  const handleListChecklist = () => {
+    if (tc == "Camion") {
+      navigation.navigate("CheckList Camion", { tc: tc, tablesD: tablesCam });
+    } else if (tc == "Carreta") {
+      navigation.navigate("CheckList Camion", { tc: tc, tablesD: tablesCarr });
+    }
+  };
 
   return (
-    <View style={styles.container}>
-      {camion ? (
-        <>
-        
-          <Text style={styles.tittleText}>{camion.tiposCModel.nombre}</Text>
-          <Text style={styles.tittleText}>Placa {camion.placa}</Text>
-          <Text style={styles.tittleText}>
-            Marca {camion.marcasModel.nombre}
-          </Text>
-          <Text style={styles.tittleText}>
-            Modelo {camion.modeloModel.nombre}
-          </Text>
+    <ImageBackground source={fondo} style={styles.backgroundImage}>
+      <View style={styles.container}>
+        {camion ? (
+          <View
+            style={{
+              backgroundColor: "white",
+              padding: 10,
+              borderRadius: 15,
+              alignItems: "center",
+              width: 200
+            }}
+          >
+            <Text style={styles.tittleText}>{camion.tiposCModel.nombre}</Text>
+            <Text style={styles.tittleText}>Placa {camion.placa}</Text>
+            <Text style={styles.tittleText}>
+              Marca {camion.marcasModel.nombre}
+            </Text>
+            <Text style={styles.tittleText}>
+              Modelo {camion.modeloModel.nombre}
+            </Text>
+          </View>
+        ) : (
+          <>
+          
+            <Text style={styles.tittleText}>Cargando...</Text>
+          </>
+        )}
+        <View style={{margin: 20}}>
           {rol && rol === "CONDUCTOR" && (
             <Button
               title=" Realizar Checklist "
@@ -115,27 +135,8 @@ export default function CamionDetalle({ navigation }) {
               />
             </>
           )}
-        </>
-      ) : (
-        <>
-          <Text style={styles.tittleText}>Cargando...</Text>
-
-          <Button
-            title=" Realizar Checklist "
-            type="outline"
-            buttonStyle={styles.styleButton}
-            titleStyle={styles.textoButton}
-            icon={{
-              name: "check",
-              type: "font-awesome",
-              size: 25,
-              color: "white",
-            }}
-            iconRight
-            onPress={() => navigation.navigate("CheckList")}
-          />
-        </>
-      )}
-    </View>
+        </View>
+      </View>
+    </ImageBackground>
   );
 }

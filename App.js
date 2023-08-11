@@ -44,26 +44,28 @@ export default function App() {
 
   const [user, setUser] = useState(null);
 
-  const ListarUser = async () => {
-    const rolValue = await AsyncStorage.getItem('rol');
-    setUser(rolValue);
-  }
-
-  useEffect(() => {
-    ListarUser();
-  }, [ListarUser]);
+    const ListarUser = async () => {
+      const rolValue = await AsyncStorage.getItem('username');
+      setUser(rolValue);
+    }
+  
+    useEffect(() => {
+      ListarUser();
+    }, [ListarUser]);
 
   return (
 
     <NavigationContainer>
       <Stack.Navigator>
-      {user ? (
-          <Stack.Screen name='Redirigir2' component={Redirigir} />
+        {/*user ? (
+          <Stack.Screen name='Redirigir' component={Redirigir} />
         ) : (
-          <Stack.Screen name='Login-' component={Login} /> 
-        )}
+          <Stack.Screen name='Login' component={Login} />
+        )*/}
+        <Stack.Screen name='Login' component={Login} />
+        <Stack.Screen name='Redirigir' component={Redirigir} />
 
-        <Stack.Screen name='Login' component={Login} /> 
+
         <Stack.Screen
           name="Inicio"
           component={CustomBottomTabBar}
@@ -81,8 +83,6 @@ export default function App() {
 
         <Stack.Screen name='Menu-Camion' component={MenuCamiones} />
         <Stack.Screen name='Menu-CRUD' component={MenuCrud} />
-
-        <Stack.Screen name='Redirigir' component={Redirigir} />
         <Stack.Screen name='Cargando' component={Cargando} />
 
         <Stack.Screen name='CheckDatos' component={CheckDatos} />
@@ -96,7 +96,7 @@ export default function App() {
         <Stack.Screen name='Observaciones' component={Observaciones} />
 
         <Stack.Screen name='Adjuntar Fotos' component={AdjuntarFotos} />
-        <Stack.Screen name='Galeria' component={GaleriaImagenes}/>
+        <Stack.Screen name='Galeria' component={GaleriaImagenes} />
         {/* Rutas secundarias */}
       </Stack.Navigator>
     </NavigationContainer>

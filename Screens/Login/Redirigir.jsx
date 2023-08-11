@@ -21,6 +21,7 @@ export function Redirigir({ navigation }) {
     console.log(username);
   }, []);
 
+  console.log("ya")
   useEffect(() => {
     fetchData();
   }, [fetchData]);
