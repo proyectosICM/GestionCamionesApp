@@ -4,6 +4,7 @@ import { StyleSheet } from 'react-native';
 import { Text } from 'react-native';
 import { Image } from 'react-native';
 import { Button } from 'react-native-elements';
+import { styles } from '../../../Styles/General';
 
 export function FormFoto({image}){
     return(
@@ -17,8 +18,8 @@ export function FormFoto({image}){
           Agrege la observacion
         </Text>
         <TextInput
-          style={styles2.input}
-          placeholder="Nombre de usuario"
+            style={[styles.input,{backgroundColor: '#EBEFF2'}]} 
+          placeholder="Detalle la observacion"
           onChangeText={(text) => setObservacion(text)}
           value={observacion}
         />

@@ -94,12 +94,28 @@ export function AdjuntarFotos() {
               id: rgs,
             },
           };
-          console.log(requestData);
-          console.log(FallasImagenURL);
           await useAgregarElemento(FallasImagenURL, requestData);
 
           setImage(null);
           setObservacion("");
+
+          const requestObs = {
+            nameObs: `Se guardo la foto: ${observacion} Por el usuario  `,
+            rgsModel: {
+                id: rgs,
+            }
+          }
+      
+          try {
+            await useAgregarElemento(CambioLlantasURL, request);
+            setCambios(
+              rows.map((row) => row.map(() => false)) // Reset all buttons to not selected
+            );
+            setTexto("")
+            await useAgregarElemento(ObsURL, requestObs);
+          } catch (error) {
+            console.log(error);
+          }
           Alert.alert("La imagen se subio correctamente");
         } else {
           console.log("Error al subir la imagen:", response.data);
@@ -130,8 +146,8 @@ export function AdjuntarFotos() {
               Agrege la observacion
             </Text>
             <TextInput
-              style={styles2.input}
-              placeholder="Nombre de usuario"
+            style={[styles2.input,{backgroundColor: '#EBEFF2'}]} 
+              placeholder="Detalle la observacion"
               onChangeText={(text) => setObservacion(text)}
               value={observacion}
             />
