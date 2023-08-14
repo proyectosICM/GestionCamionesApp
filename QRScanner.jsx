@@ -6,6 +6,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const QRScanner = ({ cerrar, navigate, tc }) => {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [rol, setRol] = useState(false);
+
+  useEffect(() => {
+    const obtenerDatosAsync = async () => {
+      const rolv = await AsyncStorage.getItem("rol");
+      setRol(rolv);
+    };
+
+    obtenerDatosAsync();
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -13,12 +23,16 @@ const QRScanner = ({ cerrar, navigate, tc }) => {
       setHasCameraPermission(status === 'granted');
     })();
   }, []);
-
+ 
   const handleBarCodeScanned = async ({ data }) => {
     setScanned(true);
     cerrar();
-    await AsyncStorage.setItem('camionid', data);
-    navigate('Detalles', { tc: tc });
+    if(rol == "CONDUCTOR"){
+      await AsyncStorage.setItem('camionid', data);
+      navigate('Detalles', { tc: tc, camionid: data });
+    } else if(rol == "MECANICO"){
+      navigate('Detalles', { tc: tc, camionid: data });
+    }
   };
 
   if (hasCameraPermission === null) {

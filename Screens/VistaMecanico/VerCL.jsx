@@ -63,7 +63,7 @@ export function VerCL() {
       });
     }
   };
-  console.log("hola p2s", camion.checkListCarretaModel);
+
   return (
     <View style={styles.container}>
       <Text>{id}</Text>

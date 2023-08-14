@@ -9,7 +9,7 @@ import * as ImagePicker from "expo-image-picker";
 import { Image } from "react-native";
 import axios from "axios";
 import { useAgregarElemento } from "../../../Hooks/CRUDHook";
-import { FallasImagenURL } from "../../../API/apiurl";
+import { FallasImagenURL, ObsURL } from "../../../API/apiurl";
 import { StyleSheet } from "react-native";
 import { useCallback } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -32,6 +32,7 @@ export function AdjuntarFotos() {
 
   useEffect(() => {
     datosAsync();
+    console.log("sdad")
   }, [datosAsync]);
 
   const [image, setImage] = useState(null);
@@ -46,7 +47,7 @@ export function AdjuntarFotos() {
         quality: 1,
       });
 
-      if (!result.cancelled) {
+      if (result) {
         setImage(result.uri);
 
         console.log("axas");
@@ -105,13 +106,8 @@ export function AdjuntarFotos() {
                 id: rgs,
             }
           }
-      
+       
           try {
-            await useAgregarElemento(CambioLlantasURL, request);
-            setCambios(
-              rows.map((row) => row.map(() => false)) // Reset all buttons to not selected
-            );
-            setTexto("")
             await useAgregarElemento(ObsURL, requestObs);
           } catch (error) {
             console.log(error);

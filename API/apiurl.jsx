@@ -1,7 +1,14 @@
- export const base = "http://192.168.1.232:8080";
- export const baseURL = "http://192.168.1.232:8080/api/";
+ //export const base = "http://192.168.1.232:8080";
+ //export const baseURL = "http://192.168.1.232:8080/api/";
+
 //export const base = "http://192.168.1.35:8080";
 //export const baseURL = "http://192.168.1.35:8080/api/";
+
+//export const base =  "http://localhost:8080"
+//export const baseURL =  "http://localhost:8080/api/";
+
+ export const base = "api-gestion-camiones-production.up.railway.app";
+ export const baseURL = "api-gestion-camiones-production.up.railway.app/api/";
 
 //Imgagen
 export const fondoURL = "../../Styles/fondo5.jpg";

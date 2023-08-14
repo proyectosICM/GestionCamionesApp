@@ -10,7 +10,7 @@ import { fondoURL, usuarioURL } from "../../API/apiurl";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { ImageBackground } from "react-native";
 import { fondo } from "../../Styles/PaletaColores";
-
+import QRCodeGenerator, { GeneradorQR } from "./GeneradorQR";
 
 export function CamionSelect() {
   const fondo1 = require("../../Styles/fondo5.jpg");
@@ -55,7 +55,7 @@ export function CamionSelect() {
   const handleCargarCamion = () => {
     obtenerDatos();
     ListarInfoUser();
-  }; 
+  };
 
   useEffect(() => {
     if (actualizar) {
@@ -64,33 +64,36 @@ export function CamionSelect() {
     }
   }, [actualizar]);
 
-/*source={fondo1} */
+  /*source={fondo1} */
   return (
-    <ImageBackground source={fondo}  style={styles.backgroundImage}>
-    <View style={styles.container}>
-      {userData ? (
-        <>
-          <Text>{userData.rgsModel.id}</Text>
-          <Text style={styles.tittleText}>
-            Placa Camion:{" "}
-            {userData.rgsModel.checkListCamionModel.camionesModel.placa}
-          </Text>
-          <Text style={styles.tittleText}>
-            Placa Tracto:{" "}
-            {userData.rgsModel.checkListCarretaModel.camionesModel.placa}
-          </Text>
-          <BotonesCamionAsignado datos={userData} />
-        </>
-      ) : (
-        <>
-          <Text>No hay Camion Asignado</Text>
-          {/*    <Button
+    <ImageBackground source={fondo} style={styles.backgroundImage}>
+      <View style={styles.container}>
+        {userData ? (
+          <>
+            <View style={{marginTop: 30, marginBottom: 20}}>
+              <QRCodeGenerator idRgs={userData.rgsModel.id} />
+            </View>
+
+            <Text style={styles.tittleText}>
+              Placa Camion:{" "}
+              {userData.rgsModel.checkListCamionModel.camionesModel.placa}
+            </Text>
+            <Text style={styles.tittleText}>
+              Placa Tracto:{" "}
+              {userData.rgsModel.checkListCarretaModel.camionesModel.placa}
+            </Text>
+            <BotonesCamionAsignado datos={userData} />
+          </>
+        ) : (
+          <>
+            <Text>No hay Camion Asignado</Text>
+            {/*    <Button
             title={"Cargar el camion asignado"}
             onPress={() => handleCargarCamion()}
       /> */}
-        </>
-      )}
-    </View>
+          </>
+        )}
+      </View>
     </ImageBackground>
   );
 }

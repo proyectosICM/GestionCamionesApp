@@ -89,8 +89,9 @@ export function CustomBottomTabBar({ navigation }) {
           }}
         />
       )}
-{/*
-      <Tab.Screen
+
+      {/* 
+   <Tab.Screen
         name="Configuracion"
         component={Configuracion}
         options={{
@@ -99,7 +100,8 @@ export function CustomBottomTabBar({ navigation }) {
           ),
         }}
       />
-*/}
+      */}
+
       <Tab.Screen
         name="Cuenta"
         component={Cuenta}

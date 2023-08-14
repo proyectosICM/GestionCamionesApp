@@ -5,23 +5,19 @@ import { Text } from 'react-native';
 import { useState } from 'react';
 import { useListarElementos } from '../../Hooks/CRUDHook';
 import { useEffect } from 'react';
+import QRCode from 'react-native-qrcode-svg';
 
 export function Configuracion(){
     
-    const [ip, setIp] = useState();
-
-    const ListarIp = useListarElementos("http://192.168.1.232:8080/redirigido", setIp);
-
-    useEffect(() => {
-        ListarIp();
-    }, [ListarIp]);
-
-    console.log(ip);
-
-    return(
-        <View style={styles.container}>
-            <Text style={styles.tittleText}>Configuracion de Cuenta</Text>
-            <Text style={styles.tittleText}>{ip}</Text>
-        </View>
+    const data = '1'; 
+    return (
+      <View style={styles.container}>
+        <QRCode
+          value={data}
+          size={200} // Tamaño del código QR
+          color="black" // Color del código QR
+          backgroundColor="white" // Color de fondo del código QR
+        />
+      </View>
     );
 }

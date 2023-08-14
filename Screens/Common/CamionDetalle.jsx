@@ -16,24 +16,29 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRoute } from "@react-navigation/native";
 import { tablesCam, tablesCarr } from "../../API/datosCLConductor";
 import { fondo } from "../../Styles/PaletaColores";
+import { VerCL } from "../VistaMecanico/VerCL";
+import { servicioExpress } from "../../API/datosCLMecanico";
 
 export default function CamionDetalle({ navigation }) {
   const [camion, setCamion] = useState();
   const [rol, setRol] = useState();
-  const [camionid, setCamionid] = useState();
+  //const [camionid, setCamionid] = useState();
   const route = useRoute();
   const tc = route.params.tc;
+  const camionid = route.params.camionid;
 
   const datosAsync = useCallback(async () => {
     const rolv = await AsyncStorage.getItem("rol");
     const camionidv = await AsyncStorage.getItem("camionid");
     setRol(rolv);
-    setCamionid(camionidv);
+    //setCamionid(camionidv);
   }, []);
 
   useEffect(() => {
     datosAsync();
   }, [datosAsync]);
+
+  const ListarCL = useListarElementos(`${baseURL}RGS/${camionid}`, setCamion);
 
   const ListarCamion = useListarElementos(
     `${baseURL}camiones/${camionid}`,
@@ -41,50 +46,93 @@ export default function CamionDetalle({ navigation }) {
   );
 
   useEffect(() => {
-    ListarCamion();
-  }, [ListarCamion]);
+    if (rol == "CONDUCTOR") {
+      ListarCamion();
+      console.log("Cond");
+      console.log(camion);
+    } else if (rol == "MECANICO") {
+      ListarCL();
+      console.log("sadsad");
+    }
+  }, [rol]);
 
   const handleAlerta = () => {
     alert("ED");
   };
 
   const handleListChecklist = () => {
-    if (tc == "Camion") {
-      navigation.navigate("CheckList Camion", { tc: tc, tablesD: tablesCam });
-    } else if (tc == "Carreta") {
-      navigation.navigate("CheckList Camion", { tc: tc, tablesD: tablesCarr });
+    if (rol == "CONDUCTOR") {
+      if (tc == "Camion") {
+        navigation.navigate("CheckList Camion", { tc: tc, tablesD: tablesCam });
+      } else if (tc == "Carreta") {
+        navigation.navigate("CheckList Camion", {
+          tc: tc,
+          tablesD: tablesCarr,
+        });
+      }
+    } else if (rol == "MECANICO") {
+      navigation.navigate("CheckList Camion", {
+        tc: tc,
+        tablesD: servicioExpress,
+      });
+    }
+  };
+
+  const handleGo = (op, datos) => {
+    if (op === "Camion") {
+      navigation.navigate("Ver Datos", {
+        datos: camion?.checkListCamionModel,
+        tc: "Camion",
+        rol: rol,
+        tablesD: datos,
+      });
+    } else if (op === "Carreta") {
+      navigation.navigate("Ver Datos", {
+        datos: camion?.checkListCarretaModel,
+        tc: "Carreta",
+        rol: rol,
+        tablesD: datos,
+      });
+    } else if (op === "Expreso") {
+      navigation.navigate("Ver Datos", {
+        datos: camion?.checkListCamionModel,
+        tc: "Camion",
+        rol: rol,
+        tablesD: datos,
+      });
     }
   };
 
   return (
     <ImageBackground source={fondo} style={styles.backgroundImage}>
       <View style={styles.container}>
-        {camion ? (
+        {camion && rol == "CONDUCTOR" ? (
           <View
             style={{
               backgroundColor: "white",
               padding: 10,
               borderRadius: 15,
               alignItems: "center",
-              width: 200
+              width: 200,
             }}
           >
-            <Text style={styles.tittleText}>{camion.tiposCModel.nombre}</Text>
+            <Text style={styles.tittleText}>{camion.tiposCModel?.nombre}</Text>
             <Text style={styles.tittleText}>Placa {camion.placa}</Text>
             <Text style={styles.tittleText}>
-              Marca {camion.marcasModel.nombre}
+              Marca {camion.marcasModel?.nombre}
             </Text>
             <Text style={styles.tittleText}>
-              Modelo {camion.modeloModel.nombre}
+              Modelo {camion.modeloModel?.nombre}
             </Text>
           </View>
         ) : (
           <>
-          
-            <Text style={styles.tittleText}>Cargando...</Text>
+            {rol && rol === "CONDUCTOR" && (
+              <Text style={styles.tittleText}>Cargando...</Text>
+            )}
           </>
         )}
-        <View style={{margin: 20}}>
+        <View style={{ margin: 20 }}>
           {rol && rol === "CONDUCTOR" && (
             <Button
               title=" Realizar Checklist "
@@ -105,7 +153,7 @@ export default function CamionDetalle({ navigation }) {
           {rol && rol === "MECANICO" && (
             <>
               <Button
-                title=" Ver Checklist mas reciente "
+                title=" Ver Checklist de Camion "
                 type="outline"
                 buttonStyle={styles.styleButton}
                 titleStyle={styles.textoButton}
@@ -116,11 +164,11 @@ export default function CamionDetalle({ navigation }) {
                   color: "white",
                 }}
                 iconRight
-                onPress={() => handleAlerta()}
+                onPress={() => handleGo("Camion", tablesCam)}
               />
 
               <Button
-                title=" Realizar Checklist mas reciente "
+                title=" Ver Checklist de Carreta "
                 type="outline"
                 buttonStyle={styles.styleButton}
                 titleStyle={styles.textoButton}
@@ -131,8 +179,65 @@ export default function CamionDetalle({ navigation }) {
                   color: "white",
                 }}
                 iconRight
-                onPress={() => handleListChecklist()}
+                onPress={() => handleGo("Carreta", tablesCarr)}
               />
+
+              {camion?.checkListExpresoModel ? (
+                <>
+                  <Button
+                    title={"Ver CheckList Servicio Expreso"}
+                    buttonStyle={styles.styleButton}
+                    titleStyle={styles.textoButton}
+                    onPress={() => handleGo("Expreso", servicioExpress)}
+                  />
+
+                  <Button
+                    title=" Autorizar salida "
+                    type="outline"
+                    buttonStyle={styles.styleButton}
+                    titleStyle={styles.textoButton}
+                    icon={{
+                      name: "check",
+                      type: "font-awesome",
+                      size: 25,
+                      color: "white",
+                    }}
+                    iconRight
+                    onPress={() => handleListChecklist()}
+                  />
+
+                  <Button
+                    title=" Solicitar ingreso a reparacion  "
+                    type="outline"
+                    buttonStyle={styles.styleButton}
+                    titleStyle={styles.textoButton}
+                    icon={{
+                      name: "wrench",
+                      type: "font-awesome",
+                      size: 25,
+                      color: "white",
+                    }}
+                    iconRight
+                    onPress={() => handleListChecklist()}
+                  />
+                </>
+              ) : (
+                <Button
+                  title=" Realizar Checklist Express "
+                  type="outline"
+                  buttonStyle={styles.styleButton}
+                  titleStyle={styles.textoButton}
+                  icon={{
+                    name: "check",
+                    type: "font-awesome",
+                    size: 25,
+                    color: "white",
+                  }}
+                  iconRight
+                  onPress={() => handleListChecklist()}
+                />
+              )}
+ 
             </>
           )}
         </View>
