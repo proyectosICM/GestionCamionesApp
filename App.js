@@ -33,10 +33,6 @@ import { VerDatos } from './Screens/VistaMecanico/VerDatos';
 import { AdjuntarFotos } from './Screens/Common/Fotos/AdjuntarFotos';
 import GaleriaImagenes from './Screens/Common/Fotos/GaleriaImagenes';
 
-
-
-
-
 export default function App() {
 
   const Stack = createNativeStackNavigator();

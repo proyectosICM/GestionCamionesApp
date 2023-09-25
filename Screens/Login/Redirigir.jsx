@@ -13,7 +13,7 @@ import { ActivityIndicator } from "react-native";
 export function Redirigir({ navigation }) {
   const [info, setInfo] = useState();
   const [user, setUser] = useState(null);
-  const [showText, setShowText] = useState(false); // Estado para controlar si se muestra el texto "Hola" o no
+  const [showText, setShowText] = useState(false); 
 
   const fetchData = useCallback(async () => {
     const token = await AsyncStorage.getItem("token");
