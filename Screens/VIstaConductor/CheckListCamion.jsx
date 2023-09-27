@@ -23,7 +23,7 @@ export default function CheckListCamion() {
   const [rol, setRol] = useState();
   const [camionid, setCamionid] = useState();
   const [usuario, setUsuario] = useState();
- 
+
   const route = useRoute();
   const tc = route.params.tc;
   const tables = route.params.tablesD;
@@ -48,9 +48,7 @@ export default function CheckListCamion() {
   }, [datosAsync]);
 
   const [currentTable, setCurrentTable] = useState(0);
-  const [marcar, setMarcar] = useState(() =>
-    tables.map((table) => Array(table.datos.length).fill(null))
-  );
+  const [marcar, setMarcar] = useState(() => tables.map((table) => Array(table.datos.length).fill(null)));
 
   const navigate = useNavigation();
 
@@ -69,10 +67,7 @@ export default function CheckListCamion() {
   };
 
   const handleNext = () => {
-    if (
-      currentTable < tables.length - 1 &&
-      allItemsMarked(marcar[currentTable])
-    ) {
+    if (currentTable < tables.length - 1 && allItemsMarked(marcar[currentTable])) {
       setCurrentTable(currentTable + 1);
     }
   };
@@ -93,57 +88,56 @@ export default function CheckListCamion() {
 
     return () => clearInterval(interval); // Limpiamos el intervalo cuando el componente se desmonte
   }, []);
- 
-  return ( 
+
+  return (
     <ImageBackground source={fondo} style={styles.backgroundImage}>
-    <ScrollView>
-      <View style={styles.container}>
-        <Text>{ide  && ide} dd</Text>
-        <Text>Tiempo: {tiempo} segundos</Text>
-        <Text style={styles.tittleText}>CheckList</Text>
-        <Tabla
-          titulo={tables[currentTable].titulo}
-          datos={tables[currentTable].datos}
-          marcar={marcar[currentTable]}
-          setMarcar={(estado) => {
-            const newMarcar = [...marcar];
-            newMarcar[currentTable] = estado;
-            setMarcar(newMarcar);
-          }}
-        />
-        <Button
-          title="Atras"
-          type="outline"
-          onPress={handleBack}
-          buttonStyle={{ backgroundColor: "#ccc", width: 150 }}
-          titleStyle={{ color: "black" }}
-          disabled={currentTable === 0}
-        >
-          Anterior
-        </Button>
-        <Button
-          title="Siguiente"
-          type="outline"
-          onPress={handleNext}
-          buttonStyle={{ backgroundColor: "white", width: 150 }}
-          disabled={
-            currentTable === tables.length - 1 ||
-            !allItemsMarked(marcar[currentTable])
-          }
-        >
-          Siguiente
-        </Button>
-        {currentTable === tables.length - 1 && allTablesMarked() && (
-          <Button
-            title="Enviar datos"
-            type="solid"
-            buttonStyle={{ backgroundColor: "blue", width: 200, marginTop: 20 }}
-            titleStyle={{ color: "white" }}
-            onPress={() => handleEnviar()}
+      <ScrollView>
+        <View style={[styles.container, {width: "95%", marginHorizontal: "2.5%"}]}>
+          {/* <Text>Tiempo: {tiempo} segundos</Text> */}
+
+          <Text style={[styles.tittleText, {marginTop: 10}]}>CheckList</Text>
+          <Tabla
+            titulo={tables[currentTable].titulo}
+            datos={tables[currentTable].datos}
+            marcar={marcar[currentTable]}
+            setMarcar={(estado) => {
+              const newMarcar = [...marcar];
+              newMarcar[currentTable] = estado;
+              setMarcar(newMarcar);
+            }}
           />
-        )}
-      </View>
-    </ScrollView>
+          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <Button
+              title="Atras"
+              type="outline"
+              onPress={handleBack}
+              buttonStyle={{ backgroundColor: "#ccc", width: 150, margin: 10 }}
+              titleStyle={{ color: "black" }}
+              disabled={currentTable === 0}
+            >
+              Anterior
+            </Button>
+            <Button
+              title="Siguiente"
+              type="outline"
+              onPress={handleNext}
+              buttonStyle={{ backgroundColor: "white", width: 150, margin: 10 }}
+              disabled={currentTable === tables.length - 1 || !allItemsMarked(marcar[currentTable])}
+            >
+              Siguiente
+            </Button>
+          </View>
+          {currentTable === tables.length - 1 && allTablesMarked() && (
+            <Button
+              title="Enviar datos"
+              type="solid"
+              buttonStyle={{ backgroundColor: "blue", width: 200, marginTop: 20 }}
+              titleStyle={{ color: "white" }}
+              onPress={() => handleEnviar()}
+            />
+          )}
+        </View>
+      </ScrollView>
     </ImageBackground>
   );
 }

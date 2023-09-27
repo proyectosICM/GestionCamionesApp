@@ -74,7 +74,7 @@ export function VerCL() {
         onPress={() => handleGo("Camion", tablesCam)}
       />
       <Button
-        title={"Ver CheckList Carreta"}
+        title={camion.checkListCarretaModel ? "Ver CheckList Carreta" : "No hay checklist de carreta registrados"}
         buttonStyle={styles.styleButton}
         titleStyle={styles.textoButton}
         onPress={() => handleGo("Carreta", tablesCarr)}

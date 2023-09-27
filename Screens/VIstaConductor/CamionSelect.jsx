@@ -68,15 +68,15 @@ export function CamionSelect() {
   return (
     <ImageBackground source={fondo} style={styles.backgroundImage}>
       <View style={styles.container}>
-        {userData ? (
+        {userData && userData.rgsModel ? (
           <>
             <View style={{marginTop: 30, marginBottom: 20}}>
-              <QRCodeGenerator idRgs={userData.rgsModel.id} />
+              <QRCodeGenerator idRgs={userData.rgsModel && userData.rgsModel.id} />
             </View>
 
             <Text style={styles.tittleText}>
               Placa Camion:{" "}
-              {userData.rgsModel.checkListCamionModel.camionesModel.placa}
+              {userData.rgsModel && userData.rgsModel.checkListCamionModel.camionesModel.placa}
             </Text>
             <Text style={styles.tittleText}>
               Placa Tracto:{" "}
@@ -86,7 +86,8 @@ export function CamionSelect() {
           </>
         ) : (
           <>
-            <Text>No hay Camion Asignado</Text>
+            <Text style={styles.tittleText}>No hay Camion Asignado</Text>
+            <Text style={[styles.tittleText,{textAlign: "center"} ]}>Por favor escanee el QR de un camion libre</Text>
             {/*    <Button
             title={"Cargar el camion asignado"}
             onPress={() => handleCargarCamion()}

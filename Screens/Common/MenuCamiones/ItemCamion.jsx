@@ -1,26 +1,14 @@
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import { FontAwesome } from "react-native-vector-icons/FontAwesome";
 import { styles as general } from "../../../Styles/General";
 import { servicioExpress } from "../../../API/datosCLMecanico";
-import {
-  ColorIcono,
-  ColorTexto,
-  ColorTextoBoton,
-} from "../../../Styles/PaletaColores";
+import { ColorIcono, ColorTexto, ColorTextoBoton } from "../../../Styles/PaletaColores";
 
-export function ItemCamion({
-  id,
-  title,
-  title2,
-  description,
-  description2,
-  estado,
-  op,
-}) {
+export function ItemCamion({ id, title, title2, description, description2, estado, fecha, op }) {
   const navigation = useNavigation();
 
   const handleCheck = () => {
@@ -35,6 +23,16 @@ export function ItemCamion({
     navigation.navigate("Ver CheckLists", { id: id });
   };
 
+  const [fechaFormateada, setFechaFormateada] = useState();
+
+  const formatearFecha = (timestamp) => {
+    if (timestamp) {
+      const fecha = new Date(timestamp);
+      return fecha.toLocaleString();
+    }
+    return "";
+  };
+
   return (
     <View style={styles.cardContainer}>
       <Text>{id}</Text>
@@ -44,6 +42,8 @@ export function ItemCamion({
       <Text style={{ textAlign: "center", color: ColorTexto }}>
         {description} - {description2}
       </Text>
+      <Text style={{ textAlign: "center", color: ColorTexto }}>Fecha ultima modificacion {fecha && formatearFecha(fecha)}</Text>
+
       {estado ? (
         <View style={{ alignItems: "center" }}>
           <FontAwesome5 name="check" color="green" size={20} />
@@ -55,19 +55,9 @@ export function ItemCamion({
         </View>
       )}
 
-      <Button
-        title={"Ver"}
-        buttonStyle={general.styleButton}
-        titleStyle={general.textoButton}
-        onPress={() => handleVerCheck()}
-      />
+      <Button title={"Ver"} buttonStyle={general.styleButton} titleStyle={general.textoButton} onPress={() => handleVerCheck()} />
 
-      <Button
-        title={"Realizar CheckList"}
-        buttonStyle={general.styleButton}
-        titleStyle={general.textoButton}
-        onPress={() => handleCheck()}
-      />
+      <Button title={"Realizar CheckList"} buttonStyle={general.styleButton} titleStyle={general.textoButton} onPress={() => handleCheck()} />
 
       {op === "Pendiente" && (
         <>

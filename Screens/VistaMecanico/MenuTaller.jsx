@@ -31,7 +31,7 @@ export function MenuTaller({ navigation }) {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-
+ 
   const handleDeshabilitados = async () => {
     await AsyncStorage.setItem("menucam", "deshabilitados");
     navigation.navigate("Menu-Camion");

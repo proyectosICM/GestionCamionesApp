@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ImageBackground,
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
 import { useListarElementos } from "../../Hooks/CRUDHook";
 import { useEffect } from "react";
 import { styles } from "../../Styles/General";
@@ -40,10 +34,7 @@ export default function CamionDetalle({ navigation }) {
 
   const ListarCL = useListarElementos(`${baseURL}RGS/${camionid}`, setCamion);
 
-  const ListarCamion = useListarElementos(
-    `${baseURL}camiones/${camionid}`,
-    setCamion
-  );
+  const ListarCamion = useListarElementos(`${baseURL}camiones/${camionid}`, setCamion);
 
   useEffect(() => {
     if (rol == "CONDUCTOR") {
@@ -106,34 +97,21 @@ export default function CamionDetalle({ navigation }) {
   return (
     <ImageBackground source={fondo} style={styles.backgroundImage}>
       <View style={styles.container}>
-        {camion && rol == "CONDUCTOR" ? (
+        {camion && rol == "CONDUCTOR" && camion.tiposCModel && camion.tiposCModel.id == 1 ? (
           <View
             style={{
               backgroundColor: "white",
               padding: 10,
               borderRadius: 15,
               alignItems: "center",
-              width: 200,
+              width: 300,
             }}
           >
             <Text style={styles.tittleText}>{camion.tiposCModel?.nombre}</Text>
             <Text style={styles.tittleText}>Placa {camion.placa}</Text>
-            <Text style={styles.tittleText}>
-              Marca {camion.marcasModel?.nombre}
-            </Text>
-            <Text style={styles.tittleText}>
-              Modelo {camion.modeloModel?.nombre}
-            </Text>
-          </View>
-        ) : (
-          <>
-            {rol && rol === "CONDUCTOR" && (
-              <Text style={styles.tittleText}>Cargando...</Text>
-            )}
-          </>
-        )}
-        <View style={{ margin: 20 }}>
-          {rol && rol === "CONDUCTOR" && (
+            <Text style={styles.tittleText}>Marca {camion.marcasModel?.nombre}</Text>
+            <Text style={styles.tittleText}>Modelo {camion.modeloModel?.nombre}</Text>
+
             <Button
               title=" Realizar Checklist "
               type="outline"
@@ -148,7 +126,20 @@ export default function CamionDetalle({ navigation }) {
               iconRight
               onPress={() => handleListChecklist()}
             />
-          )}
+          </View>
+        ) : (
+          <>
+            {rol && rol === "CONDUCTOR" && (
+              <View>
+                <Text style={[styles.tittleText, {textAlign: "center"}]}>Cargando...</Text>
+                <Text style={[styles.tittleText, {textAlign: "center"}]}>
+                  Si no es redirigido luego de 5 segundos posiblemente el QR escaneado no pertenece a un camion
+                </Text>
+              </View>
+            )}
+          </>
+        )}
+        <View style={{ margin: 20 }}>
 
           {rol && rol === "MECANICO" && (
             <>
@@ -237,7 +228,6 @@ export default function CamionDetalle({ navigation }) {
                   onPress={() => handleListChecklist()}
                 />
               )}
- 
             </>
           )}
         </View>

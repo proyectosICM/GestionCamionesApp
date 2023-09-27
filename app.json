@@ -56,6 +56,14 @@
       "web": {
         "favicon": "./assets/favicon.png"
       }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "caa7c9b6-02c0-4891-ab1b-a7faadcab84b"
+      }
+    },
+    "android": {
+      "package": "com.eduardoaguilar.gestioncamionesapp"
     }
   }
 }

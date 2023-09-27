@@ -34,31 +34,38 @@ export function VerDatos() {
 
   return (
     <ScrollView>
-      {tableD.map((table, index) => (
-        <View key={index} style={{ alignItems: "center" }}>
-          <Text style={styles.tittleText}>{table.titulo}</Text>
-          <View style={{ alignItems: "center" }}>
-            {table.datos.map((dato, datoIndex) => (
-              <View key={datoIndex}>
-                <Text>
-                  {dato.nombre} :{" "}
-                  {datos[dato.atributo] ? (
-                    <Text style={{ color: "green" }}>
-                      {" "}
-                      Buen estado <Icon name="check" size={20} color="green" />
+      {datos ? (
+        tableD.map((table, index) => (
+          <View key={index} style={{ alignItems: "center" }}>
+            <Text style={styles.tittleText}>{table.titulo}</Text>
+            <View style={{ alignItems: "center" }}>
+              {table.datos &&
+                table.datos.map((dato, datoIndex) => (
+                  <View key={datoIndex}>
+                    <Text>
+                      {dato.nombre} :{" "}
+                      {[dato.atributo] ? (
+                        <Text style={{ color: "green" }}>
+                          {" "}
+                          Buen estado <Icon name="check" size={20} color="green" />
+                        </Text>
+                      ) : (
+                        <Text style={{ color: "red" }}>
+                          {" "}
+                          Mal estado <Icon name="close" size={20} color="red" />
+                        </Text>
+                      )}
                     </Text>
-                  ) : (
-                    <Text style={{ color: "red" }}>
-                      {" "}
-                      Mal estado <Icon name="close" size={20} color="red" />
-                    </Text>
-                  )}
-                </Text>
-              </View>
-            ))}
+                  </View>
+                ))}
+            </View>
           </View>
+        ))
+      ) : (
+        <View style={styles.container}>
+          <Text style={styles.tittleText}>No hay datos registrados</Text>
         </View>
-      ))}
+      )}
     </ScrollView>
   );
 }

@@ -14,7 +14,7 @@ export function Tabla({ titulo, datos, marcar, setMarcar }) {
   };
 
   const handleTomarFoto = () => {
-    navigation.navigate('Adjuntar Fotos')
+    navigation.navigate("Adjuntar Fotos");
   };
 
   return (
@@ -24,7 +24,7 @@ export function Tabla({ titulo, datos, marcar, setMarcar }) {
         <Card.Divider />
         <View style={styles2.user}>
           <Text style={styles2.name}>Revise</Text>
-          <Text style={styles2.name2}>Marque</Text>
+          <Text style={styles2.buttonContainer}>Marque</Text>
           <Text style={styles2.name2}>Estado</Text>
         </View>
 
@@ -32,34 +32,28 @@ export function Tabla({ titulo, datos, marcar, setMarcar }) {
           return (
             <View key={i} style={styles2.user}>
               <Text style={styles2.name}>{u.nombre}</Text>
-              <TouchableOpacity
-                style={[
-                  styles2.successButton,
-                  //marcar[i] === true ? styles2.successButton : null,
+              <View style={styles2.buttonContainer}>
+                <TouchableOpacity
+                  style={[
+                    styles2.successButton,
+                    marcar[i] === true ? styles2.selectedButton : null,
+                  ]}
+                  onPress={() => handlePress(i, true)}
+                >
+                  <FontAwesome name="check" size={10} color="white" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    styles2.dangerButton,
+                    marcar[i] === false ? styles2.selectedButton : null,
+                  ]}
+                  onPress={() => handlePress(i, false)}
+                >
+                  <FontAwesome name="times" size={10} color="white" />
+                </TouchableOpacity>
+              </View>
 
-                ]}
-                onPress={() => handlePress(i, true)}
-              >
-                <FontAwesome
-                  name="check"
-                  size={10}
-                  color="white"
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  styles2.dangerButton,
-                  //marcar[i] === true ? styles2.dangerButton : null,
-                ]}
-                onPress={() => handlePress(i, false)}
-              >
-                <FontAwesome
-                  name="times"
-                  size={10}
-                  color="white"
-                />
-              </TouchableOpacity>
-              <View style={{ marginHorizontal: 10 }}>
+              <View style={styles2.name2}>
                 {marcar[i] === null ? (
                   <Text style={{ color: "black" }}>Sin estado</Text>
                 ) : marcar[i] ? (
@@ -71,7 +65,7 @@ export function Tabla({ titulo, datos, marcar, setMarcar }) {
             </View>
           );
         })}
-{   /*     <Button title={'Adjuntar Fotos'} onPress={() => handleTomarFoto()} /> */}
+        {/*     <Button title={'Adjuntar Fotos'} onPress={() => handleTomarFoto()} /> */}
       </Card>
     </View>
   );
@@ -91,22 +85,35 @@ const styles2 = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
+
+    width: "30%",
+    marginTop: 5,
+    textAlign: "center",
+    alignItems: "center",
+    justifyContent:"center",
+    marginHorizontal: 3,
+    padding: "auto",
+    paddingHorizontal: "auto"
+
   },
   successButton: {
     borderColor: "green",
     backgroundColor: "green",
-    paddingVertical: 12,
-    paddingHorizontal: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
     borderRadius: 8,
-    margin: 2
+    margin: 2,
+    width: "40%"
   },
   dangerButton: {
     borderColor: "red",
     backgroundColor: "red",
-    paddingVertical: 12,
-    paddingHorizontal: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
     borderRadius: 8,
-    margin: 2
+    margin: 2,
+    width: "40%", 
+    textAlign: "center"
   },
   buttonTitle: {
     color: "black",
@@ -114,6 +121,7 @@ const styles2 = StyleSheet.create({
   user: {
     flexDirection: "row",
     marginBottom: 6,
+
   },
   image: {
     width: 30,
@@ -122,16 +130,18 @@ const styles2 = StyleSheet.create({
   },
   name: {
     fontSize: 16,
-    width: "50%",
+    width: "40%",
     marginTop: 5,
     textAlign: "center",
 
   },
   name2: {
     fontSize: 16,
-    width: "20%",
+    width: "30%",
     marginTop: 5,
     textAlign: "center",
-    marginHorizontal: 6,
+    justifyContent: "center",
+    marginHorizontal: 3,
+    paddingHorizontal: 6
   },
 });

@@ -22,7 +22,7 @@ export default function VerificacionCamion({ navigation }) {
 
   useBackHandler(navigation);
 
-  return abrir ? (
+  return abrir ? ( 
     <QRScanner
       cerrar={handleCerrarCamera}
       navigate={navigation.navigate}

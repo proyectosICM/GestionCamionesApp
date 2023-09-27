@@ -30,11 +30,7 @@ export function Observaciones() {
     <View style={styles.container}>
       <ScrollView>
         <Text style={styles.tittleText}>Observaciones</Text>
-        {obs && obs.reverse().map((dato) => <ObservacionesItem name={dato.nameObs} />)}
-        <ObservacionesItem name="Cambio de llanta registrado: asfdsafd" />
-        <ObservacionesItem name="Cambio de llanta registrado: asfdsafd" />
-        <ObservacionesItem name="Cambio de llanta registrado: asfdsafd" />
-
+        {obs && obs.reverse().map((dato) => <ObservacionesItem key={dato.id} name={dato.nameObs} />)}
       </ScrollView>
     </View>
     </ImageBackground>

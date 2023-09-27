@@ -95,18 +95,21 @@ const localStyles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-around",
-    width: 120,
-    height: 200,
+    width: "40%",
     marginHorizontal: 10,
+    /*
+    borderColor: "red",
+    borderWidth: 2,
+ */
   },
   button: {
     backgroundColor: BotonColorOscuro,
     flexDirection: "column",
     borderRadius: 8,
     padding: 10,
-    width: 120,
-    height: 90,
-    marginTop: 8,
+    width: 150,
+    height: 100,
+    marginTop: 10
   },
   buttonText: {
     color: ColorTextoBoton,

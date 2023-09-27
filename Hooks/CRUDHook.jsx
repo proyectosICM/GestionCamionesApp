@@ -44,16 +44,18 @@ export function useListarElementos(url, setDatos) {
 export async function useAgregarElemento(url, requestData) {
   try {
     const token = await AsyncStorage.getItem("token");
-    //console.log("datos", requestData);
+    
     const response = await axios.post(url, requestData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
+    console.log("datos", response.status);
+    console.log("datos", response.data);
     return response; // Retorna el resultado de la solicitud POST
   } catch (error) {
-    console.log(error);
-    throw error; // Lanza el error para que puedas manejarlo en el componente
+    //console.log(error, "makl" , requestData);
+    throw error; // 
   }
 }
 
@@ -69,7 +71,7 @@ export async function useEditarUnElemento(url, id, est, value) {
     });
     const elemento = response.data;
     elemento[est] = value;
-    console.log(elemento);
+    //console.log(elemento);
     await axios.put(nurl, elemento, {
       headers: {
         Authorization: `Bearer ${token}`,

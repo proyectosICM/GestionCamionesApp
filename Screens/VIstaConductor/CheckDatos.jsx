@@ -7,15 +7,7 @@ import { ScrollView } from "react-native";
 import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useAgregarElemento, useEditarUnElemento } from "../../Hooks/CRUDHook";
-import {
-  FallasImagenURL,
-  RGS_URL,
-  checkListCamionURL,
-  checkListCarretaURL,
-  checkListExpresoURL,
-  checkListURL,
-  usuarioURL,
-} from "../../API/apiurl";
+import { FallasImagenURL, RGS_URL, checkListCamionURL, checkListCarretaURL, checkListExpresoURL, checkListURL, usuarioURL } from "../../API/apiurl";
 import { useState } from "react";
 import { useCallback } from "react";
 import { useEffect } from "react";
@@ -44,7 +36,7 @@ export function CheckDatos() {
 
   const datos = route.params.datos;
   const rol = route.params.rol;
-  console.log("ds·", datos.sistemaDeArranque);
+  console.log("ds·", datos);
 
   const tiempo = route.params.tiempo;
   const navigation = useNavigation();
@@ -105,11 +97,15 @@ export function CheckDatos() {
 
         const requestRGS = {
           checkListCamionModel: { id: data.id },
+          estado: true,
+          reparacion: false,
         };
-
+        console.log("yas4", RGS_URL);
+        console.log("yas4", requestRGS);
         const RGS = await useAgregarElemento(RGS_URL, requestRGS);
+
         await AsyncStorage.setItem("rgs", RGS.data.id.toString());
-        console.log(RGS.data.id);
+        //console.log(RGS.data.id);
 
         Alert.alert(
           "Desea Agregar fotos",
@@ -117,8 +113,7 @@ export function CheckDatos() {
           [
             {
               text: "Sí",
-              onPress: () =>
-                navigation.navigate("Adjuntar Fotos", { rgs: RGS.data.id }), // Redirección a la pantalla de imagen
+              onPress: () => navigation.navigate("Adjuntar Fotos", { rgs: RGS.data.id }), // Redirección a la pantalla de imagen
             },
             {
               text: "No",
@@ -145,10 +140,7 @@ export function CheckDatos() {
           }, {}),
         };
 
-        const { data } = await useAgregarElemento(
-          checkListCarretaURL,
-          requestData
-        );
+        const { data } = await useAgregarElemento(checkListCarretaURL, requestData);
 
         const requestRGS = {
           checkListCarretaModel: { id: data.id },
@@ -175,19 +167,18 @@ export function CheckDatos() {
           [
             {
               text: "Sí",
-              onPress: () =>
-                navigation.navigate("Adjuntar Fotos", { rgs: rgs }), // Redirección a la pantalla de imagen
+              onPress: () => navigation.navigate("Adjuntar Fotos", { rgs: rgs }), // Redirección a la pantalla de imagen
             },
-            { 
+            {
               text: "No",
-              onPress: () => navigation.navigate("Asignado", {actualizar: true}), // Redirección a la pantalla CheckListCarreta
+              onPress: () => navigation.navigate("Asignado", { actualizar: true }), // Redirección a la pantalla CheckListCarreta
               style: "cancel",
             },
           ],
           { cancelable: false }
         );
 
-          navigation.navigate("Asignado", {actualizar: true});
+        navigation.navigate("Asignado", { actualizar: true });
         console.log("Fin");
       } else if (tc === "Expreso") {
         const carretaURL = checkListCarretaURL;
@@ -204,10 +195,7 @@ export function CheckDatos() {
           }, {}),
         };
 
-        const { data } = await useAgregarElemento(
-          checkListExpresoURL,
-          requestData
-        );
+        const { data } = await useAgregarElemento(checkListExpresoURL, requestData);
 
         console.log(data.id);
         console.log(ide);
@@ -239,8 +227,7 @@ export function CheckDatos() {
           [
             {
               text: "Sí",
-              onPress: () =>
-                navigation.navigate("Adjuntar Fotos", { rgs: rgs }), // Redirección a la pantalla de imagen
+              onPress: () => navigation.navigate("Adjuntar Fotos", { rgs: rgs }), // Redirección a la pantalla de imagen
             },
             {
               text: "No",
@@ -252,9 +239,11 @@ export function CheckDatos() {
         );
 
         navigation.navigate("Inicio");
+      } else {
+        console.log("no tipo");
       }
     } catch (error) {
-      console.log("Error al enviar los datos:", error);
+      //console.log("Error al enviar los datos:", error);
     }
   };
 
@@ -263,7 +252,7 @@ export function CheckDatos() {
       <View style={styles.container}>
         <Text>{ide && ide} Asqw</Text>
         <Text>{rol}</Text>
-        {tablesD.map((table, index) => (
+        {!tablesD && tablesD.map((table, index) => (
           <View key={index} style={{ alignItems: "center" }}>
             <Text style={styles.tittleText}>{table.titulo}</Text>
             <View style={{ alignItems: "center" }}>
@@ -274,8 +263,7 @@ export function CheckDatos() {
                     {datos[index][datoIndex] ? (
                       <Text style={{ color: "green" }}>
                         {" "}
-                        Buen estado{" "}
-                        <Icon name="check" size={20} color="green" />
+                        Buen estado <Icon name="check" size={20} color="green" />
                       </Text>
                     ) : (
                       <Text style={{ color: "red" }}>
@@ -290,13 +278,8 @@ export function CheckDatos() {
           </View>
         ))}
         <Text>{camionid ? camionid : "no jay"}</Text>
-        <Text style={styles.tittleText}>
-          Tiempo: {convertirAMinutos(tiempo)}
-        </Text>
-        <Button
-          title={"Confirmar Envio de datos"}
-          onPress={() => handleEnviar()}
-        />
+        <Text style={styles.tittleText}>Tiempo: {convertirAMinutos(tiempo)}</Text>
+        <Button title={"Confirmar Envio de datos"} onPress={() => handleEnviar()} />
       </View>
     </ScrollView>
   );

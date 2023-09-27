@@ -65,19 +65,20 @@ export function MenuCamiones() {
   console.log(camiones);
   const renderItem = ({ item }) =>
     op === "Habilitados" ? (
-      item.checkListCarretaModel ? (
+      item ? (
         <ItemCamion
           id={item.id}
           title={item.checkListCamionModel.camionesModel.placa}
           description={
             item.checkListCamionModel.camionesModel.tiposCModel.nombre
           }
-          title2={item.checkListCarretaModel.camionesModel.placa}
+          title2={item.checkListCarretaModel && item.checkListCarretaModel.camionesModel.placa}
           description2={
-            item.checkListCarretaModel.camionesModel.tiposCModel.nombre
+            item.checkListCarretaModel && item.checkListCarretaModel.camionesModel.tiposCModel.nombre
           }
           estado={item.checkListCamionModel.camionesModel.estado}
           enreparacion={item.checkListCamionModel.camionesModel.enreparacion}
+          fecha = {item.fechaCreacion}
           op={op}
         />
       ) : (
