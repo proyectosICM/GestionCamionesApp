@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { Button } from "react-native-elements";
-import * as ImagePicker from "expo-image-picker";
-import { Camera } from 'expo-camera'; // Importa Camera desde expo-camera
-import axios from "axios"; 
+import { Camera } from "expo-camera"; // Importa Camera desde expo-camera
+import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import { useRoute } from "@react-navigation/native";
@@ -21,6 +27,7 @@ export function AdjuntarFotos() {
   const [image, setImage] = useState(null);
   const [observacion, setObservacion] = useState(null);
   const userAccessToken = "e7eefedec49196bf8229bedb7324c29d72ef4bd3";
+  const [camera, setCamera] = useState(null);
 
   const datosAsync = async () => {
     const usuariov = await AsyncStorage.getItem("usuario");
@@ -32,18 +39,16 @@ export function AdjuntarFotos() {
   }, []);
 
   const handleImagePicker = async () => {
-    try {
-      const result = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        quality: 1,
-      });
+    if (camera) {
+      try {
+        const { uri } = await camera.takePictureAsync();
 
-      if (!result.cancelled) {
-        setImage(result.uri);
+        if (uri) {
+          setImage(uri);
+        }
+      } catch (error) {
+        console.log("Error al tomar la foto:", error);
       }
-    } catch (error) {
-      console.log("Error al tomar la foto:", error);
     }
   };
 
@@ -151,7 +156,9 @@ export function AdjuntarFotos() {
         ) : (
           <View style={styles2.previewContainer}>
             <Camera
-              style={{ flex: 1 }} // Establece un estilo para el componente Camera
+              style={{ flex: 1 }}
+              type={Camera.Constants.Type.back}
+              ref={(ref) => setCamera(ref)}
             >
               <TouchableOpacity
                 onPress={handleImagePicker}
