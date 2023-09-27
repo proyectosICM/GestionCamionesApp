@@ -28,11 +28,20 @@ export function AdjuntarFotos() {
   const [observacion, setObservacion] = useState(null);
   const userAccessToken = "e7eefedec49196bf8229bedb7324c29d72ef4bd3";
   const [camera, setCamera] = useState(null);
-
+  const [nameusu, setNameusu] = useState({});
   const datosAsync = async () => {
     const usuariov = await AsyncStorage.getItem("usuario");
     setUsuario(usuariov);
+    const nomusuario = await AsyncStorage.getItem("username");
+    setNameusu(nomusuario);
   };
+
+
+  const obtenerDatosAsync = async () => {
+    const usuariov = await AsyncStorage.getItem("username");
+    setUser(usuariov);
+  };
+
 
   useEffect(() => {
     datosAsync();
@@ -53,7 +62,7 @@ export function AdjuntarFotos() {
   };
 
   const handleEnviar = async () => {
-    if (image) {
+    if (image && observacion) {
       try {
         setIsLoading(true);
         const formData = new FormData();
@@ -95,7 +104,7 @@ export function AdjuntarFotos() {
           setObservacion("");
 
           const requestObs = {
-            nameObs: `Se guardo la foto: ${observacion} Por el usuario`,
+            nameObs: `Se guardo la foto: ${observacion} Por el usuario ${nameusu}`,
             rgsModel: {
               id: rgs,
             },
@@ -115,6 +124,8 @@ export function AdjuntarFotos() {
         console.log("Error al subir la imagen:", error);
         setIsLoading(false);
       }
+    } else {
+      Alert.alert("Agregue detalle a la observacion", "Por favor describa la falla")
     }
   };
 
@@ -156,17 +167,18 @@ export function AdjuntarFotos() {
         ) : (
           <View style={styles2.previewContainer}>
             <Camera
-              style={{ flex: 1 }}
+              style={{ flex: 1, width: "90%", height: "90%", marginTop: "10%" }}
               type={Camera.Constants.Type.back}
               ref={(ref) => setCamera(ref)}
             >
-              <TouchableOpacity
+
+            </Camera>
+            <TouchableOpacity
                 onPress={handleImagePicker}
                 style={styles2.captureButton}
               >
                 <Text style={styles2.captureButtonText}>Tomar Foto</Text>
               </TouchableOpacity>
-            </Camera>
           </View>
         )}
       </View>
@@ -182,7 +194,7 @@ const styles2 = StyleSheet.create({
   },
   previewContainer: {
     width: "80%",
-    height: "50%",
+    height: "70%",
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
@@ -206,6 +218,10 @@ const styles2 = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 5,
     padding: 15,
+    width: "50%",
+    alignItems: "center",
+    marginHorizontal: "25%",
+    marginVertical: "10%"
   },
   captureButtonText: {
     fontSize: 20,

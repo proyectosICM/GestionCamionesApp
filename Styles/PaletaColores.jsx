@@ -11,7 +11,7 @@ export const BotonCard = '#007BFF';
 
 export const BotonColorOscuro = '#A69677';
 export const BotonLlantas = '#D9C091';
-export const BotonLlantasActivo = '#A69677';
+export const BotonLlantasActivo = 'red';
 
 
 

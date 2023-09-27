@@ -140,7 +140,7 @@ const localStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginBottom: 10,
-  },
+  }, 
   button: {
     backgroundColor: BotonLlantas,
     borderRadius: 80,

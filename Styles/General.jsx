@@ -32,7 +32,8 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
-    color: ColorTexto
+    color: ColorTexto,
+    textAlign: "center"
   },
   marcaText: {
     fontSize: 18,
