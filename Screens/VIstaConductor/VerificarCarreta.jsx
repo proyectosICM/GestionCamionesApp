@@ -42,7 +42,7 @@ export default function VerificacionCarreta({ navigation }) {
             type: "font-awesome",
             size: 25,
             color: "white",
-          }}
+          }} 
           iconRight
           onPress={handleAbrirCamera}
         />

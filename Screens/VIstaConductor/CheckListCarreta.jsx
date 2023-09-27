@@ -52,7 +52,7 @@ export default function CheckListCarreta() {
   const handleBack = () => {
     if (currentTable > 0) {
       setCurrentTable(currentTable - 1);
-    }
+    } 
   };
 
   const allItemsMarked = (marcarArr) => {

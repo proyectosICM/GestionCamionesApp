@@ -27,7 +27,7 @@ export default function VerificacionCamion({ navigation }) {
       cerrar={handleCerrarCamera}
       navigate={navigation.navigate}
       tc={"Camion"}
-    />
+    /> 
   ) : (
     <ImageBackground source={fondo} style={styles.backgroundImage}>
       <View style={styles.container}>

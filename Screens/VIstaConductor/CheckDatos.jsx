@@ -4,7 +4,7 @@ import { Text, View } from "react-native";
 import { styles } from "../../Styles/General";
 
 import { ScrollView } from "react-native";
-import { Button } from "react-native-elements";
+import { Button, Card } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useAgregarElemento, useEditarUnElemento } from "../../Hooks/CRUDHook";
 import { FallasImagenURL, RGS_URL, checkListCamionURL, checkListCarretaURL, checkListExpresoURL, checkListURL, usuarioURL } from "../../API/apiurl";
@@ -250,34 +250,40 @@ export function CheckDatos() {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text>{ide && ide} Asqw</Text>
         <Text>{rol}</Text>
-        {!tablesD && tablesD.map((table, index) => (
-          <View key={index} style={{ alignItems: "center" }}>
-            <Text style={styles.tittleText}>{table.titulo}</Text>
-            <View style={{ alignItems: "center" }}>
-              {table.datos.map((dato, datoIndex) => (
-                <View key={datoIndex}>
-                  <Text>
-                    {dato.nombre}
-                    {datos[index][datoIndex] ? (
-                      <Text style={{ color: "green" }}>
-                        {" "}
-                        Buen estado <Icon name="check" size={20} color="green" />
-                      </Text>
-                    ) : (
-                      <Text style={{ color: "red" }}>
-                        {" "}
-                        Mal estado <Icon name="close" size={20} color="red" />
-                      </Text>
-                    )}
-                  </Text>
+        {tablesD &&
+          tablesD.map((table, index) => (
+            <View key={index} style={{ alignItems: "center" }}>
+              <Card>
+                <Text style={styles.tittleText}>{table.titulo}</Text>
+                <View style={{ alignItems: "center" }}>
+                  {table.datos.map((dato, datoIndex) => (
+                    <View key={datoIndex}>
+                      <>
+                        <Text>
+                          <Card.Title> {dato.nombre}</Card.Title>
+                          {datos[index][datoIndex] ? (
+                            <>
+                              <Text style={{ color: "green" }}>
+                                {" "}
+                                Buen estado <Icon name="check" size={20} color="green" />
+                              </Text>
+                            </>
+                          ) : (
+                            <Text style={{ color: "red" }}>
+                              {" "}
+                              Mal estado <Icon name="close" size={20} color="red" />
+                            </Text>
+                          )}
+                        </Text>
+                      </>
+                    </View>
+                  ))}
                 </View>
-              ))}
+              </Card>
             </View>
-          </View>
-        ))}
-        <Text>{camionid ? camionid : "no jay"}</Text>
+          ))}
+        <Text>{camionid ? camionid : "no hay"}</Text>
         <Text style={styles.tittleText}>Tiempo: {convertirAMinutos(tiempo)}</Text>
         <Button title={"Confirmar Envio de datos"} onPress={() => handleEnviar()} />
       </View>

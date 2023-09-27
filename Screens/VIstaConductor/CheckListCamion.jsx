@@ -71,7 +71,7 @@ export default function CheckListCamion() {
       setCurrentTable(currentTable + 1);
     }
   };
-
+ 
   const handleEnviar = () => {
     navigate.navigate("CheckDatos", { datos: marcar, tiempo: tiempo, tc: tc, tablesD: tables, ide: ide }); // Envía los datos de 'marcar' a la pantalla CheckDatosScreen
   };
@@ -140,4 +140,4 @@ export default function CheckListCamion() {
       </ScrollView>
     </ImageBackground>
   );
-}
+} 

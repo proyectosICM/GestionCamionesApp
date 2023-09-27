@@ -25,7 +25,7 @@ const QRScanner = ({ cerrar, navigate, tc }) => {
   }, []);
  
   const handleBarCodeScanned = async ({ data }) => {
-    setScanned(true);
+    setScanned(true); 
     cerrar();
     if(rol == "CONDUCTOR"){
       await AsyncStorage.setItem('camionid', data);

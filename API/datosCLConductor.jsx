@@ -89,7 +89,7 @@ export const tablesCarr = [
     ],
   },
   {
-    titulo: "Semi-remolque 2",
+    titulo: "Semi-remolque",
     datos: [
       { nombre: "Sistema electrico", atributo: "sistemaElectrico" },
       { nombre: "Bocamasas, Grasa, Tapa, Araña", atributo: "bocamasas" },
@@ -97,7 +97,7 @@ export const tablesCarr = [
     ],
   },
   {
-    titulo: "Semi-remolque 3",
+    titulo: "Semi-remolque  ",
     datos: [
       { nombre: "Chasis: Patas de apoyo", atributo: "chasis" },
       { nombre: "Cortinas, puertas, mamparon", atributo: "cortinasPuertasMamparon" },
