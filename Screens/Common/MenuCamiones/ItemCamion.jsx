@@ -35,7 +35,6 @@ export function ItemCamion({ id, title, title2, description, description2, estad
 
   return (
     <View style={styles.cardContainer}>
-      <Text>{id}</Text>
       <Text style={styles.title}>
         {title} - {title2}
       </Text>

@@ -62,7 +62,7 @@ export function MenuCamiones() {
       ListarCamiones();
     }
   }, [empresa, sede, url, ListarCamiones]);
-  console.log(camiones);
+
   const renderItem = ({ item }) =>
     op === "Habilitados" ? (
       item ? (

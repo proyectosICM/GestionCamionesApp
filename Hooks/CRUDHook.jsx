@@ -29,7 +29,7 @@ export function useListarElementos(url, setDatos) {
       } else {
         // Otro error, manejarlo adecuadamente
         //console.error(`Error al obtener los datos del camión: ${url}`, error);
-        // Token expirado, redirigir al inicio de sesión
+        // Token expirado, redirigir al inicio de sesión 
       }
     }
   }, [navigation, setDatos, url]);
