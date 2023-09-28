@@ -77,7 +77,7 @@ export function CheckDatos() {
 
       if (tc === "Camion") {
         const camionURL = checkListCamionURL;
-
+        console.log("ed")
         const requestData = {
           camionesModel: { id: camionId },
           tiempo: tiempo,
@@ -100,8 +100,7 @@ export function CheckDatos() {
           estado: true,
           reparacion: false,
         };
-        console.log("yas4", RGS_URL);
-        console.log("yas4", requestRGS);
+   
         const RGS = await useAgregarElemento(RGS_URL, requestRGS);
 
         await AsyncStorage.setItem("rgs", RGS.data.id.toString());
@@ -113,7 +112,7 @@ export function CheckDatos() {
           [
             {
               text: "Sí",
-              onPress: () => navigation.navigate("Adjuntar Fotos", { rgs: RGS.data.id }), // Redirección a la pantalla de imagen
+              onPress: () => navigation.navigate("Adjuntar Fotos", { rgs: RGS.data.id, clc: "continuar" }), // Redirección a la pantalla de imagen
             },
             {
               text: "No",
@@ -167,7 +166,7 @@ export function CheckDatos() {
           [
             {
               text: "Sí",
-              onPress: () => navigation.navigate("Adjuntar Fotos", { rgs: rgs }), // Redirección a la pantalla de imagen
+              onPress: () => navigation.navigate("Adjuntar Fotos", { rgs: rgs, clc: "cerrar"  }), // Redirección a la pantalla de imagen
             },
             {
               text: "No",

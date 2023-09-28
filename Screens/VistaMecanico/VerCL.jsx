@@ -40,23 +40,23 @@ export function VerCL() {
   }, [ListarCamion]);
 
   const handleGo = (op, datos) => {
-    if (op === "Camion") {
+    if (op === "Camion" && camion.checkListCamionModel) {
       navigation.navigate("Ver Datos", {
         datos: camion.checkListCamionModel,
         tc: "Camion",
         rol: rol,
         tablesD: datos,
       });
-    } else if (op === "Carreta") {
+    } else if (op === "Carreta" && camion.checkListCarretaModel) {
       navigation.navigate("Ver Datos", {
         datos: camion.checkListCarretaModel,
         tc: "Carreta",
         rol: rol,
         tablesD: datos,
       });
-    } else if (op === "Expreso") {
+    } else if (op === "Expreso" && camion.checkListExpresoModel) {
       navigation.navigate("Ver Datos", {
-        datos: camion.checkListCamionModel,
+        datos: camion.checkListExpresoModel,
         tc: "Camion",
         rol: rol,
         tablesD: datos,
@@ -66,7 +66,6 @@ export function VerCL() {
 
   return (
     <View style={styles.container}>
-      <Text>{id}</Text>
       <Button
         title={"Ver CheckList Camion"}
         buttonStyle={styles.styleButton}
@@ -80,7 +79,7 @@ export function VerCL() {
         onPress={() => handleGo("Carreta", tablesCarr)}
       />
       <Button
-        title={"Ver CheckList Servicio Expreso"}
+        title={camion.checkListExpresoModel ? "Ver CheckList Servicio Expreso": "No hay checklist express registrados"}
         buttonStyle={styles.styleButton}
         titleStyle={styles.textoButton}
         onPress={() => handleGo("Expreso", servicioExpress)}

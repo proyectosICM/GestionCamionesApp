@@ -6,7 +6,7 @@ import { StyleSheet } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import { BotonColorOscuro, ColorIcono, ColorTextoBoton } from "../../Styles/PaletaColores";
 
-export function BotonesCamionAsignado({ datos }) {
+export function BotonesCamionAsignado({ datos }) { 
   const navigation = useNavigation();
   console.log(datos);
 

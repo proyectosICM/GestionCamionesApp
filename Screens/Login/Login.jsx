@@ -44,27 +44,10 @@ export default function Login({ navigation }) {
       console.log(error);
     }
   };
-
-  const [test, setTest] = useState();
-
-  const handleTest = async() => {
-    try {
-      const response = await axios.get(`${base}/hola`);
-      setTest(response.data);
-    }catch (error){
-      console.log(error)
-    }
-  }
-
-  useEffect(() => {
-    handleTest();
-  },[handleTest]);
-
   
   return (
     <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
       <View style={styles.container}>
-        <Text>{test && test}</Text>
         <Text style={styles.title}>Inicio de Sesión</Text>
         <TextInput
           style={styles.input}

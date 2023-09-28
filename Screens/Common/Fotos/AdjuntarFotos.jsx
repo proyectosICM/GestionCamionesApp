@@ -1,28 +1,23 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import { Camera } from "expo-camera"; // Importa Camera desde expo-camera
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { styles } from "../../../Styles/General";
 import { ImageBackground } from "react-native";
 import { ColorIcono, fondo } from "../../../Styles/PaletaColores";
-import { useAgregarElemento } from "../../../Hooks/CRUDHook";
-import { FallasImagenURL, ObsURL } from "../../../API/apiurl";
+import { useAgregarElemento, useListarElementos } from "../../../Hooks/CRUDHook";
+import { FallasImagenURL, ObsURL, infoURL } from "../../../API/apiurl";
 
 export function AdjuntarFotos() {
   const [usuario, setUsuario] = useState();
   const route = useRoute();
   const rgs = route.params.rgs;
+  const clc = route.params.clc;
+  const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
   const [observacion, setObservacion] = useState(null);
@@ -36,12 +31,13 @@ export function AdjuntarFotos() {
     setNameusu(nomusuario);
   };
 
+  const [info, setInfo] = useState();
+  useListarElementos(`${infoURL}${nameusu}`, setInfo);
 
   const obtenerDatosAsync = async () => {
     const usuariov = await AsyncStorage.getItem("username");
     setUser(usuariov);
   };
-
 
   useEffect(() => {
     datosAsync();
@@ -72,16 +68,12 @@ export function AdjuntarFotos() {
           type: "image/jpeg",
         });
 
-        const response = await axios.post(
-          "https://api.imgur.com/3/image",
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${userAccessToken}`,
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
+        const response = await axios.post("https://api.imgur.com/3/image", formData, {
+          headers: {
+            Authorization: `Bearer ${userAccessToken}`,
+            "Content-Type": "multipart/form-data",
+          },
+        });
 
         if (response.status === 200) {
           const uploadedImageUrl = response.data.data.link;
@@ -104,7 +96,7 @@ export function AdjuntarFotos() {
           setObservacion("");
 
           const requestObs = {
-            nameObs: `Se guardo la foto: ${observacion} Por el usuario ${nameusu}`,
+            nameObs: `Se guardo la foto: ${observacion} Por el usuario ${info.nombre} ${info.apellido}`,
             rgsModel: {
               id: rgs,
             },
@@ -125,7 +117,7 @@ export function AdjuntarFotos() {
         setIsLoading(false);
       }
     } else {
-      Alert.alert("Agregue detalle a la observacion", "Por favor describa la falla")
+      Alert.alert("Agregue detalle a la observacion", "Por favor describa la falla");
     }
   };
 
@@ -135,6 +127,8 @@ export function AdjuntarFotos() {
     // Puedes abrir un modal o navegar a una nueva pantalla para mostrar la imagen en pantalla completa.
     // Esto depende de la implementación específica de tu aplicación.
   };
+
+  console.log(clc);
 
   return (
     <ImageBackground source={fondo} style={styles.backgroundImage}>
@@ -147,9 +141,7 @@ export function AdjuntarFotos() {
               resizeMode="contain"
               onPress={handleVerImagen} // Agrega una función para ver la imagen en pantalla completa
             />
-            <Text style={[styles.tittleText, { margin: 2 }]}>
-              Agregar una observación
-            </Text>
+            <Text style={[styles.tittleText, { margin: 2 }]}>Agregar una observación</Text>
             <TextInput
               style={[styles2.input, { backgroundColor: "#EBEFF2" }]}
               placeholder="Detalle la observación"
@@ -170,15 +162,21 @@ export function AdjuntarFotos() {
               style={{ flex: 1, width: "90%", height: "90%", marginTop: "10%" }}
               type={Camera.Constants.Type.back}
               ref={(ref) => setCamera(ref)}
-            >
-
-            </Camera>
-            <TouchableOpacity
-                onPress={handleImagePicker}
-                style={styles2.captureButton}
-              >
-                <Text style={styles2.captureButtonText}>Tomar Foto</Text>
+            ></Camera>
+            <TouchableOpacity onPress={handleImagePicker} style={styles2.captureButton}>
+              <Text style={styles2.captureButtonText}>Tomar Foto</Text>
+            </TouchableOpacity>
+            {clc == "continuar" && (
+              <TouchableOpacity onPress={() => navigation.navigate("VerificacionCarreta")} style={styles2.continuar}>
+                <Text style={styles2.captureButtonText}>Continuar checklist</Text>
               </TouchableOpacity>
+            )}
+
+            {clc == "cerrar" && (
+              <TouchableOpacity onPress={() => navigation.navigate("Asignado")} style={styles2.continuar}>
+                <Text style={styles2.captureButtonText}>Cerrar</Text>
+              </TouchableOpacity>
+            )}
           </View>
         )}
       </View>
@@ -194,7 +192,7 @@ const styles2 = StyleSheet.create({
   },
   previewContainer: {
     width: "80%",
-    height: "70%",
+    height: "80%",
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
@@ -221,10 +219,19 @@ const styles2 = StyleSheet.create({
     width: "50%",
     alignItems: "center",
     marginHorizontal: "25%",
-    marginVertical: "10%"
+    marginVertical: "10%",
   },
   captureButtonText: {
     fontSize: 20,
     fontWeight: "bold",
+  },
+  continuar: {
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    padding: 15,
+    width: "70%",
+    alignItems: "center",
+    marginHorizontal: "25%",
+    marginBottom: "10%",
   },
 });
