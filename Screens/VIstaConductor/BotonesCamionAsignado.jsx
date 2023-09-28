@@ -8,7 +8,6 @@ import { BotonColorOscuro, ColorIcono, ColorTextoBoton } from "../../Styles/Pale
 
 export function BotonesCamionAsignado({ datos }) { 
   const navigation = useNavigation();
-  console.log(datos);
 
   return (
     <>

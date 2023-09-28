@@ -25,9 +25,6 @@ export function Cuenta({ navigation }) {
     try {
       await AsyncStorage.clear();
       setUser("");
-      console.log(
-        "Sesión cerrada. Todos los datos eliminados de AsyncStorage."
-      );
       navigation.navigate("Login");
     } catch (error) {
       console.log("Error al cerrar la sesión:", error);

@@ -68,27 +68,41 @@ export function VerCL() {
     <View style={styles.container}>
       <Button
         title={camion.checkListCamionModel ? "Ver CheckList Camion" : "No hay checklist de camion registrado"}
-        buttonStyle={styles.styleButton}
-        titleStyle={styles.textoButton}
+        buttonStyle={[styles.styleButton, { width: "80%", alignContent: "center", justifyContent: "center" }]}
+        titleStyle={[styles.textoButton, { textAlign: "center", paddingHorizontal: "10%" }]}
         onPress={() => handleGo("Camion", tablesCam)}
       />
       <Button
         title={camion.checkListCarretaModel ? "Ver CheckList Carreta" : "No hay checklist de carreta registrados"}
-        buttonStyle={styles.styleButton}
-        titleStyle={styles.textoButton}
+        buttonStyle={[styles.styleButton, { width: "80%", alignContent: "center", justifyContent: "center" }]}
+        titleStyle={[styles.textoButton, { textAlign: "center", paddingHorizontal: "10%" }]}
         onPress={() => handleGo("Carreta", tablesCarr)}
       />
       <Button
-        title={camion.checkListExpresoModel ? "Ver CheckList Servicio Expreso": "No hay checklist express registrados"}
-        buttonStyle={styles.styleButton}
-        titleStyle={styles.textoButton}
+        title={camion.checkListExpresoModel ? "Ver CheckList Servicio Expreso" : "No hay checklist express registrados"}
+        buttonStyle={[styles.styleButton, { width: "80%", alignContent: "center", justifyContent: "center" }]}
+        titleStyle={[styles.textoButton, { textAlign: "center", paddingHorizontal: "10%" }]}
         onPress={() => handleGo("Expreso", servicioExpress)}
       />
       <Button
         title={"Ver Imagenes de falla"}
-        buttonStyle={styles.styleButton}
-        titleStyle={styles.textoButton}
-        onPress={() => navigation.navigate('Galeria', {idRgs: id})}
+        buttonStyle={[styles.styleButton, { width: "80%"}]}
+        titleStyle={[styles.textoButton, { textAlign: "center", paddingHorizontal: "10%" }]}
+        onPress={() => navigation.navigate("Galeria", { idRgs: id })}
+      />
+
+      <Button
+        title={"Colocar camion como pendiente a reparacion"}
+        buttonStyle={[styles.styleButton, { width: "80%", backgroundColor:"blue" }]}
+        titleStyle={[styles.textoButton, { textAlign: "center", paddingHorizontal: "10%" }]}
+        onPress={() => navigation.navigate("Galeria", { idRgs: id })}
+      />
+
+      <Button
+        title={"Descargar un archivo excel"}
+        buttonStyle={[styles.styleButton, { width: "80%", backgroundColor:"green" }]}
+        titleStyle={[styles.textoButton, { textAlign: "center", paddingHorizontal: "10%" }]}
+        onPress={() => navigation.navigate("Galeria", { idRgs: id })}
       />
     </View>
   );

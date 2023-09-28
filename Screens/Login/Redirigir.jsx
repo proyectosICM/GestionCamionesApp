@@ -9,11 +9,10 @@ import { useNavigation } from "@react-navigation/native";
 import { styles } from "../../Styles/General";
 import { ActivityIndicator } from "react-native";
 
-
 export function Redirigir({ navigation }) {
   const [info, setInfo] = useState();
   const [user, setUser] = useState(null);
-  const [showText, setShowText] = useState(false); 
+  const [showText, setShowText] = useState(false);
 
   const fetchData = useCallback(async () => {
     const token = await AsyncStorage.getItem("token");
@@ -30,7 +29,7 @@ export function Redirigir({ navigation }) {
   useEffect(() => {
     ListarInfo();
   }, [ListarInfo]);
-  
+
   useEffect(() => {
     const obtenerDatosUser = async () => {
       if (info) {
@@ -40,7 +39,7 @@ export function Redirigir({ navigation }) {
         await AsyncStorage.setItem("usuario", info.id.toString());
 
         navigation.navigate("Inicio");
-// Navegar a la pantalla "Inicio" después de 2 segundos
+        // Navegar a la pantalla "Inicio" después de 2 segundos
       }
     };
     obtenerDatosUser();
@@ -50,9 +49,7 @@ export function Redirigir({ navigation }) {
     try {
       await AsyncStorage.clear();
       setUser("");
-      console.log(
-        "Sesión cerrada. Todos los datos eliminados de AsyncStorage."
-      );
+      console.log("Sesión cerrada. Todos los datos eliminados de AsyncStorage.");
       navigation.navigate("Login");
     } catch (error) {
       console.log("Error al cerrar la sesión:", error);
@@ -64,27 +61,20 @@ export function Redirigir({ navigation }) {
       <ActivityIndicator size={100} color="black" style={{ marginVertical: 15 }} />
       {showText && (
         <>
-          <Text style={styles.tittleText}>
-            Algo a fallado en su inico de sesion
-          </Text>
+          <Text style={styles.tittleText}>Algo a fallado en su inico de sesion</Text>
           <Text style={styles.tittleText}>Por favor cierra sesion </Text>
-          <Text style={styles.tittleText}>
-            y comunicate con tu administrador
-          </Text>
-          <Button
-            title="Cerrar Sesión"
-            buttonStyle={styles.styleButton}
-            titleStyle={styles.tittleText}
-            onPress={() => handleLogout()}
-          />
+          <Text style={styles.tittleText}>y comunicate con tu administrador</Text>
+          <Button title="Cerrar Sesión" buttonStyle={styles.styleButton} titleStyle={styles.tittleText} onPress={() => handleLogout()} />
         </>
       )}
+      {/*
       <Button
         title="Cerrar Sesión"
         buttonStyle={styles.styleButton}
         titleStyle={styles.tittleText}
         onPress={() => handleLogout()}
       />
+      */}
     </View>
   );
 }

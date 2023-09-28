@@ -18,7 +18,7 @@ export function useListarElementos(url, setDatos) {
     } catch (error) {
       if (error.response && error.response.status === 500) {
         // Token expirado, redirigir al inicio de sesión
-        console.log(url)
+
 /*
         if(!logout){
           alert("Su sesion a caducado, la sesion se cerro");

@@ -14,21 +14,17 @@ export function CamionSelect() {
   const fondo1 = require("../../Styles/fondo5.jpg");
   const [usuarioid, setUsuarioid] = useState();
   const [userData, setUserData] = useState();
-  const [countdown, setCountdown] = useState(2); 
+  const [countdown, setCountdown] = useState(2);
   const route = useRoute();
   const navigation = useNavigation();
   const actualizar = route.params?.actualizar;
 
   const obtenerDatos = useCallback(async () => {
     const usuarioidv = await AsyncStorage.getItem("usuario");
-    setUsuarioid(usuarioidv); 
+    setUsuarioid(usuarioidv);
   }, []);
 
-
-  const ListarInfoUser = useListarElementos(
-    `${usuarioURL}/${usuarioid}`,
-    setUserData
-  );
+  const ListarInfoUser = useListarElementos(`${usuarioURL}/${usuarioid}`, setUserData);
 
   useEffect(() => {
     ListarInfoUser();
@@ -40,17 +36,15 @@ export function CamionSelect() {
     //ListarInfoUser()
     if (actualizar) {
       obtenerDatos();
-      ListarInfoUser(); 
-      navigation.setParams({ actualizar: false }); 
+      ListarInfoUser();
+      navigation.setParams({ actualizar: false });
     }
   }, [obtenerDatos, ListarInfoUser]);
-
-
 
   const handleCargarCamion = () => {
     obtenerDatos();
     ListarInfoUser();
-  }; 
+  };
 
   useEffect(() => {
     if (actualizar) {
@@ -63,26 +57,20 @@ export function CamionSelect() {
       <View style={styles.container}>
         {userData && userData.rgsModel ? (
           <>
-{/*
-            <View style={{marginTop: 30, marginBottom: 20}}>
-              <QRCodeGenerator idRgs={userData.rgsModel && userData.rgsModel.id} />
-            </View> 
-            <Text style={styles.tittleText}>
-              Placa Camion:{" "}
-              {userData.rgsModel && userData.rgsModel.checkListCamionModel.camionesModel.placa}
-            </Text>
-            <Text style={styles.tittleText}>
-              Placa Tracto:{" "}
-              {userData.rgsModel.checkListCarretaModel.camionesModel.placa}
-            </Text>
+            {/*
+              <View style={{ marginTop: 30, marginBottom: 20 }}>
+                <QRCodeGenerator idRgs={userData.rgsModel && userData.rgsModel.id} />
+              </View>
+        */}
+
+            <Text style={styles.tittleText}>Placa Camion: {userData.rgsModel && userData.rgsModel.checkListCamionModel.camionesModel.placa}</Text>
+            <Text style={styles.tittleText}>Placa Tracto: {userData.rgsModel && userData.rgsModel.checkListCarretaModel.camionesModel.placa}</Text>
             <BotonesCamionAsignado datos={userData} />
-                 */}
           </>
-   
         ) : (
           <>
             <Text style={styles.tittleText}>No hay Camion Asignado</Text>
-            <Text style={[styles.tittleText,{textAlign: "center"} ]}>Por favor escanee el QR de un camion libre</Text>
+            <Text style={[styles.tittleText, { textAlign: "center" }]}>Por favor escanee el QR de un camion libre</Text>
             {/*    <Button
             title={"Cargar el camion asignado"}
             onPress={() => handleCargarCamion()}
