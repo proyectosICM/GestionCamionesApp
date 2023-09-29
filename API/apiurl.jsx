@@ -43,7 +43,7 @@ export const usuarioURL = `${baseURL}usuarios`;
 
 //Registro General de Salidas
 export const RGS_URL = `${baseURL}RGS`;
-export const RGS_xEmpresa = `${RGS_URL}/xempresa-sede/`
+export const RGS_xEmpresa = `${RGS_URL}/xempresa-sede/` 
 
 //Observaciones 
 export const ObsURL = `${baseURL}Obs`;

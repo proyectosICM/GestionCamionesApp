@@ -80,6 +80,7 @@ export function MenuCamiones() {
           enreparacion={item.checkListCamionModel.camionesModel.enreparacion}
           fecha = {item.fechaCreacion}
           op={op}
+          item = {item}
         />
       ) : (
         <Text>Fallado {item.id}</Text>

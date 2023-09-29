@@ -7,8 +7,10 @@ import { FontAwesome } from "react-native-vector-icons/FontAwesome";
 import { styles as general } from "../../../Styles/General";
 import { servicioExpress } from "../../../API/datosCLMecanico";
 import { ColorIcono, ColorTexto, ColorTextoBoton } from "../../../Styles/PaletaColores";
+import { useListarElementos } from "../../../Hooks/CRUDHook";
+import { RGS_URL } from "../../../API/apiurl";
 
-export function ItemCamion({ id, title, title2, description, description2, estado, fecha, op }) {
+export function ItemCamion({ id, title, title2, description, description2, estado, fecha, op, item }) {
   const navigation = useNavigation();
 
   const handleCheck = () => {
@@ -22,6 +24,9 @@ export function ItemCamion({ id, title, title2, description, description2, estad
   const handleVerCheck = () => {
     navigation.navigate("Ver CheckLists", { id: id });
   };
+
+  const [camion, setCamion] = useState();
+  useListarElementos(`${RGS_URL}/${id}`, setCamion);
 
   const [fechaFormateada, setFechaFormateada] = useState();
 
@@ -55,8 +60,9 @@ export function ItemCamion({ id, title, title2, description, description2, estad
       )}
 
       <Button title={"Ver"} buttonStyle={general.styleButton} titleStyle={general.textoButton} onPress={() => handleVerCheck()} />
-
-      <Button title={"Realizar CheckList"} buttonStyle={general.styleButton} titleStyle={general.textoButton} onPress={() => handleCheck()} />
+      {camion && camion.checkListExpresoModel && (
+        <Button title={"Realizar CheckList"} buttonStyle={general.styleButton} titleStyle={general.textoButton} onPress={() => handleCheck()} />
+      )}
 
       {op === "Pendiente" && (
         <>

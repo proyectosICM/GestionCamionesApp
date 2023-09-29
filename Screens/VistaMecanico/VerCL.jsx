@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { Text } from "react-native";
 import { styles } from "../../Styles/General";
 import { Button } from "react-native-elements";
@@ -13,6 +13,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { checkListCamionURL } from "./../../API/apiurl";
 import { tablesCam, tablesCarr } from "../../API/datosCLConductor";
 import { servicioExpress } from "./../../API/datosCLMecanico";
+import { CLExcel, mensaje } from "../Common/ExcelCL";
 
 export function VerCL() {
   const [camion, setCamion] = useState([]);
@@ -96,13 +97,13 @@ export function VerCL() {
         buttonStyle={[styles.styleButton, { width: "80%", backgroundColor:"blue" }]}
         titleStyle={[styles.textoButton, { textAlign: "center", paddingHorizontal: "10%" }]}
         onPress={() => navigation.navigate("Galeria", { idRgs: id })}
-      />
+      /> 
 
       <Button
         title={"Descargar un archivo excel"}
         buttonStyle={[styles.styleButton, { width: "80%", backgroundColor:"green" }]}
         titleStyle={[styles.textoButton, { textAlign: "center", paddingHorizontal: "10%" }]}
-        onPress={() => navigation.navigate("Galeria", { idRgs: id })}
+        onPress={() => Alert.alert("No disponible aun" , "Esta funcion solo esta disponible desde el sistema web, aun no disponible en movil")}
       />
     </View>
   );

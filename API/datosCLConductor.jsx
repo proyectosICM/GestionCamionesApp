@@ -42,7 +42,7 @@ export const tablesCam = [
       { nombre: "Seryo", atributo: "seryo" },
       { nombre: "Alineamiento", atributo: "alineamiento" },
       { nombre: "Pines, bocinas, terminales", atributo: "pinesBocinasTerminales" },
-      { nombre: "Caja de Direcion", atributo: "cajaDeDireccion" },
+      { nombre: "Caja de Direcion", atributo: "cajaDeDirecion" },
     ],
   },
   {
@@ -56,7 +56,7 @@ export const tablesCam = [
   {
     titulo: "Suspension",
     datos: [
-      { nombre: "Muelles, Bolsas de aire", atributo: "muellesBolsasDeAire" },
+      { nombre: "Muelles, Bolsas de aire", atributo: "muellesBolsasdeAire" },
       { nombre: "Amortiguadores", atributo: "amortiguadores" },
       { nombre: "Ejes barra estabilizadora", atributo: "ejesBarraEstabilizadora" },
     ],
