@@ -1,16 +1,18 @@
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { Button, Icon } from "react-native-elements";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { Button, Card, Icon } from "react-native-elements";
 import { FontAwesome } from "react-native-vector-icons/FontAwesome";
 import { styles as general } from "../../../Styles/General";
 import { servicioExpress } from "../../../API/datosCLMecanico";
 import { ColorIcono, ColorTexto, ColorTextoBoton } from "../../../Styles/PaletaColores";
 import { useListarElementos } from "../../../Hooks/CRUDHook";
-import { RGS_URL } from "../../../API/apiurl";
+import { RGS_CHabilitar, RGS_CReparar, RGS_URL } from "../../../API/apiurl";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
-export function ItemCamion({ id, title, title2, description, description2, estado, fecha, op, item }) {
+export function ItemCamion({ id, title, title2, description, description2, estado, fecha, op, item, actualizar }) {
   const navigation = useNavigation();
 
   const handleCheck = () => {
@@ -28,6 +30,83 @@ export function ItemCamion({ id, title, title2, description, description2, estad
   const [camion, setCamion] = useState();
   useListarElementos(`${RGS_URL}/${id}`, setCamion);
 
+  const handleReparar = async () => {
+    const token = await AsyncStorage.getItem("token");
+    Alert.alert("Seguro de enviar el registro a reparar?", "Esta acción no se puede deshacer.", [
+      {
+        text: "No",
+        onPress: () => {
+          // Acción a realizar si el usuario selecciona "No"
+          console.log("El usuario seleccionó No");
+        },
+        style: "cancel", // Opcional: estilo "cancel" para el botón "No"
+      },
+      {
+        text: "Sí",
+        onPress: async () => {
+          // Acción a realizar si el usuario selecciona "Sí"
+          console.log("El usuario seleccionó Sí");
+          try {
+            await axios
+              .put(
+                `${RGS_CReparar}${id}`,
+                {},
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              )
+              .then(console.log("ds"));
+            console.log("Enviado a reparacion");
+            actualizar();
+          } catch (error) {
+            console.error("Error al realizar la solicitud PUT:", error);
+          }
+          // Aquí puedes poner tu lógica para enviar el registro a reparar
+        },
+      },
+    ]);
+  };
+
+  const handleHabilitar = async () => {
+    const token = await AsyncStorage.getItem("token");
+    Alert.alert("Seguro de acabar la repacion y habilitar el camion y carreta?", "Esta acción no se puede deshacer.", [
+      {
+        text: "No",
+        onPress: () => {
+          // Acción a realizar si el usuario selecciona "No"
+          console.log("El usuario seleccionó No");
+        },
+        style: "cancel", // Opcional: estilo "cancel" para el botón "No"
+      },
+      {
+        text: "Sí",
+        onPress: async () => {
+          // Acción a realizar si el usuario selecciona "Sí"
+          console.log("El usuario seleccionó Sí");
+          try {
+            await axios.put(
+              `${RGS_CHabilitar}${id}`,
+              {},
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+            console.log("Enviado a reparacion");
+            actualizar();
+          } catch (error) {
+            console.error("Error al realizar la solicitud PUT:", error);
+            console.log(`${RGS_CHabilitar}${id}`);
+          }
+          // Aquí puedes poner tu lógica para enviar el registro a reparar
+        },
+      },
+    ]);
+  };
+
   const [fechaFormateada, setFechaFormateada] = useState();
 
   const formatearFecha = (timestamp) => {
@@ -40,6 +119,7 @@ export function ItemCamion({ id, title, title2, description, description2, estad
 
   return (
     <View style={styles.cardContainer}>
+      <Text style={{ textAlign: "center" }}>Codigo de Registro {id}</Text>
       <Text style={styles.title}>
         {title} - {title2}
       </Text>
@@ -60,9 +140,14 @@ export function ItemCamion({ id, title, title2, description, description2, estad
       )}
 
       <Button title={"Ver"} buttonStyle={general.styleButton} titleStyle={general.textoButton} onPress={() => handleVerCheck()} />
-      {camion && camion.checkListExpresoModel && (
+
+      {camion && !camion.checkListExpresoModel && (
         <Button title={"Realizar CheckList"} buttonStyle={general.styleButton} titleStyle={general.textoButton} onPress={() => handleCheck()} />
       )}
+
+      {/* camion && camion.checkListExpresoModel && (
+        <Button title={"Colocar camion como pendiente a Reparacion"} buttonStyle={general.styleButton} titleStyle={general.textoButton} onPress={() => handleCheck()} />
+      ) */}
 
       {op === "Pendiente" && (
         <>
@@ -78,7 +163,26 @@ export function ItemCamion({ id, title, title2, description, description2, estad
             }
             buttonStyle={general.styleButton}
             titleStyle={general.textoButton}
-            onPress={() => handleCheck()}
+            onPress={() => handleReparar()}
+          />
+        </>
+      )}
+
+      {op === "enreparacion" && (
+        <>
+          <Button
+            title={"Habilitar"}
+            icon={
+              <Icon
+                name="wrench" // Aquí puedes cambiar el nombre del icono según el icono que desees usar
+                type="font-awesome" // Puedes cambiar el tipo de icono según la librería de iconos que estés utilizando
+                color={ColorIcono} // Puedes cambiar el color del icono
+                size={24} // Puedes cambiar el tamaño del icono
+              />
+            }
+            buttonStyle={general.styleButton}
+            titleStyle={general.textoButton}
+            onPress={() => handleHabilitar()}
           />
         </>
       )}

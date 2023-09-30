@@ -19,7 +19,7 @@ export function BotonesCamionAsignado({ datos }) {
             buttonStyle={localStyles.button}
             onPress={() =>
               navigation.navigate("InfoDetallada", { datos: datos })
-            }
+            } 
             icon={<Icon name="info" size={20} color={ColorIcono}  />} // Agrega el icono al botón
           />
 

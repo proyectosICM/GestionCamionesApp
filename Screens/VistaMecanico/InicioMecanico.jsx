@@ -78,6 +78,7 @@ export default function InicioMecanico({ navigation }) {
   ) : (
     <ImageBackground source={fondo}  style={styles.backgroundImage}>
     <View style={styles.container}>
+      {/*
       <Text style={styles.tittleText}>
         Escanear QR de camion
       </Text>
@@ -97,6 +98,8 @@ export default function InicioMecanico({ navigation }) {
         onPress={handleAbrirCamera}
       />
       <Text style={styles.tittleText}>O</Text>
+  */}
+
       <Button
         title=" Buscar Camion en Menu "
         type="outline"
