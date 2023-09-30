@@ -56,4 +56,7 @@ export const ObsxRgsURL = `${ObsURL}/xRGS/`
 //Registro Cambio de llantas de Salidas
 export const CambioLlantasURL = `${baseURL}cambio-llantas`;
 
+//Reparaciones
+export const ReparacionesURL = `${baseURL}reparaciones`;
+export const ReparacionxRGS = `${ReparacionesURL}/xrgs/`
 

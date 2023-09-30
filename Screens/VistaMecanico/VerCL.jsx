@@ -4,7 +4,12 @@ import { Text } from "react-native";
 import { styles } from "../../Styles/General";
 import { Button, Card } from "react-native-elements";
 import { useState } from "react";
-import { RGS_CHabilitar, RGS_CPendiente, RGS_CReparar, RGS_URL } from "../../API/apiurl";
+import {
+  RGS_CHabilitar,
+  RGS_CPendiente,
+  RGS_CReparar,
+  RGS_URL,
+} from "../../API/apiurl";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useCallback } from "react";
 import { useEffect } from "react";
@@ -87,67 +92,131 @@ export function VerCL() {
       console.log(token);
 
       if (datos.estado == true && datos.reparacion == false) {
-        Alert.alert("Seguro de colocar como pendiente el camion y carreta?", "Esta acción no se puede deshacer.", [
-          {
-            text: "No",
-            onPress: () => {
-              // Acción a realizar si el usuario selecciona "No"
-              console.log("El usuario seleccionó No");
+        Alert.alert(
+          "Seguro de colocar como pendiente el camion y carreta?",
+          "Esta acción no se puede deshacer.",
+          [
+            {
+              text: "No",
+              onPress: () => {
+                // Acción a realizar si el usuario selecciona "No"
+                console.log("El usuario seleccionó No");
+              },
+              style: "cancel", // Opcional: estilo "cancel" para el botón "No"
             },
-            style: "cancel", // Opcional: estilo "cancel" para el botón "No"
-          },
-          {
-            text: "Sí",
-            onPress: async () => {
-              try {
-                await axios.put(
-                  `${RGS_CPendiente}${id}`,
-                  {},
-                  {
+            {
+              text: "Sí",
+              onPress: async () => {
+                try {
+                  await axios.put(
+                    `${RGS_CPendiente}${id}`,
+                    {},
+                    {
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                      },
+                    }
+                  );
+
+                  navigation.navigate("Menu-Camion", {
+                    menucam: "habilitados",
+                  });
+                } catch (error) {
+                  console.error("Error al realizar la solicitud PUT:", error);
+                }
+                // Aquí puedes poner tu lógica para enviar el registro a reparar
+              },
+            },
+          ]
+        );
+      } else if (datos.estado == false && datos.reparacion == false) {
+        Alert.alert(
+          "Pasar camión a reparar",
+          "¿Estás seguro de que quieres enviar el camión a reparación?",
+          [
+            {
+              text: "Sí",
+              onPress: async () => {
+                try {
+                  await axios.put(`${RGS_CReparar}${id}`, {}, {
                     headers: {
                       Authorization: `Bearer ${token}`,
                     },
-                  }
-                );
- 
-                navigation.navigate("Menu-Camion", {menucam: "habilitados"});
-              } catch (error) {
-                console.error("Error al realizar la solicitud PUT:", error);
-              }
-              // Aquí puedes poner tu lógica para enviar el registro a reparar
+                  });
+                  console.log("Camión enviado a reparación");
+                  navigation.navigate("Menu-Camion", {
+                    menucam: "pendientes",
+                  });
+                } catch (error) {
+                  console.error("Error al realizar la solicitud PUT:", error);
+                }
+              },
             },
-          },
-        ]);
-
-      } else if (datos.estado == false && datos.reparacion == false) {
-        await axios.put(`${RGS_CReparar}${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+            {
+              text: "No",
+              style: "cancel",
+            },
+          ]
+        );
       } else if (datos.estado == false && datos.reparacion == true) {
-        await axios.put(`${RGS_CHabilitar}${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        Alert.alert(
+          "Seguro de retirar registro de reparación y habilitar el camión y carreta?",
+          "¿Estás seguro de que quieres realizar esta acción?",
+          [
+            {
+              text: "Sí",
+              onPress: async () => {
+                try {
+                  await axios.put(`${RGS_CHabilitar}${id}`, {}, {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  });
+                  navigation.navigate("Menu-Camion", {
+                    menucam: "reparar",
+                  });
+                  console.log("Registro de reparación retirado y camión habilitado");
+                } catch (error) {
+                  console.error("Error al realizar la solicitud PUT:", error);
+                }
+              },
+            },
+            {
+              text: "No",
+              style: "cancel",
+            },
+          ]
+        );
       }
     }
   };
 
-console.log(camion.estado)
+  console.log(camion.estado);
   return (
     <View style={styles.container}>
       <View style={localStyles.cardContainer}>
         <View style={localStyles.cardItem}>
           <Card style={{ height: "100%" }}>
-            <Card.Title>{camion.checkListCamionModel ? "Ver CheckList Camion" : "No hay checklist de camion registrado"}</Card.Title>
+            <Card.Title>
+              {camion.checkListCamionModel
+                ? "Ver CheckList Camion"
+                : "No hay checklist de camion registrado"}
+            </Card.Title>
             <Text style={{ textAlign: "center" }}>
-              Ver el checklist realizado para el camion {camion.checkListCamionModel && camion.checkListCamionModel.camionesModel.placa}
+              Ver el checklist realizado para el camion{" "}
+              {camion.checkListCamionModel &&
+                camion.checkListCamionModel.camionesModel.placa}
             </Text>
             <Button
-              title={camion.checkListCamionModel ? "Ver" : "No hay checklist de camion registrado"}
-              buttonStyle={[styles.styleButton, { alignContent: "center", justifyContent: "center" }]}
+              title={
+                camion.checkListCamionModel
+                  ? "Ver"
+                  : "No hay checklist de camion registrado"
+              }
+              buttonStyle={[
+                styles.styleButton,
+                { alignContent: "center", justifyContent: "center" },
+              ]}
               titleStyle={[styles.textoButton, { textAlign: "center" }]}
               onPress={() => handleGo("Camion", tablesCam)}
             />
@@ -156,13 +225,26 @@ console.log(camion.estado)
 
         <View style={localStyles.cardItem}>
           <Card style={{ height: "100%" }}>
-            <Card.Title>{camion.checkListCarretaModel ? "Ver CheckList Carreta" : "No hay checklist de carreta registrados"}</Card.Title>
+            <Card.Title>
+              {camion.checkListCarretaModel
+                ? "Ver CheckList Carreta"
+                : "No hay checklist de carreta registrados"}
+            </Card.Title>
             <Text style={{ textAlign: "center" }}>
-              Ver el checklist realizado para el camion {camion.checkListCarretaModel && camion.checkListCarretaModel.camionesModel.placa}
+              Ver el checklist realizado para el camion{" "}
+              {camion.checkListCarretaModel &&
+                camion.checkListCarretaModel.camionesModel.placa}
             </Text>
             <Button
-              title={camion.checkListCamionModel ? "Ver" : "No hay checklist de camion registrado"}
-              buttonStyle={[styles.styleButton, { alignContent: "center", justifyContent: "center" }]}
+              title={
+                camion.checkListCamionModel
+                  ? "Ver"
+                  : "No hay checklist de camion registrado"
+              }
+              buttonStyle={[
+                styles.styleButton,
+                { alignContent: "center", justifyContent: "center" },
+              ]}
               titleStyle={[styles.textoButton, { textAlign: "center" }]}
               onPress={() => handleGo("Carreta", tablesCarr)}
             />
@@ -173,11 +255,24 @@ console.log(camion.estado)
       <View style={localStyles.cardContainer}>
         <View style={localStyles.cardItem}>
           <Card style={{ height: "100%" }}>
-            <Card.Title>{camion.checkListExpresoModel ? "Ver CheckList Servicio Expreso" : "No hay checklist express registrados"}</Card.Title>
-            <Text style={{ textAlign: "center" }}>Ver el checklist expreso realizado</Text>
+            <Card.Title>
+              {camion.checkListExpresoModel
+                ? "Ver CheckList Servicio Expreso"
+                : "No hay checklist express registrados"}
+            </Card.Title>
+            <Text style={{ textAlign: "center" }}>
+              Ver el checklist expreso realizado
+            </Text>
             <Button
-              title={camion.checkListExpresoModel ? "Ver" : "No hay checklist express registrados"}
-              buttonStyle={[styles.styleButton, { alignContent: "center", justifyContent: "center" }]}
+              title={
+                camion.checkListExpresoModel
+                  ? "Ver"
+                  : "No hay checklist express registrados"
+              }
+              buttonStyle={[
+                styles.styleButton,
+                { alignContent: "center", justifyContent: "center" },
+              ]}
               titleStyle={[styles.textoButton, { textAlign: "center" }]}
               onPress={() => handleGo("Expreso", servicioExpress)}
             />
@@ -187,28 +282,97 @@ console.log(camion.estado)
         <View style={localStyles.cardItem}>
           <Card style={{ height: "100%" }}>
             <Card.Title>Ver Imagenes de falla</Card.Title>
-            <Text style={{ textAlign: "center" }}>Ver la fotos de fallas adjuntadas</Text>
+            <Text style={{ textAlign: "center" }}>
+              Ver la fotos de fallas adjuntadas
+            </Text>
             <Button
               title={"Ver"}
-              buttonStyle={[styles.styleButton, { alignContent: "center", justifyContent: "center" }]}
+              buttonStyle={[
+                styles.styleButton,
+                { alignContent: "center", justifyContent: "center" },
+              ]}
               titleStyle={[styles.textoButton, { textAlign: "center" }]}
-              onPress={() => navigation.navigate("Galeria", { idRgs: id })}
+              onPress={() =>
+                navigation.navigate("Galeria", { idRgs: camion.id })
+              }
             />
           </Card>
         </View>
       </View>
-    {
-      (camion && camion.estado && camion.reparacion) && (
+      {camion && camion.estado && !camion.reparacion && (
         <Button
-        title={"Colocar camion como pendiente a reparacion"}
-        buttonStyle={[styles.styleButton, { width: "80%", backgroundColor: "blue", margin: "10%"  }]}
-        titleStyle={[styles.textoButton, { textAlign: "center", paddingHorizontal: "10%"}]}
-        onPress={() => handleGo("cEstado", camion)}
+          title={"Colocar camion como pendiente a reparacion"}
+          buttonStyle={[
+            styles.styleButton,
+            { width: "80%", backgroundColor: "blue", margin: "10%" },
+          ]}
+          titleStyle={[
+            styles.textoButton,
+            { textAlign: "center", paddingHorizontal: "10%" },
+          ]}
+          onPress={() => handleGo("cEstado", camion)}
+        />
+      )}
+
+      {camion && !camion.estado && !camion.reparacion && (
+        <Button
+          title={"Empezar la reparacion"}
+          buttonStyle={[
+            styles.styleButton,
+            { width: "80%", backgroundColor: "blue", margin: "10%" },
+          ]}
+          titleStyle={[
+            styles.textoButton,
+            { textAlign: "center", paddingHorizontal: "10%" },
+          ]}
+          onPress={() => handleGo("cEstado", camion)}
+        />
+      )}
+
+      {camion && !camion.estado && camion.reparacion && (
+        <>
+          <Button
+            title={"Agregar Reparacion"}
+            buttonStyle={[
+              styles.styleButton,
+              { backgroundColor: "blue", margin: "4%" },
+            ]}
+            titleStyle={[
+              styles.textoButton,
+              { textAlign: "center", paddingHorizontal: "10%" },
+            ]}
+            onPress={() =>
+              navigation.navigate("Agregar Reparacion", { rgs: id })
+            }
+          />
+
+          <Button
+            title={"Habilitar camion y carreta"}
+            buttonStyle={[
+              styles.styleButton,
+              { backgroundColor: "blue", margin: "4%" },
+            ]}
+            titleStyle={[
+              styles.textoButton,
+              { textAlign: "center", paddingHorizontal: "10%" },
+            ]}
+            onPress={() => handleGo("cEstado", camion)}
+          />
+        </>
+      )}
+
+      <Button
+        title={"Ver Reparacioes realizadas"}
+        buttonStyle={[
+          styles.styleButton,
+          { backgroundColor: "blue", margin: "4%" },
+        ]}
+        titleStyle={[
+          styles.textoButton,
+          { textAlign: "center", paddingHorizontal: "10%" },
+        ]}
+        onPress={() => navigation.navigate("Historial de Reparacion", { rgsm: id })}
       />
-      )
-    }
-
-
 
       {/*
       <Button
@@ -242,6 +406,6 @@ const localStyles = StyleSheet.create({
     alignItems: "center",
     textAlign: "center",
     width: "50%",
-    maxHeight: "90%"
+    maxHeight: "90%",
   },
 });

@@ -166,7 +166,7 @@ export function ItemCamion({ id, title, title2, description, description2, estad
             onPress={() => handleReparar()}
           />
         </>
-      )}
+      )} 
 
       {op === "enreparacion" && (
         <>
