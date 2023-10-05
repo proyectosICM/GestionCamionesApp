@@ -46,7 +46,8 @@ export function CheckDatos() {
   const [rgs, setRgs] = useState();
   const [token, setToken] = useState();
   //const [rol, setRol] = useState();
-
+const [empresa, setEmpresa] = useState();
+const [sede, setSede] = useState();
   useEffect(() => {
     const obtenerDatosAsync = async () => {
       const camionidv = await AsyncStorage.getItem("camionid");
@@ -54,10 +55,14 @@ export function CheckDatos() {
       const rolv = await AsyncStorage.getItem("rol");
       const rgsv = await AsyncStorage.getItem("rgs");
       const tokenv = await AsyncStorage.getItem("token");
+      const empresa = await AsyncStorage.getItem("empresa");
+      const sede = await AsyncStorage.getItem("sede");
       setCamionid(camionidv);
       setUsuario(usuariov);
       setRgs(rgsv);
       setToken(tokenv);
+      setEmpresa(empresa);
+      setSede(sede);
       //setRol(rolv);
     };
 
@@ -99,6 +104,12 @@ export function CheckDatos() {
           checkListCamionModel: { id: data.id },
           estado: true,
           reparacion: false,
+          empresasModel: {
+            id: empresa
+          },
+          sedesModel: {
+            id: sede
+          }
         };
    
         const RGS = await useAgregarElemento(RGS_URL, requestRGS);
@@ -153,7 +164,7 @@ export function CheckDatos() {
 
         const d = { id: data.id };
 
-        console.log("e22", rgs);
+
         await useEditarUnElemento(RGS_URL, rgs, `checkListCarretaModel`, d);
 
         //console.log("e22", ide);

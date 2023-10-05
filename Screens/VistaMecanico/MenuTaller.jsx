@@ -72,8 +72,7 @@ export function MenuTaller({ navigation }) {
           <Card.Title style={{color: ColorTexto}}>Ver Camiones pendientes a reparacion</Card.Title>
           <Card.Divider />
           <Text style={styles.cardText}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
+            Camiones y carretas con alguna falla pendientes para pasar a reparacion
           </Text>
           <Button
             title="Ver más"
@@ -87,8 +86,7 @@ export function MenuTaller({ navigation }) {
           <Card.Title style={{color: ColorTexto}}>Ver camiones en reparacion</Card.Title>
           <Card.Divider />
           <Text style={styles.cardText}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
+            Camiones y carretas que estan actualmente siendo reparados
           </Text>
           <Button
             title="Ver más"

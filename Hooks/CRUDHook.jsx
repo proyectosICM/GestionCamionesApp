@@ -18,7 +18,6 @@ export function useListarElementos(url, setDatos) {
     } catch (error) {
       if (error.response && error.response.status === 500) {
         // Token expirado, redirigir al inicio de sesión
-
 /*
         if(!logout){
           alert("Su sesion a caducado, la sesion se cerro");
@@ -35,7 +34,7 @@ export function useListarElementos(url, setDatos) {
   }, [navigation, setDatos, url]);
 
   useEffect(() => {
-    fetchData(); // Llama a fetchData al montar el componente
+    fetchData(); 
   }, [fetchData]);
 
   return fetchData;

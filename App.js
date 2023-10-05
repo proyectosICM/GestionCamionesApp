@@ -32,6 +32,8 @@ import { VerCL } from './Screens/VistaMecanico/VerCL';
 import { VerDatos } from './Screens/VistaMecanico/VerDatos';
 import { AdjuntarFotos } from './Screens/Common/Fotos/AdjuntarFotos';
 import GaleriaImagenes from './Screens/Common/Fotos/GaleriaImagenes';
+import { AgregarReparacion } from './Screens/VistaMecanico/Reparaciones/AgregarReparacion';
+import { HistorialReparaciones } from './Screens/VistaMecanico/Reparaciones/HistorialReparaciones';
 
 export default function App() {
 
@@ -100,6 +102,9 @@ export default function App() {
 
         <Stack.Screen name='Adjuntar Fotos' component={AdjuntarFotos} />
         <Stack.Screen name='Galeria' component={GaleriaImagenes} />
+
+        <Stack.Screen name="Agregar Reparacion" component={AgregarReparacion} />
+        <Stack.Screen name="Historial de Reparacion" component={HistorialReparaciones} />
         {/* Rutas secundarias */}
       </Stack.Navigator>
     </NavigationContainer>

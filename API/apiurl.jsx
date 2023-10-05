@@ -44,7 +44,11 @@ export const usuarioURL = `${baseURL}usuarios`;
 
 //Registro General de Salidas
 export const RGS_URL = `${baseURL}RGS`;
-export const RGS_xEmpresa = `${RGS_URL}/xempresa-sede/`
+export const RGS_xEmpresa = `${RGS_URL}/xempresa-sede/` 
+export const RGS_Listados = `${RGS_URL}/listados-RGS/`
+export const RGS_CPendiente = `${RGS_URL}/gestion-estado/pendiente/`
+export const RGS_CReparar = `${RGS_URL}/gestion-estado/reparar/`
+export const RGS_CHabilitar = `${RGS_URL}/gestion-estado/habilitar/`
 
 //Observaciones 
 export const ObsURL = `${baseURL}Obs`;
@@ -53,4 +57,7 @@ export const ObsxRgsURL = `${ObsURL}/xRGS/`
 //Registro Cambio de llantas de Salidas
 export const CambioLlantasURL = `${baseURL}cambio-llantas`;
 
+//Reparaciones
+export const ReparacionesURL = `${baseURL}reparaciones`;
+export const ReparacionxRGS = `${ReparacionesURL}/xrgs/`
 
