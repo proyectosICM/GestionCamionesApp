@@ -11,7 +11,7 @@
  //export const base = "https://api-gestion-camiones-production.up.railway.app";
  //export const baseURL = "https://api-gestion-camiones-production.up.railway.app/api/";
 
- export const baseURL = "http://161.132.180.242:65003/api"
+ export const baseURL = "http://161.132.180.242:65004/api"
 //Imgagen
 export const fondoURL = "../../Styles/fondo5.jpg";
 
