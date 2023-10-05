@@ -10,7 +10,7 @@ import {
   ImageBackground,
 } from "react-native";
 import { useListarElementos } from "../../Hooks/CRUDHook";
-import { base } from "../../API/apiurl";
+import { base, baseURL } from "../../API/apiurl";
 
 const backgroundImage = require("../Login/login1.jpg"); // Importa tu imagen de fondo
 
@@ -42,6 +42,7 @@ export default function Login({ navigation }) {
     } catch (error) {
       setError("Error en la autenticación");
       console.log(error);
+      console.log(username, " - " , password    )
     }
   };
   

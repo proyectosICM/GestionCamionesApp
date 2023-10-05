@@ -18,7 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { checkListCamionURL } from "./../../API/apiurl";
 import { tablesCam, tablesCarr } from "../../API/datosCLConductor";
 import { servicioExpress } from "./../../API/datosCLMecanico";
-import { CLExcel, mensaje } from "../Common/ExcelCL";
+// import { CLExcel, mensaje } from "../Common/ExcelCL";
 import axios from "axios";
 import { StyleSheet } from "react-native";
 import { MenuCamiones } from "../Common/MenuCamiones";

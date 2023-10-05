@@ -4,14 +4,15 @@
 // export const base = "http://192.168.1.232:8080";
 // export const baseURL = "http://192.168.1.232:8080/api/";
 
-//export const base = "http://192.168.1.35:8080";
-//export const baseURL = "http://192.168.1.35:8080/api/";
+export const base = "http://192.168.1.202:65004";
+export const baseURL = "http://192.168.1.202:65004/api/";
 
 
  //export const base = "https://api-gestion-camiones-production.up.railway.app";
  //export const baseURL = "https://api-gestion-camiones-production.up.railway.app/api/";
- export const base = "http://161.132.180.242:65004";
- export const baseURL = "http://161.132.180.242:65004/api"
+ 
+ //export const base = "http://161.132.180.242:65004";
+ //export const baseURL = "http://161.132.180.242:65004/api"
 //Imgagen
 export const fondoURL = "../../Styles/fondo5.jpg";
 
