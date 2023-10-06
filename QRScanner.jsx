@@ -7,6 +7,13 @@ const QRScanner = ({ cerrar, navigate, tc }) => {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [rol, setRol] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      setHasCameraPermission(status === 'granted');
+    })();
+  }, []);
    
   useEffect(() => {
     const obtenerDatosAsync = async () => {
@@ -35,19 +42,20 @@ const QRScanner = ({ cerrar, navigate, tc }) => {
     }
   };
 
-  if (hasCameraPermission === null) {
-    return <View />;
-  }
-  if (hasCameraPermission === false) {
-    return <Text>No se ha otorgado el permiso para acceder a la cámara.</Text>;
-  }
+
 
   return (
     <View style={styles.container}>
-      <Camera
-        style={styles.preview}
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-      />
+      {hasCameraPermission === null ? (
+        <Text>Obteniendo permisos...</Text>
+      ) : hasCameraPermission === false ? (
+        <Text>No se ha otorgado el permiso para acceder a la cámara.</Text>
+      ) : (
+        <Camera
+          style={styles.preview}
+          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        />
+      )}
       {scanned && (
         <TouchableOpacity onPress={() => setScanned(false)} style={styles.scanAgain}>
           <Text style={styles.scanAgainText}>Escanear de nuevo</Text>
