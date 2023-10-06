@@ -63,7 +63,7 @@ export function CamionSelect() {
               </View>
         */}
             <Text style={styles.tittleText}>Placa Camion: {userData.rgsModel && userData.rgsModel.checkListCamionModel.camionesModel.placa}</Text>
-            <Text style={styles.tittleText}>Placa Tracto: {userData.rgsModel && userData.rgsModel.checkListCarretaModel.camionesModel.placa}</Text>
+            <Text style={styles.tittleText}>Placa Carreta: {userData.rgsModel && userData.rgsModel.checkListCarretaModel.camionesModel.placa}</Text>
             <BotonesCamionAsignado datos={userData} />
           </>
         ) : (
