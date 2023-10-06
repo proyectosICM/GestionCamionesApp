@@ -42,13 +42,21 @@ export default function Login({ navigation }) {
     } catch (error) {
       setError("Error en la autenticación");
       console.log(error);
-      console.log(username, " - " , password    )
+      //console.log(username, " - " , password    )
     }
   };
+/*
+  const [test, setText] = useState();
+  <Text>{test && test}</Text>
+  useEffect(() => {
+   const response =  axios.get(`${baseURL}/hola`);
+   setText(response.data);
+  },[])*/
   
   return (
     <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
       <View style={styles.container}>
+      
         <Text style={styles.title}>Inicio de Sesión</Text>
         <TextInput
           style={styles.input}
