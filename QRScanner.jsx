@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Camera } from 'expo-camera';
+import { BarCodeScanner } from 'expo-barcode-scanner'; // Importa BarCodeScanner en lugar de Camera
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const QRScanner = ({ cerrar, navigate, tc }) => {
@@ -10,11 +10,11 @@ const QRScanner = ({ cerrar, navigate, tc }) => {
 
   useEffect(() => {
     (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
+      const { status } = await BarCodeScanner.requestPermissionsAsync(); // Usa BarCodeScanner en lugar de Camera
       setHasCameraPermission(status === 'granted');
     })();
   }, []);
-   
+
   useEffect(() => {
     const obtenerDatosAsync = async () => {
       const rolv = await AsyncStorage.getItem("rol");
@@ -24,25 +24,16 @@ const QRScanner = ({ cerrar, navigate, tc }) => {
     obtenerDatosAsync();
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasCameraPermission(status === 'granted');
-    })();
-  }, []);
- 
   const handleBarCodeScanned = async ({ data }) => {
-    setScanned(true); 
+    setScanned(true);
     cerrar();
-    if(rol == "CONDUCTOR"){
+    if (rol == "CONDUCTOR") {
       await AsyncStorage.setItem('camionid', data);
       navigate('Detalles', { tc: tc, camionid: data });
-    } else if(rol == "MECANICO"){
+    } else if (rol == "MECANICO") {
       navigate('Detalles', { tc: tc, camionid: data });
     }
   };
-
-
 
   return (
     <View style={styles.container}>
@@ -51,7 +42,7 @@ const QRScanner = ({ cerrar, navigate, tc }) => {
       ) : hasCameraPermission === false ? (
         <Text>No se ha otorgado el permiso para acceder a la cámara.</Text>
       ) : (
-        <Camera
+        <BarCodeScanner
           style={styles.preview}
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         />
