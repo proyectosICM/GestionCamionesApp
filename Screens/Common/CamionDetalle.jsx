@@ -13,6 +13,7 @@ import { fondo } from "../../Styles/PaletaColores";
 import { VerCL } from "../VistaMecanico/VerCL";
 import { servicioExpress } from "../../API/datosCLMecanico";
 import VerificacionCarreta from "../VIstaConductor/VerificarCarreta";
+import VerificacionCamion from "../VIstaConductor/VerificacionCamion";
 
 export default function CamionDetalle({ navigation }) {
   const [camion, setCamion] = useState();
@@ -95,6 +96,14 @@ export default function CamionDetalle({ navigation }) {
     }
   };
 
+  const VolverAScanear = () => {
+    if(tc =="Camion"){
+      navigation.navigate(VerificacionCamion);
+    } else if(tc="Carreta"){
+      navigation.navigate(VerificacionCarreta);
+    }
+  }
+
   return (
     <ImageBackground source={fondo} style={styles.backgroundImage}>
       <View style={styles.container}>
@@ -135,7 +144,7 @@ export default function CamionDetalle({ navigation }) {
                 <Text style={[styles.tittleText, { textAlign: "center" }]}>Cargando...</Text>
                 <Text style={[styles.tittleText, { textAlign: "center" }]}>
                   Si no es redirigido luego de 5 segundos posiblemente el QR escaneado no pertenece a un camion
-               
+               {tc}
                 </Text>
                 <Button
                   title=" Escanear QR nuevamente "
@@ -150,7 +159,7 @@ export default function CamionDetalle({ navigation }) {
                     color: "white",
                   }}
                   iconRight
-                  onPress={() => navigation.navigate(VerificacionCarreta)}
+                  onPress={() => VolverAScanear()}
                 />
               </View>
             )}
