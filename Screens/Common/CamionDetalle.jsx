@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
+} from "react-native";
 import { useListarElementos } from "../../Hooks/CRUDHook";
 import { useEffect } from "react";
 import { styles } from "../../Styles/General";
@@ -36,7 +42,10 @@ export default function CamionDetalle({ navigation }) {
 
   const ListarCL = useListarElementos(`${baseURL}RGS/${camionid}`, setCamion);
 
-  const ListarCamion = useListarElementos(`${baseURL}camiones/${camionid}`, setCamion);
+  const ListarCamion = useListarElementos(
+    `${baseURL}camiones/${camionid}`,
+    setCamion
+  );
 
   useEffect(() => {
     if (rol == "CONDUCTOR") {
@@ -97,12 +106,12 @@ export default function CamionDetalle({ navigation }) {
   };
 
   const VolverAScanear = () => {
-    if(tc =="Camion"){
+    if (tc == "Camion") {
       navigation.navigate(VerificacionCamion);
-    } else if(tc="Carreta"){
+    } else if ((tc = "Carreta")) {
       navigation.navigate(VerificacionCarreta);
     }
-  }
+  };
 
   return (
     <ImageBackground source={fondo} style={styles.backgroundImage}>
@@ -119,8 +128,12 @@ export default function CamionDetalle({ navigation }) {
           >
             <Text style={styles.tittleText}>{camion.tiposCModel?.nombre}</Text>
             <Text style={styles.tittleText}>Placa {camion.placa}</Text>
-            <Text style={styles.tittleText}>Marca {camion.marcasModel?.nombre}</Text>
-            <Text style={styles.tittleText}>Modelo {camion.modeloModel?.nombre}</Text>
+            <Text style={styles.tittleText}>
+              Marca {camion.marcasModel?.nombre}
+            </Text>
+            <Text style={styles.tittleText}>
+              Modelo {camion.modeloModel?.nombre}
+            </Text>
 
             <Button
               title=" Realizar Checklist "
@@ -139,12 +152,15 @@ export default function CamionDetalle({ navigation }) {
           </View>
         ) : (
           <>
-            {rol && rol  === "CONDUCTOR" &&  (
+            {rol && rol === "CONDUCTOR" && (
               <View>
-                <Text style={[styles.tittleText, { textAlign: "center" }]}>Cargando...</Text>
                 <Text style={[styles.tittleText, { textAlign: "center" }]}>
-                  Si no es redirigido luego de 5 segundos posiblemente el QR escaneado no pertenece a un camion
-               {tc}
+                  Cargando...
+                </Text>
+                <Text style={[styles.tittleText, { textAlign: "center" }]}>
+                  Si no es redirigido luego de 5 segundos posiblemente el QR
+                  escaneado no es el correcto o solicitado
+                  {tc}
                 </Text>
                 <Button
                   title=" Escanear QR nuevamente "

@@ -69,7 +69,6 @@ export function CambiarCamion() {
 
   return (
     <>
-      <Text style={styles.tittleText}>Camion</Text>
       {cambios.some((row) => row.includes(true)) && (
         <>
           <Text style={[styles.tittleText, { margin: 10 }]}>

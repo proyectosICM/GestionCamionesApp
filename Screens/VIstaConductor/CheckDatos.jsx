@@ -293,7 +293,6 @@ const [sede, setSede] = useState();
               </Card>
             </View>
           ))}
-        <Text>{camionid ? camionid : "no hay"}</Text>
         <Text style={styles.tittleText}>Tiempo: {convertirAMinutos(tiempo)}</Text>
         <Button title={"Confirmar Envio de datos"} onPress={() => handleEnviar()} />
       </View>

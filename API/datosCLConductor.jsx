@@ -74,7 +74,7 @@ export const tablesCarr = [
   {
     titulo: "Llantas",
     datos: [
-      { nombre: "Revisar ajuste2", atributo: "revisarAjuste" },
+      { nombre: "Revisar ajuste", atributo: "revisarAjuste" },
       { nombre: "Cortes y averias", atributo: "cortesYAverias" },
       { nombre: "Revisar Presion recomendada", atributo: "revisarPresionRecomendada" },
     ],

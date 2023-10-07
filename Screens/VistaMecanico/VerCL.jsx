@@ -203,7 +203,7 @@ export function VerCL() {
                 : "No hay checklist de camion registrado"}
             </Card.Title>
             <Text style={{ textAlign: "center" }}>
-              Ver el checklist realizado para el camion{" "}
+              Ver el checklist realizado para {" "}
               {camion.checkListCamionModel &&
                 camion.checkListCamionModel.camionesModel.placa}
             </Text>
@@ -231,7 +231,7 @@ export function VerCL() {
                 : "No hay checklist de carreta registrados"}
             </Card.Title>
             <Text style={{ textAlign: "center" }}>
-              Ver el checklist realizado para el camion{" "}
+              Ver el checklist realizado para {" "}
               {camion.checkListCarretaModel &&
                 camion.checkListCarretaModel.camionesModel.placa}
             </Text>
