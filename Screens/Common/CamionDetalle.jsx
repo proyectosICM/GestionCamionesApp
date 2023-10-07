@@ -160,7 +160,6 @@ export default function CamionDetalle({ navigation }) {
                 <Text style={[styles.tittleText, { textAlign: "center" }]}>
                   Si no es redirigido luego de 5 segundos posiblemente el QR
                   escaneado no es el correcto o solicitado
-                  {tc}
                 </Text>
                 <Button
                   title=" Escanear QR nuevamente "
