@@ -40,24 +40,17 @@ export default function CamionDetalle({ navigation }) {
   useEffect(() => {
     if (rol == "CONDUCTOR") {
       ListarCamion();
-      console.log("Cond");
-      console.log(camion);
     } else if (rol == "MECANICO") {
       ListarCL();
-      console.log("sadsad");
     }
   }, [rol]);
-
-  const handleAlerta = () => {
-    alert("ED");
-  };
 
   const handleListChecklist = () => {
     if (rol == "CONDUCTOR") {
       if (camion.tiposCModel.id == 1) {
         navigation.navigate("CheckList Camion", { tc: tc, tablesD: tablesCam });
       } else if (camion.tiposCModel.id == 2) {
-        navigation.navigate("CheckList Camion", {
+        navigation.navigate("CheckList Carreta", {
           tc: tc,
           tablesD: tablesCarr,
         });
@@ -135,10 +128,10 @@ export default function CamionDetalle({ navigation }) {
                 <Text style={[styles.tittleText, { textAlign: "center" }]}>Cargando...</Text>
                 <Text style={[styles.tittleText, { textAlign: "center" }]}>
                   Si no es redirigido luego de 5 segundos posiblemente el QR escaneado no pertenece a un camion
-               
+                  {tc}
                 </Text>
                 <Button
-                  title=" Escanear QR nuevamente "
+                  title="Escanear QR nuevamente "
                   type="outline"
                   buttonStyle={styles.styleButton}
                   titleStyle={styles.textoButton}

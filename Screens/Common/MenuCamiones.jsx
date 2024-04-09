@@ -42,6 +42,7 @@ export function MenuCamiones() {
       setUrl(`${RGS_Listados}${empresav}/${sedev}/0/0`);
       setTitulo("Camiones Pendientes a reparacion");
       setOp("Pendiente");
+      console.log(`${RGS_Listados}${empresav}/${sedev}/0/0`)
     } else if (menucam === "enreparacion") {
       setUrl(`${RGS_Listados}${empresav}/${sedev}/0/1`);
       setTitulo("Camiones en reparacion");

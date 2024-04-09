@@ -15,7 +15,7 @@ export default function VerificacionCamion({ navigation }) {
   const handleAbrirCamera = () => {
     setAbrir(true);
   };
-
+ 
   const handleCerrarCamera = () => {
     setAbrir(false);
   };

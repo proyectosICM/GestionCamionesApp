@@ -19,7 +19,6 @@ export function CustomBottomTabBar({ navigation }) {
   const [rol, setRol] = useState(null);
 
   useEffect(() => {
-    // Función asincrónica para obtener el valor de 'user' de AsyncStorage
     const getUserFromAsyncStorage = async () => {
       try {
         const rolValue = await AsyncStorage.getItem("rol");
@@ -36,7 +35,7 @@ export function CustomBottomTabBar({ navigation }) {
 
     // Actualizar el valor de 'user' cada 5 segundos
     const interval = setInterval(getUserFromAsyncStorage, 300);
-
+    
     // Limpiar el intervalo cuando el componente se desmonte
     return () => clearInterval(interval);
   }, []);
@@ -44,27 +43,17 @@ export function CustomBottomTabBar({ navigation }) {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: "#A69677", // Cambia este color al que prefieras para los íconos seleccionados
-        tabBarInactiveTintColor: "#9CA4A6", // Cambia este color al que prefieras para los íconos no seleccionados
+        tabBarActiveTintColor: "#A69677",
+        tabBarInactiveTintColor: "#9CA4A6",
       }}
     >
-      {/* Configurar las opciones de cada pantalla en el TabNavigator */}
-
       <Tab.Screen
         name="Home"
         component={
-          rol === "CONDUCTOR"
-            ? VerificacionCamion
-            : rol === "MECANICO"
-            ? IncioMecanico
-            : rol === "ADMINISTRADOR"
-            ? InicioAdministrador
-            : Cargando
+          rol === "CONDUCTOR" ? VerificacionCamion : rol === "MECANICO" ? IncioMecanico : rol === "ADMINISTRADOR" ? InicioAdministrador : Cargando
         }
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="home" color={color} size={size} />
-          ),
+          tabBarIcon: ({ color, size }) => <FontAwesome5 name="home" color={color} size={size} />,
         }}
       />
       {rol === "CONDUCTOR" && (
@@ -72,9 +61,7 @@ export function CustomBottomTabBar({ navigation }) {
           name="Asignado"
           component={CamionSelect}
           options={{
-            tabBarIcon: ({ color, size }) => (
-              <FontAwesome5 name="truck" color={color} size={size} />
-            ),
+            tabBarIcon: ({ color, size }) => <FontAwesome5 name="truck" color={color} size={size} />,
           }}
         />
       )}
@@ -83,9 +70,7 @@ export function CustomBottomTabBar({ navigation }) {
           name="Taller"
           component={MenuTaller}
           options={{
-            tabBarIcon: ({ color, size }) => (
-              <FontAwesome5 name="wrench" color={color} size={size} />
-            ),
+            tabBarIcon: ({ color, size }) => <FontAwesome5 name="wrench" color={color} size={size} />,
           }}
         />
       )}
@@ -106,9 +91,7 @@ export function CustomBottomTabBar({ navigation }) {
         name="Cuenta"
         component={Cuenta}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person-circle" color={color} size={size} />
-          ),
+          tabBarIcon: ({ color, size }) => <Ionicons name="person-circle" color={color} size={size} />,
         }}
       />
     </Tab.Navigator>

@@ -22,7 +22,7 @@ export function CheckDatos() {
 
   const route = useRoute();
 
-  const tc = route.params.tc;
+  const tc = route.params.tc; 
   const tablesD = route.params.tablesD;
   const ide = route.params.ide;
 
@@ -36,7 +36,6 @@ export function CheckDatos() {
 
   const datos = route.params.datos;
   const rol = route.params.rol;
-  console.log("ds·", datos);
 
   const tiempo = route.params.tiempo;
   const navigation = useNavigation();

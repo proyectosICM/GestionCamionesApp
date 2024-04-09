@@ -9,7 +9,7 @@ const QRScanner = ({ cerrar, navigate, tc }) => {
   const [rol, setRol] = useState(false);
    
   useEffect(() => {
-    const obtenerDatosAsync = async () => {
+    const obtenerDatosAsync = async () => { 
       const rolv = await AsyncStorage.getItem("rol");
       setRol(rolv);
     };

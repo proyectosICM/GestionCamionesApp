@@ -8,8 +8,7 @@ export function VerDatos() {
   const route = useRoute();
   const tableD = route.params.tablesD;
   const datos = route.params.datos; 
-console.log(datos[tableD[0].datos[1].atributo])
-console.log(tableD[0].datos[1].atributo)
+  
   return (
     <ScrollView>
       {datos ? (

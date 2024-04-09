@@ -3,7 +3,7 @@ import { Text } from "react-native";
 import { View } from "react-native";
 import { useListarElementos } from "../../Hooks/CRUDHook";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { infoURL } from "../../API/apiurl";
+import { infoURL } from "../../API/apiurl"; 
 import { Button } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import { styles } from "../../Styles/General";

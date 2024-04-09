@@ -17,7 +17,7 @@ export default function VerificacionCarreta({ navigation }) {
   };
 
   const handleCerrarCamera = () => {
-    setAbrir(false);
+    setAbrir(false); 
   };
 
   return abrir ? (

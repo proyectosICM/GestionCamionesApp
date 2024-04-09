@@ -68,7 +68,7 @@ export default function App() {
 
         <Stack.Screen name='Login' component={Login} />
         <Stack.Screen
-          name="Inicio"
+          name="Inicio" 
           component={CustomBottomTabBar}
           options={{ headerShown: false }}
         />
@@ -87,7 +87,7 @@ export default function App() {
         <Stack.Screen name='Menu-Camion' component={MenuCamiones} />
         <Stack.Screen name='Menu-CRUD' component={MenuCrud} />
         <Stack.Screen name='Cargando' component={Cargando} />
-
+ 
         <Stack.Screen name='CheckDatos' component={CheckDatos} />
         <Stack.Screen name='Ver CheckLists' component={VerCL} />
         <Stack.Screen name='Ver Datos' component={VerDatos} />

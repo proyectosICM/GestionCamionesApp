@@ -12,7 +12,7 @@ import {
 import { useListarElementos } from "../../Hooks/CRUDHook";
 import { base } from "../../API/apiurl";
 
-const backgroundImage = require("../Login/login1.jpg"); // Importa tu imagen de fondo
+const backgroundImage = require("../Login/login1.jpg");
 
 export default function Login({ navigation }) {
   const [username, setUsername] = useState("");
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Fondo semi-transparente
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     alignItems: "center",
     justifyContent: "center",
   },

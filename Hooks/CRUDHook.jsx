@@ -49,8 +49,6 @@ export async function useAgregarElemento(url, requestData) {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log("datos", response.status);
-    console.log("datos", response.data);
     return response; // Retorna el resultado de la solicitud POST
   } catch (error) {
     //console.log(error, "makl" , requestData);
@@ -70,7 +68,6 @@ export async function useEditarUnElemento(url, id, est, value) {
     });
     const elemento = response.data;
     elemento[est] = value;
-    //console.log(elemento);
     await axios.put(nurl, elemento, {
       headers: {
         Authorization: `Bearer ${token}`,
